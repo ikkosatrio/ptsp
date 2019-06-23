@@ -53,8 +53,11 @@ class Auth extends CI_Controller {
 			return;
 		}
 
+        $cek = $this->m_login->cek_login("admin",$where)->row();
+
 		$data_session = array(
 				'nama' => $this->input->post('user'),
+                'id' => $cek->id,
 				'auth' =>	TRUE
 				);
 

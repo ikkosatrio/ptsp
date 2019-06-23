@@ -45,56 +45,28 @@ Dashboard - Administrasi
 		                        <tr>
 		                        	<th>No</th>
 		                        	<th>Nama Penilaian</th>
-		                        	<th>Kode Sub Penilaian</th>
-		                            <th>Sub Penilaian</th>
-		                            <th>Deskripsi</th>
+		                        	<th>Triwulan</th>
 		                            <th class="text-center">Aksi</th>
 		                        </tr>
 		                    </thead>
 		                    <tbody>
 		                    	@foreach($penilaian as $key => $result)
 		                         <tr>
-		                        	<td align="center">{{($key+1)}}</td>
-			                        <td style="width:300px;">
-			                        	<a href="{{base_url('superuser/penilaian/update/'.$result->id_subkat.'/'.seo($result->id_kategori))}}">
-			                        		<b>{{ucwords(read_more($result->nama_kat,30))}}</b>
-			                        	</a><br>
-			                        	<span class="text-size-mini">
-			                        	Tanggal Publish : {{tgl_indo($result->created_at)}}
-			                        	</span><br>
-			                        </td>
-			                        <td style="width:300px;">
-			                        	<a href="{{base_url('superuser/penilaian/update/'.$result->id_subkat.'/'.seo($result->kode_subkat))}}">
-			                        		<b>{{ucwords(read_more($result->kode_subkat,30))}}</b>
-			                        	</a><br>
-			                        	<span class="text-size-mini">
-			                        	Tanggal Publish : {{tgl_indo($result->created_at)}}
-			                        	</span><br>
-			                        </td>
-			                        <td style="width:300px;">
-			                        	<a href="{{base_url('superuser/penilaian/update/'.$result->id_subkat.'/'.seo($result->nama_subkat))}}">
-			                        		<b>{{ucwords(read_more($result->nama_subkat,30))}}</b>
-			                        	</a><br>
-			                        	<span class="text-size-mini">
-			                        	Tanggal Publish : {{tgl_indo($result->created_at)}}
-			                        	</span><br>
-			                        </td>
-			                        <td class="text-center">
-			                        	<span class="text-size-small text-muted">
-			                        		{{read_more(strip_tags($result->deskripsi_subkat),30)}}
-			                        	</span>
-			                        </td>
+
+									 <td align="center">{{($key+1)}}</td>
+									 <td align="center">{{($result->user)}}</td>
+									 <td align="center">{{($result->triwulan)}}</td>
 			                        <td class="text-center">
 			                           <div class="btn-group">
 					                    	<button type="button" class="btn btn-danger btn-sm btn-rounded dropdown-toggle" data-toggle="dropdown"><i class="icon-cog5 position-left"></i> Action <span class="caret"></span></button>
 					                    	<ul class="dropdown-menu dropdown-menu-right">
 												<li>
-													<a href="{{base_url('superuser/penilaian/update/'.$result->id_subkat.'/'.seo($result->nama_subkat))}}">
+													<a href="{{base_url('superuser/penilaian/update/'.$result->id_penilaian)}}">
 														<i class="fa fa-edit"></i> Ubah Penilaian
 													</a>
 												</li>
 												<li><a href="javascript:void(0)" onclick="deleteIt(this)" 
-												data-url="{{base_url('superuser/penilaian/deleted/'.$result->id_subkat.'/'.seo($result->nama_subkat))}}">
+												data-url="{{base_url('superuser/penilaian/deleted/'.$result->id_penilaian)}}">
 														<i class="fa fa-trash"></i> Hapus Penilaian
 													</a>
 												</li>

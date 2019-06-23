@@ -12,12 +12,14 @@ class M_penilaianptsp extends CI_Model {
 
 	function tampil_data($table){
 		$this->db->from($table);
+        $this->db->join('admin','admin.id=penilaianptsp.id_admin');
 		return $query = $this->db->get();
 		// return $this->db->get($table);
 	}
 
 	function input_data($data,$table){
 		$this->db->insert($table,$data);
+        return $this->db->insert_id();
 	}
 	
 	function detail($where,$table){	

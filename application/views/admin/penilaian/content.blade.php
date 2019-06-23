@@ -69,8 +69,8 @@ Dashboard - Administrasi
 			        								<td>{{$sub->kode_subkat}}</td>
 			        								<td>{{$sub->nama_subkat}}</td>
 			        								<td>{!!$sub->deskripsi_subkat!!}</td>
-			        								<td><input class="form-input" type="number"></td>
-			        								<td><textarea class="form-input"></textarea></td>
+			        								<td><input class="form-input" type="number" name="nilai-{{$sub->id_subkat}}"></td>
+			        								<td><textarea class="form-input" name="kendala-{{$sub->id_subkat}}"></textarea></td>
 			        							</tr>
 			        							@endforeach
 			        						</table>

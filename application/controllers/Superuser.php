@@ -125,6 +125,7 @@ class Superuser extends CI_Controller {
         $data             = $this->data;
         $data['menu']     = "kategori";
         $data['penilaian'] = $this->m_penilaianptsp->tampil_data('penilaianptsp')->result();
+
         $kategoris = $this->m_kategoripenilaian->tampil_data('kategoripenilaian')->result();
 
         $arrKat = array();
@@ -144,20 +145,43 @@ class Superuser extends CI_Controller {
         }
         else if ($url == "created" && $this->input->is_ajax_request() == true) {
 
-        	$kode_kat     	= $this->input->post('kode_kat');
-            $nama_kat     	= $this->input->post('nama_kat');
-            $deskripsi  = $this->input->post('deskripsi');
+            $userid     	= $this->session->userdata('id');
+            $triwulan     	= $this->input->post('triwulan');
 
             $data = array(
-            	'kode_kat'      => $kode_kat,
-                'nama_kat'       => $nama_kat,
-                'deskripsi_kat'   => $deskripsi,
+                'id_admin'      => $userid,
+                'triwulan'       =>1,
             );
 
-            if($this->m_kategoripenilaian->input_data($data,'kategoripenilaian')){
-                echo goResult(true,"Data Telah Di Tambahkan");
-                return;
+            if($idpenilaian = $this->m_penilaianptsp->input_data($data,'penilaianptsp') ){
+                $subkat = $this->m_subkategori->tampil_data('subkatpenilaian')->result();
+                foreach ($subkat as $sub){
+                    $nilai = "";
+                    $kendala = "";
+                    if($this->input->post('nilai-'.$sub->id_subkat)){
+                        $nilai = $this->input->post('nilai-'.$sub->id_subkat);
+                    }
+                    if($this->input->post('kendala-'.$sub->id_subkat)){
+                        $kendala = $this->input->post('kendala-'.$sub->id_subkat);
+                    }
+
+                    if($nilai){
+                        $data2 = array(
+                            'id_penilaian'      => $idpenilaian,
+                            'nilai'       => $nilai,
+                            'id_subkat' => $sub->id_subkat,
+                        );
+                        $this->m_penilaianptsp->input_data($data2,'detailpenilaian');
+                    }
+                }
             }
+
+            echo goResult(true,"Data Telah Di Tambahkan");
+            return;
+
+
+
+
         }
         else if ($url=="update" && $id!=null) {
             $data['type']    = "update";
