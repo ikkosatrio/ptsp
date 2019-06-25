@@ -28,6 +28,8 @@ class Superuser extends CI_Controller {
 	{
 		$data 		= $this->data;
 		$data['menu'] = "dashboard";
+         $data['banding'] = $this->m_banding->tampil_data('banding')->result();
+         $data['penilaian'] = $this->m_penilaianptsp->tampil_data('penilaianptsp')->result();
 		echo $this->blade->nggambar('admin.home',$data);
 	}
 
@@ -921,3 +923,4 @@ public function kategorijbt($url=null,$id=null)
 		}
 	}
 }
+ 

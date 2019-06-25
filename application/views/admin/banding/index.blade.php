@@ -44,9 +44,9 @@ Dashboard - Administrasi
 		                    <thead>
 		                        <tr>
 		                        	<th>No</th>
-		                        	<th>Kode</th>
-		                            <th>Kategori</th>
-		                            <th>Deskripsi</th>
+		                        	<th>No Urut PTA</th>
+		                            <th>No Perkara</th>
+		                            <th>Asal PA</th>
 		                            <th class="text-center">Aksi</th>
 		                        </tr>
 		                    </thead>

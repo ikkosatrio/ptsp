@@ -42,7 +42,7 @@ Dashboard - Administrasi
 		                	</div>
 						</div>
 						<div class="panel-body">
-						<form id="form-blog" class="form-horizontal" action="{{ ($type=='create') ? base_url('superuser/penilaian/created') : base_url('superuser/penilaian/updated/'.$penilaian->id_subkat) : base_url('superuser/penilaian/viewed/'.$penilaian->id_subkat) }}" method="post">
+						<form id="form-blog" class="form-horizontal" action="{{ ($type=='create') ? base_url('superuser/penilaian/created') : base_url('superuser/penilaian/updated/'.$penilaian->id_subkat) }}" method="post">
 						
 						@foreach($kategoris as $keyKat => $kategori)
 						<div class="panel-group">
