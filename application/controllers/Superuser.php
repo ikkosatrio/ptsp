@@ -11,7 +11,7 @@ class Superuser extends CI_Controller {
 			redirect('auth');
 		}
 		$this->blade->sebarno('ctrl', $this);
-		
+
 		$this->load->model('m_config');
 		$this->load->model('m_banding');
 		$this->load->model('m_kategoripenilaian');
@@ -21,13 +21,15 @@ class Superuser extends CI_Controller {
         $this->load->model('m_admin');
 		$this->load->library('session');
 		$this->data['config'] 			= $this->m_config->ambil('config',1)->row();
-		
+
 	}
 
 	public function index()
 	{
 		$data 		= $this->data;
 		$data['menu'] = "dashboard";
+         $data['banding'] = $this->m_banding->tampil_data('banding')->result();
+         $data['penilaian'] = $this->m_penilaianptsp->tampil_data('penilaianptsp')->result();
 		echo $this->blade->nggambar('admin.home',$data);
 	}
 
@@ -158,8 +160,14 @@ class Superuser extends CI_Controller {
                     'kategoripenilaian.id_kategori' => $row->id_kategori,
                 );
                 $row->skorperolehan = $this->m_penilaianptsp->perolehan($where2,'penilaianptsp')->row()->nilai;
+                $row->pencapaian = $row->skorperolehan / $row->skormaximal * (100/100);
                 $arrKat[] = $row;
             }
+
+            $data['hasil']			= $arrKat;
+
+            echo $this->blade->nggambar('admin.kategoripenilaian.content3',$data);
+            return;
 
         }else if ($url == "created" && $this->input->is_ajax_request() == true) {
 
@@ -225,6 +233,32 @@ class Superuser extends CI_Controller {
                 return;
             }
         }
+
+        else if ($url=="view" && $id!=null) {
+            $data['type']    = "update";
+            $where           = array('id_kategori' => $id);
+            $data['kategori'] = $this->m_kategoripenilaian->detail($where,'kategoripenilaian')->row();
+            echo $this->blade->nggambar('admin.kategoripenilaian.content',$data);
+        }
+        else if ($url=="viewed" && $id!=null && $this->input->is_ajax_request() == true) {
+            $where           = array('id_kategori' => $id);
+
+            $kode_kat       = $this->input->post('kode_kat');
+            $nama_kat       = $this->input->post('nama_kat');
+            $deskripsi  = $this->input->post('deskripsi');
+
+            $data = array(
+                'kode_kat'      => $kode_kat,
+                'nama_kat'       => $nama_kat,
+                'deskripsi_kat'   => $deskripsi,
+            );
+
+            if($this->m_kategoripenilaian->update_data($where,$data,'kategoripenilaian')){
+                echo goResult(true,"Data Telah Di Tambahkan");
+                return;
+            }
+        }
+
         else if ($url=="deleted" && $id != null) {
             $where           = array('id_kategori' => $id);
             if ($this->m_kategoripenilaian->hapus_data($where,'kategoripenilaian')) {
@@ -238,8 +272,8 @@ class Superuser extends CI_Controller {
         }
     }
     //end Kategori Penilaian
-	
-	
+
+
 
     //Banding
     public function banding($url=null,$id=null)
@@ -601,6 +635,8 @@ class Superuser extends CI_Controller {
                 return;
             }
         }
+
+
         else if ($url=="deleted" && $id != null) {
             $where           = array('id_kategori' => $id);
             if ($this->m_kategoripenilaian->hapus_data($where,'kategoripenilaian')) {
@@ -630,13 +666,13 @@ public function kategorijbt($url=null,$id=null)
         }
         else if ($url == "created" && $this->input->is_ajax_request() == true) {
 
-           
+
             $nama_jbt       = $this->input->post('nama_jbt');
             $desk_jbt       = $this->input->post('desk_jbt');
 
 
             $data = array(
-              
+
                 'nama_jbt'       => $nama_jbt,
                 'desk_jbt'       => $desk_jbt,
             );
@@ -655,7 +691,7 @@ public function kategorijbt($url=null,$id=null)
         else if ($url=="updated" && $id!=null && $this->input->is_ajax_request() == true) {
             $where           = array('id_jbt' => $id);
 
-            
+
             $nama_jbt       = $this->input->post('nama_jbt');
             $desk_jbt       = $this->input->post('desk_jbt');
 
@@ -682,7 +718,11 @@ public function kategorijbt($url=null,$id=null)
         }
     }
     // --------------------------------- End Kategorijbt
-	
+
+//contohview
+
+    // --------------------------------- End contohview
+
 
 // --------------------------------- Start Admin
     public function admin($url=null,$id=null)
@@ -833,7 +873,7 @@ public function kategorijbt($url=null,$id=null)
 	}
 	// --------------------------------- End SUBKAtegori
 
-	
+
 
 	//---------------------------------------------------------------------
 	//--------------------------------------------------------fungsi global

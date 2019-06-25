@@ -42,7 +42,7 @@ Dashboard - Administrasi
 		                	</div>
 						</div>
 						<div class="panel-body">
-						<form id="form-blog" class="form-horizontal" action="{{ ($type=='create') ? base_url('superuser/kategoripenilaian/created') : base_url('superuser/kategoripenilaian/updated/'.$kategori->id_kategori)}}" method="post">
+						<form id="form-blog" class="form-horizontal" action="{{ ($type=='create') ? base_url('superuser/kategoripenilaian/created') : base_url('superuser/kategoripenilaian/updated/'.$kategori->id_kategori) }}" method="post">
 							<div class="form-group">
 								<label class="col-lg-2 control-label">Kode <span class="text-danger"><b>*</b></span></label>
 								<div class="col-lg-10">
