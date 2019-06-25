@@ -60,11 +60,11 @@ Dashboard - Administrasi
 			                           <div class="btn-group">
 					                    	<button type="button" class="btn btn-danger btn-sm btn-rounded dropdown-toggle" data-toggle="dropdown"><i class="icon-cog5 position-left"></i> Action <span class="caret"></span></button>
 					                    	<ul class="dropdown-menu dropdown-menu-right">
-												<li>
-													<a href="{{base_url('superuser/penilaian/update/'.$result->id_penilaian)}}">
-														<i class="fa fa-edit"></i> Ubah Penilaian
-													</a>
-												</li>
+												{{--<li>--}}
+													{{--<a href="{{base_url('superuser/penilaian/update/'.$result->id_penilaian)}}">--}}
+														{{--<i class="fa fa-edit"></i> Ubah Penilaian--}}
+													{{--</a>--}}
+												{{--</li>--}}
 												<li><a href="javascript:void(0)" onclick="deleteIt(this)" 
 												data-url="{{base_url('superuser/penilaian/deleted/'.$result->id_penilaian)}}">
 														<i class="fa fa-trash"></i> Hapus Penilaian

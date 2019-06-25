@@ -16,6 +16,12 @@ class M_kategoripenilaian extends CI_Model {
 		// return $this->db->get($table);
 	}
 
+    function maxskor($where,$table){
+        $this->db->where($where);
+        $this->db->from($table);
+        return $this->db->count_all_results();
+    }
+
 	function input_data($data,$table){
 		$this->db->insert($table,$data);
 	}

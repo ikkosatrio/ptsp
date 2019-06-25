@@ -26,6 +26,16 @@ class M_penilaianptsp extends CI_Model {
 		return $this->db->get_where($table,$where);
 	}
 
+    function perolehan($where,$table){
+        $this->db->select_sum('nilai');
+        $this->db->where($where);
+        $this->db->from($table);
+        $this->db->join('detailpenilaian','penilaianptsp.id_penilaian=detailpenilaian.id_penilaian');
+        $this->db->join('subkatpenilaian','subkatpenilaian.id_subkat=detailpenilaian.id_subkat');
+        $this->db->join('kategoripenilaian','kategoripenilaian.id_kategori=subkatpenilaian.id_kategori');
+        return $this->db->get();
+    }
+
 	function update_data($where,$data,$table){
 		$this->db->where($where);
 		$this->db->update($table,$data);

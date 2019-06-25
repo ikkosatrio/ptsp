@@ -143,7 +143,25 @@ class Superuser extends CI_Controller {
             echo $this->blade->nggambar('admin.penilaian.content',$data);
             return;
         }
-        else if ($url == "created" && $this->input->is_ajax_request() == true) {
+        else if ($url=="detail" && $id!=null) {
+            $data['type']			= "detail";
+            $kategoris = $this->m_kategoripenilaian->tampil_data('kategoripenilaian')->result();
+
+            $arrKat = array();
+            foreach ($kategoris as $row){
+                $where = array(
+                    'id_kategori' => $row->id_kategori,
+                );
+                $row->skormaximal = $this->m_kategoripenilaian->maxskor($where,'subkatpenilaian') * 10;
+                $where2 = array(
+                    'penilaianptsp.id_penilaian' => $id,
+                    'kategoripenilaian.id_kategori' => $row->id_kategori,
+                );
+                $row->skorperolehan = $this->m_penilaianptsp->perolehan($where2,'penilaianptsp')->row()->nilai;
+                $arrKat[] = $row;
+            }
+
+        }else if ($url == "created" && $this->input->is_ajax_request() == true) {
 
             $userid     	= $this->session->userdata('id');
             $triwulan     	= $this->input->post('triwulan');
