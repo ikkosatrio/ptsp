@@ -1,4 +1,4 @@
-<?php
+2<?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Superuser extends CI_Controller {
@@ -207,6 +207,32 @@ class Superuser extends CI_Controller {
                 return;
             }
         }
+
+        else if ($url=="view" && $id!=null) {
+            $data['type']    = "update";
+            $where           = array('id_kategori' => $id);
+            $data['kategori'] = $this->m_kategoripenilaian->detail($where,'kategoripenilaian')->row();
+            echo $this->blade->nggambar('admin.kategoripenilaian.content',$data);
+        }
+        else if ($url=="viewed" && $id!=null && $this->input->is_ajax_request() == true) {
+            $where           = array('id_kategori' => $id);
+
+            $kode_kat       = $this->input->post('kode_kat');
+            $nama_kat       = $this->input->post('nama_kat');
+            $deskripsi  = $this->input->post('deskripsi');
+
+            $data = array(
+                'kode_kat'      => $kode_kat,
+                'nama_kat'       => $nama_kat,
+                'deskripsi_kat'   => $deskripsi,
+            );
+
+            if($this->m_kategoripenilaian->update_data($where,$data,'kategoripenilaian')){
+                echo goResult(true,"Data Telah Di Tambahkan");
+                return;
+            }
+        }
+
         else if ($url=="deleted" && $id != null) {
             $where           = array('id_kategori' => $id);
             if ($this->m_kategoripenilaian->hapus_data($where,'kategoripenilaian')) {
@@ -583,6 +609,8 @@ class Superuser extends CI_Controller {
                 return;
             }
         }
+
+        
         else if ($url=="deleted" && $id != null) {
             $where           = array('id_kategori' => $id);
             if ($this->m_kategoripenilaian->hapus_data($where,'kategoripenilaian')) {
@@ -664,6 +692,10 @@ public function kategorijbt($url=null,$id=null)
         }
     }
     // --------------------------------- End Kategorijbt
+
+//contohview
+
+    // --------------------------------- End contohview
 	
 
 // --------------------------------- Start Admin

@@ -42,107 +42,38 @@ Dashboard - Administrasi
 		                	</div>
 						</div>
 						<div class="panel-body">
+						<form id="form-blog" class="form-horizontal" action="{{ ($type=='create') ? base_url('superuser/kategoripenilaian/created') : base_url('superuser/kategoripenilaian/updated/'.$kategori->id_kategori)}}" method="post">
+							<div class="form-group">
+								<label class="col-lg-2 control-label">Kode <span class="text-danger"><b>*</b></span></label>
+								<div class="col-lg-10">
+									<input class="form-control" type="text" placeholder="Kode Penilaian" name="kode_kat"
+									value="{{ ($type=='create') ? '' : $kategori->kode_kat }}" required>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-lg-2 control-label">Nama Penilaian <span class="text-danger"><b>*</b></span></label>
+								<div class="col-lg-10">
+									<input class="form-control" type="text" placeholder="Nama Kategori" name="nama_kat"
+									value="{{ ($type=='create') ? '' : $kategori->nama_kat }}" required>
+								</div>
+							</div>
+
 
 							<div class="form-group">
-								<table class="table table-striped datatable-basic table-lg table-responsive" border="1">
-		                    <thead>
-		                        <tr>
-		                        	<th>No</th>
-		                        	<th>Komponen</th>
-		                            <th>Skor maksimal</th>
-		                            <th>Skor Perolehan</th>
-		                            <th>Pencapaian</th>
-		                        </tr>
-		                    </thead>
-		                    <tbody>
-		                    	
-		                         <tr>
-		                        	<td align="center">1</td>
-			                        <td style="width:300px;">
-			                        	kategori
-			                        	
-			                        </td>
-			                        <td style="width:300px;">
-			                        	jumlah subkategori dikali 10
-			                        </td>
-			                        <td class="text-center">
-			                        	jumlah skor yang diperoleh() subkategori ditambah )
-			                        </td>
-			                        <td class="text-center">
-			                          jumlah kategori dibagi jumlah skor yang diperoleh
-			                        </td>
-		                        </tr>
-
-		                        <tr>
-		                        	<td align="center" colspan="2">Total</td>
-			                        
-			                        <td style="width:300px;">
-			                        	skor maksimal
-			                        </td>
-			                        <td class="text-center">
-			                        	skor perolehan
-			                        </td>
-			                        <td class="text-center">
-			                          average 
-			                        </td>
-		                        </tr>
-		                    
-		                    </tbody>
-		                </table><br><br>
-
-		                <table class="table table-striped datatable-basic table-lg table-responsive" border="1">
-		                    <thead>
-		                        <tr>
-		                        	<th>Capaian Akhir</th>
-		                        	<th>Kategori</th>
-		                           
-		                        </tr>
-		                    </thead>
-		                    <tbody>
-		                    	
-		                         <tr>
-		                        	<td align="center">Hasil average</td>
-			                        <td style="width:300px;">
-			                        	=IF(A65>=71%,"A",IF(A65>=51%,"B",IF(A65>=26%,"C",IF(A65>=0%,"D"))))
-			                        	
-			                        </td>
-			                        
-		                        </tr>
-
-		                        
-		                    
-		                    </tbody>
-		                </table><br><br>
-
-		                <table class="table table-striped datatable-basic table-lg table-responsive" border="1">
-		                    <thead>
-		                        <tr>
-		                        	<th>No</th>
-		                        	<th>Skoring</th>
-		                        	<th>Kategori</th>
-		                           
-		                        </tr>
-		                    </thead>
-		                    <tbody>
-		                    	
-		                         <tr>
-		                        	<td align="center">1</td>
-			                        <td style="width:300px;">
-			                        	71%  -  100%	                        	
-			                        </td>
-			                        <td style="width:300px;">
-			                        	A	                        	
-			                        </td>
-			                        
-		                        </tr>
-
-		                        
-		                    
-		                    </tbody>
-		                </table>
-
-
+								<label class="col-lg-2 control-label">Deskripsi Kategori <span class="text-danger"><b>*</b></span></label>
+								<div class="col-lg-10">
+									<textarea rows="10" id="editor-full" cols="100" class="wysihtml5 wysihtml5-default2 form-control"  name="deskripsi" >{!! ($type=='create') ? '' : $kategori->deskripsi_kat !!}</textarea>
+								</div>
 							</div>
+
+					<div class="text-right">
+							<button type="submit" class="btn btn-primary">{{ ($type=='create') ? 'Buat Kategori' : 'Ubah kategori' }} <i class="icon-arrow-right14 position-right"></i></button>
+							@if($type=="update")
+							<a class="btn btn-danger" href="javascript:void(0)" onclick="window.history.back(); "> Batalkan <i class="fa fa-times position-right"></i></a>
+							@endif
+					</div>
+					</div>
+					</form>
 					<!-- /form horizontal -->
 
 

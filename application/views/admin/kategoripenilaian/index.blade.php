@@ -84,6 +84,7 @@ Dashboard - Administrasi
 														<i class="fa fa-edit"></i> Ubah Kategori
 													</a>
 												</li>
+												
 												<li><a href="javascript:void(0)" onclick="deleteIt(this)" 
 												data-url="{{base_url('superuser/kategoripenilaian/deleted/'.$result->id_kategori.'/'.seo($result->nama_kat))}}">
 														<i class="fa fa-trash"></i> Hapus Kategori

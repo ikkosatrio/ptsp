@@ -65,6 +65,11 @@ Dashboard - Administrasi
 														<i class="fa fa-edit"></i> Ubah Penilaian
 													</a>
 												</li>
+												<li>
+													<a href="{{base_url('superuser/penilaian/view/'.$result->id_penilaian)}}">
+														<i class="fa fa-edit"></i> Lihat Detail
+													</a>
+												</li>
 												<li><a href="javascript:void(0)" onclick="deleteIt(this)" 
 												data-url="{{base_url('superuser/penilaian/deleted/'.$result->id_penilaian)}}">
 														<i class="fa fa-trash"></i> Hapus Penilaian
