@@ -20,8 +20,8 @@ Dashboard - Administrasi
 					<div class="breadcrumb-line">
 						<ul class="breadcrumb">
 							<li><a href="{{base_url('superuser')}}"><i class="icon-home2 position-left"></i> Home</a></li>
-							<li><a href="{{base_url('superuser/subkategori')}}">Admin</a></li>
-							<li class="active">{{ ($type=="create") ? 'Tambah Data Admin' : 'Perbarui Data Admin' }}</li>
+							<li><a href="{{base_url('superuser/pengadilan')}}">Pengadilan</a></li>
+							<li class="active">{{ ($type=="create") ? 'Tambah Data Pengadilan' : 'Perbarui Data Jabatan' }}</li>
 						</ul>
 					</div>
 				</div>
@@ -32,7 +32,7 @@ Dashboard - Administrasi
 					<!-- Form horizontal -->
 					<div class="panel panel-flat">
 						<div class="panel-heading">
-							<h5 class="panel-title">Tambah Admin</h5>
+							<h5 class="panel-title">Tambah Pengadilan</h5>
 							<div class="heading-elements">
 								<ul class="icons-list">
 			                		<li><a data-action="collapse"></a></li>
@@ -42,52 +42,33 @@ Dashboard - Administrasi
 		                	</div>
 						</div>
 						<div class="panel-body">
-						<form id="form-blog" class="form-horizontal" action="{{ ($type=='create') ? base_url('superuser/admin/created') : base_url('superuser/admin/updated/'.$admin->id) }}" method="post">
+						<form id="form-blog" class="form-horizontal" action="{{ ($type=='create') ? base_url('superuser/pengadilan/created') : base_url('superuser/pengadilan/updated/'.$pengadilan->id_pengadilan) }}" method="post">
+							
 							<div class="form-group">
-                                <label class="col-lg-2 control-label">Admin <span class="text-danger"><b>*</b></span></label>
-                                <div class="col-lg-10">
-                                    <select class="select-search" name="kategorijbt" required>
-                                        <option value="">Pilih Jabatan</option>
-                                        @foreach($kategorijbt as $result)
-                                            @if($type=="update")
-                                                <option value="{{$result->id_jbt}}" {{($result->id_jbt==$admin->id_jbt) ? "selected" : ""}}>{{$result->nama_jbt}}</option>
-                                            @else
-                                                <option value="{{$result->id_jbt}}">{{$result->nama_jbt}}</option>
-                                            @endif
-                                        @endforeach
-                                    </select>
-
-                                </div>
-                            </div>
-							<div class="form-group">
-								<label class="col-lg-2 control-label">User <span class="text-danger"><b>*</b></span></label>
+								<label class="col-lg-2 control-label">ID Pengadilan <span class="text-danger"><b>*</b></span></label>
 								<div class="col-lg-10">
-									<input class="form-control" type="text" placeholder="User" name="user"
-									value="{{ ($type=='create') ? '' : $admin->user }}" required>
-								</div>
-							</div>
-							<div class="form-group">
-								<label class="col-lg-2 control-label">Password <span class="text-danger"><b>*</b></span></label>
-								<div class="col-lg-10">
-									<input class="form-control" type="password" placeholder="Passsword" name="pass"
-									value="{{ ($type=='create') ? '' : $admin->pass }}" required>
+									<input class="form-control" type="text" placeholder="ID Pengadilan" name="id_pengadilan"
+									value="{{ ($type=='create') ? '' : $pengadilan->id_pengadilan }}" required>
 								</div>
 							</div>
 
-
 							<div class="form-group">
-								<label class="col-lg-2 control-label">Posisi <span class="text-danger"><b>*</b></span></label>
+								<label class="col-lg-2 control-label">Nama Pengadilan <span class="text-danger"><b>*</b></span></label>
 								<div class="col-lg-10">
-									<select name="posisi" class="form-control">
-										<option value="superuser">Superuser</option>
-										<option value="admin">admin</option>
-										<option value="user">user</option>
-									</select>
+									<input class="form-control" type="text" placeholder="Nama Pengadilan" name="nama_peng"
+									value="{{ ($type=='create') ? '' : $pengadilan->nama_peng }}" required>
 								</div>
 							</div>
 
+							<div class="form-group">
+								<label class="col-lg-2 control-label">Deskripsi Pengadilan <span class="text-danger"><b>*</b></span></label>
+								<div class="col-lg-10">
+									<textarea rows="10" id="editor-full" cols="100" class="wysihtml5 wysihtml5-default2 form-control"  name="deskripsi_peng" >{!! ($type=='create') ? '' : $pengadilan->deskripsi_peng !!}</textarea>
+								</div>
+							</div>
+							
 					<div class="text-right">
-							<button type="submit" class="btn btn-primary">{{ ($type=='create') ? 'Buat Admin' : 'Ubah Admin' }} <i class="icon-arrow-right14 position-right"></i></button>
+							<button type="submit" class="btn btn-primary">{{ ($type=='create') ? 'Buat Pengadilan' : 'Ubah Pengadilan' }} <i class="icon-arrow-right14 position-right"></i></button>
 							@if($type=="update")
 							<a class="btn btn-danger" href="javascript:void(0)" onclick="window.history.back(); "> Batalkan <i class="fa fa-times position-right"></i></a>
 							@endif
@@ -135,19 +116,19 @@ Dashboard - Administrasi
           		processData: false,
           		contentType: false,
 				beforeSend: function(){
-					blockMessage($('#form-blog'),'Please Wait , {{ ($type =="create") ? "Menambahkan Administrator" : "Memperbarui Administrator" }}','#fff');
+					blockMessage($('#form-blog'),'Please Wait , {{ ($type =="create") ? "Menambahkan Pengadilan" : "Memperbarui Pengadilan" }}','#fff');
 				}
 			})
 			.done(function(data){
 				$('#form-blog').unblock();
 				sweetAlert({
-					title: 	((data.auth==false) ? "Opps!" : '{{ ($type =="create") ? "Administrator Di Buatkan" : "Administrator Di Perbarui" }}'),
+					title: 	((data.auth==false) ? "Opps!" : '{{ ($type =="create") ? "Pengadilan Di Buatkan" : "Pengadilan Di Perbarui" }}'),
 					text: 	data.msg,
 					type: 	((data.auth==false) ? "error" : "success"),
 				},
 				function(){
 					if(data.auth!=false){
-						redirect("{{base_url('superuser/admin')}}");
+						redirect("{{base_url('superuser/pengadilan')}}");
 						return;
 					}
 				});

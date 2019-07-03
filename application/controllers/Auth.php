@@ -41,10 +41,10 @@ class Auth extends CI_Controller {
 		}
 
 		$where 	= array(
-					'user' 	=> $this->input->post('user'),
+					'nip' 	=> $this->input->post('nip'),
 					'pass'	=> $this->input->post('pass'),
 				  );
-		$cek = $this->m_login->cek_login("admin",$where)->num_rows();
+		$cek = $this->m_login->cek_login("datapegawai",$where)->num_rows();
 
 		if($cek<=0){
 			$data['auth']		= false;
@@ -53,11 +53,11 @@ class Auth extends CI_Controller {
 			return;
 		}
 
-        $cek = $this->m_login->cek_login("admin",$where)->row();
+        $cek = $this->m_login->cek_login("datapegawai",$where)->row();
 
 		$data_session = array(
-				'nama' => $this->input->post('user'),
-                'id' => $cek->id,
+				'nama' => $this->input->post('nip'),
+                'nip' => $cek->nip,
 				'auth' =>	TRUE
 				);
 

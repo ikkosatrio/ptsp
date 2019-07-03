@@ -1,6 +1,6 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class M_banding extends CI_Model {
+class M_pengadilan extends CI_Model {
 
 	public $variable;
 
@@ -12,7 +12,6 @@ class M_banding extends CI_Model {
 
 	function tampil_data($table){
 		$this->db->from($table);
-		$this->db->join('pengadilan','banding.id_pengadilan=pengadilan.id_pengadilan');
 		return $query = $this->db->get();
 		// return $this->db->get($table);
 	}

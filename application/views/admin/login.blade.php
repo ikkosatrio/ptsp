@@ -79,7 +79,7 @@
 							</div>
 
 							<div class="form-group has-feedback has-feedback-left">
-								<input type="text" class="form-control" placeholder="Username" name="user">
+								<input type="text" class="form-control" placeholder="Username" name="nip">
 								<div class="form-control-feedback">
 									<i class="icon-user text-muted"></i>
 								</div>

@@ -88,8 +88,16 @@ Dashboard - Administrasi
 										value="{{ ($type=='create') ? '' : $banding->no_perkara }}" >
 									</div>
 									<div class="form-group col-md-4">
-										<input class="form-control" type="text" placeholder="Asal PA" name="asal_pa"
-										value="{{ ($type=='create') ? '' : $banding->asal_pa }}">
+										<select class="select-search" name="id_pengadilan" required>
+                                        <option value="">Pilih Pengadilan Agama</option>
+                                        @foreach($pengadilan as $result)
+                                            @if($type=="update")
+                                                <option value="{{$result->id_pengadilan}}" {{($result->id_pengadilan==$banding->id_pengadilan) ? "selected" : ""}}>{{$result->nama_peng}}</option>
+                                            @else
+                                                <option value="{{$result->id_pengadilan}}">{{$result->nama_peng}}</option>
+                                            @endif
+                                        @endforeach
+                                    </select>
 									</div>
 								
 								</div>
