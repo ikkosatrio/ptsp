@@ -274,6 +274,13 @@ class Superuser extends CI_Controller {
     }
     //end Kategori Penilaian
 
+    public function getdatabandingchart(){
+        $banding = $this->m_banding->chartbanding('banding')->result();
+//        var_dump($banding);
+        echo json_encode($banding);
+        return;
+
+    }
 
 
     //Banding

@@ -3,7 +3,7 @@
 Dashboard - Administrasi
 @endsection
 @section('corejs')
-{{-- <script type="text/javascript" src="{{base_url()}}assets/js/pages/dashboard.js"></script> --}}
+
 @endsection
 @section('content')
 <div class="content-wrapper">
@@ -24,10 +24,24 @@ Dashboard - Administrasi
 				<!-- Content area -->
 				<div class="content">
 
+					<div class="panel panel-flat">
+						<div class="panel-heading">
+							<h5 class="panel-title">Daftar Data Banding Terbaru</h5>
+							<div class="heading-elements">
+								<ul class="icons-list">
+									<li><a data-action="collapse"></a></li>
+									<li><a data-action="reload"></a></li>
+									<li><a data-action="close"></a></li>
+								</ul>
+							</div>
+						</div>
+						<canvas id="myChart" width="400" height="400"></canvas>
+					</div>
+
 					<!-- Main charts -->
 
 
-						<div class="panel panel-flat">
+					<div class="panel panel-flat">
 						<div class="panel-heading">
 							<h5 class="panel-title">Daftar Data Banding Terbaru</h5>
 							<div class="heading-elements">
@@ -149,4 +163,78 @@ Dashboard - Administrasi
 				<!-- /content area -->
 
 			</div>
+
+
+@endsection
+
+@section('script')
+	<script>
+        $(document).ready(function(){
+            $.ajax({
+                url: "superuser/getdatabandingchart",
+                method: "GET",
+                dataType:"json",
+                success: function(data) {
+                    console.log(data);
+                    var label = [];
+                    var jumlah = [];
+
+                    for(var i in data) {
+                        label.push(data[i].nama_peng);
+                        jumlah.push(data[i].total);
+                    }
+                    console.log("label",label);
+                    console.log("jumlah",jumlah);
+
+
+                    var chartdata = {
+                        labels: label,
+                        datasets : [
+                            {
+                                label: 'Chart Banding',
+                                backgroundColor: 'rgba(200, 200, 200, 0.75)',
+                                borderColor: 'rgba(200, 200, 200, 0.75)',
+                                hoverBackgroundColor: 'rgba(200, 200, 200, 1)',
+                                hoverBorderColor: 'rgba(200, 200, 200, 1)',
+                                data: jumlah
+                            }
+                        ]
+                    };
+
+                    var ctx = $("#myChart");
+
+                    var barGraph = new Chart(ctx, {
+                        type: 'bar',
+                        data: chartdata
+                    });
+                },
+                error: function(data) {
+                    console.log(data);
+                }
+            });
+        });
+	</script>
+	{{--<script>--}}
+        {{--var ctx = document.getElementById('myChart').getContext('2d');--}}
+        {{--var myChart = new Chart(ctx, {--}}
+            {{--type: 'bar',--}}
+            {{--data: {--}}
+                {{--labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],--}}
+                {{--datasets: [{--}}
+                    {{--label: '# of Votes',--}}
+                    {{--data: [12, 19, 3, 5, 2, 3],--}}
+                    {{--borderWidth: 1--}}
+                {{--}]--}}
+            {{--},--}}
+            {{--options: {--}}
+                {{--scales: {--}}
+                    {{--yAxes: [{--}}
+                        {{--ticks: {--}}
+                            {{--beginAtZero: true--}}
+                        {{--}--}}
+                    {{--}]--}}
+                {{--}--}}
+            {{--}--}}
+        {{--});--}}
+	{{--</script>--}}
 @endsection
