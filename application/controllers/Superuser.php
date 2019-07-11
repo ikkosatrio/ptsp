@@ -160,7 +160,7 @@ class Superuser extends CI_Controller {
                     'kategoripenilaian.id_kategori' => $row->id_kategori,
                 );
                 $row->skorperolehan = $this->m_penilaianptsp->perolehan($where2,'penilaianptsp')->row()->nilai;
-                $row->pencapaian = $row->skorperolehan / $row->skormaximal * (100/100);
+                $row->pencapaian = round($row->skorperolehan / $row->skormaximal * 100);
                 $arrKat[] = $row;
             }
 
