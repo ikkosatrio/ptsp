@@ -284,6 +284,11 @@ class Superuser extends CI_Controller {
         $data['banding'] = $this->m_banding->tampil_data('banding')->result();        
         $data['pengadilan'] = $this->m_pengadilan->tampil_data('pengadilan')->result();
 
+
+        $data['ketuamajelisPA'] = $this->m_pegawai->getketuamajelispa()->result();
+        $data['hakim'] = $this->m_pegawai->gethakim()->result();
+        $data['panitera'] = $this->m_pegawai->getpanitera()->result();
+
         if ($url=="create") {
             $data['type']			= "create";
             echo $this->blade->nggambar('admin.banding.content',$data);

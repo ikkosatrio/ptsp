@@ -51,10 +51,10 @@ Dashboard - Administrasi
 						</div>
 						<div class="panel-body">
 						<form id="form-blog" class="form-horizontal" action="{{ ($type=='create') ? base_url('superuser/banding/created') : base_url('superuser/banding/updated/'.$banding->id_banding) }}" method="post">
-							
+
 						<div class="w3-container">
 
- 
+
 							  <div class="w3-row">
 							    <a href="javascript:void(0)" onclick="openCity(event, 'surat');">
 							      <div class="w3-third tablink w3-bottombar w3-hover-light-grey w3-padding">Surat</div>
@@ -76,9 +76,9 @@ Dashboard - Administrasi
 							  <br>
 							 	<br>
 							  <div id="surat" class="w3-container city" style="display:true">
-							    
+
 							    <div class="row  col-md-12">
-							    
+
 								    <div class="form-group col-md-4">
 										<input class="form-control" type="text" placeholder="No Urut Banding" name="id_banding"
 										value="{{ ($type=='create') ? '' : $banding->id_banding }}" >
@@ -89,17 +89,17 @@ Dashboard - Administrasi
 									</div>
 									<div class="form-group col-md-4">
 										<select class="select-search" name="id_pengadilan" required>
-                                        <option value="">Pilih Pengadilan Agama</option>
-                                        @foreach($pengadilan as $result)
-                                            @if($type=="update")
-                                                <option value="{{$result->id_pengadilan}}" {{($result->id_pengadilan==$banding->id_pengadilan) ? "selected" : ""}}>{{$result->nama_peng}}</option>
-                                            @else
-                                                <option value="{{$result->id_pengadilan}}">{{$result->nama_peng}}</option>
-                                            @endif
-                                        @endforeach
-                                    </select>
+											<option value="">Pilih Pengadilan Agama</option>
+											@foreach($pengadilan as $result)
+												@if($type=="update")
+													<option value="{{$result->id_pengadilan}}" {{($result->id_pengadilan==$banding->id_pengadilan) ? "selected" : ""}}>{{$result->nama_peng}}</option>
+												@else
+													<option value="{{$result->id_pengadilan}}">{{$result->nama_peng}}</option>
+												@endif
+											@endforeach
+										</select>
 									</div>
-								
+
 								</div>
 
 
@@ -119,7 +119,7 @@ Dashboard - Administrasi
 							</div>
 
 							<div class="row col-md-12">
-								
+
 								<div class="form-group col-md-4">
 									<label class="control-label">Tanggal Terima Berkas</label>
 									<input class="form-control" type="date"  name="tgl_terima_berkas"
@@ -130,7 +130,7 @@ Dashboard - Administrasi
 									<input class="form-control" type="date"  name="tgl_surat_pta_m"
 									value="{{ ($type=='create') ? '' : $banding->tgl_surat_pta_m }}">
 								</div>
-								
+
 							</div>
 
 							  </div>
@@ -138,7 +138,7 @@ Dashboard - Administrasi
 							  <div id="pembanding" class="w3-container city" style="display:none">
 							   <h5 style="text-align:center;"><b>Pembanding</b></h5>
 							   <div class="row  col-md-12">
-							    
+
 								    <div class="form-group col-md-4">
 										<input class="form-control" type="text" placeholder="Nama Pembanding" name="nama_pb"
 										value="{{ ($type=='create') ? '' : $banding->nama_pb }}" >
@@ -151,11 +151,11 @@ Dashboard - Administrasi
 										<input class="form-control" type="text" placeholder="Umur" name="umur_pb"
 										value="{{ ($type=='create') ? '' : $banding->umur_pb }}" >
 									</div>
-								
+
 								</div>
 
 								<div class="row  col-md-12">
-							    
+
 								    <div class="form-group col-md-4">
 										<input class="form-control" type="text" placeholder="Agama" name="agama_pb"
 										value="{{ ($type=='create') ? '' : $banding->agama_pb }}" >
@@ -168,21 +168,21 @@ Dashboard - Administrasi
 										<input class="form-control" type="text" placeholder="Pekerjaan" name="pekerjaan_pb"
 										value="{{ ($type=='create') ? '' : $banding->pekerjaan_pb }}" >
 									</div>
-								
+
 								</div>
 
 								<div class="row  col-md-12">
-							    
+
 								    <div class="form-group col-md-6">
 										<input class="form-control" type="text" placeholder="Alamat" name="alamat_pb"
 										value="{{ ($type=='create') ? '' : $banding->alamat_pb }}">
 									</div>
-															
+
 								</div>
 
 								<h5 style="text-align:center;"><b>Kuasa Hukum Pembanding</b></h5>
 							   <div class="row  col-md-12">
-							    
+
 								    <div class="form-group col-md-4">
 										<input class="form-control" type="text" placeholder="Nama" name="nama_kh_pb"
 										value="{{ ($type=='create') ? '' : $banding->nama_kh_pb }}" >
@@ -191,16 +191,16 @@ Dashboard - Administrasi
 										<input class="form-control" type="text" placeholder="Umur" name="umur_kh_pb"
 										value="{{ ($type=='create') ? '' : $banding->umur_kh_pb }}" >
 									</div>
-								
+
 									<div class="form-group col-md-4">
 										<input class="form-control" type="text" placeholder="Agama" name="agama_kh_pb"
 										value="{{ ($type=='create') ? '' : $banding->agama_kh_pb }}" >
 									</div>
-									
+
 								</div>
 
 								<div class="row  col-md-12">
-							    
+
 								    <div class="form-group col-md-4">
 										<input class="form-control" type="text" placeholder="Nama" name="pekerjaan_kh_pb"
 										value="{{ ($type=='create') ? '' : $banding->pekerjaan_kh_pb }}" >
@@ -209,8 +209,8 @@ Dashboard - Administrasi
 										<input class="form-control" type="text" placeholder="Umur" name="alamat_kh_pb"
 										value="{{ ($type=='create') ? '' : $banding->alamat_kh_pb }}" >
 									</div>
-								
-									
+
+
 								</div>
 
 
@@ -218,10 +218,10 @@ Dashboard - Administrasi
 							  </div>
 
 							  <div id="terbanding" class="w3-container city" style="display:none">
-							    
+
 							     <h5 style="text-align:center;"><b>Terbanding</b></h5>
 							   <div class="row  col-md-12">
-							    
+
 								    <div class="form-group col-md-4">
 										<input class="form-control" type="text" placeholder="Nama Terbanding" name="nama_tb"
 										value="{{ ($type=='create') ? '' : $banding->nama_tb }}" >
@@ -234,11 +234,11 @@ Dashboard - Administrasi
 										<input class="form-control" type="text" placeholder="Umur" name="umur_tb"
 										value="{{ ($type=='create') ? '' : $banding->umur_tb }}" >
 									</div>
-								
+
 								</div>
 
 								<div class="row  col-md-12">
-							    
+
 								    <div class="form-group col-md-4">
 										<input class="form-control" type="text" placeholder="Agama" name="agama_tb"
 										value="{{ ($type=='create') ? '' : $banding->agama_tb }}" >
@@ -251,21 +251,21 @@ Dashboard - Administrasi
 										<input class="form-control" type="text" placeholder="Pekerjaan" name="pekerjaan_tb"
 										value="{{ ($type=='create') ? '' : $banding->pekerjaan_tb }}" >
 									</div>
-								
+
 								</div>
 
 								<div class="row  col-md-12">
-							    
+
 								    <div class="form-group col-md-6">
 										<input class="form-control" type="text" placeholder="Alamat" name="alamat_tb"
 										value="{{ ($type=='create') ? '' : $banding->alamat_tb }}" >
 									</div>
-															
+
 								</div>
 
 								<h5 style="text-align:center;"><b>Kuasa Hukum Terbanding</b></h5>
 							   <div class="row  col-md-12">
-							    
+
 								    <div class="form-group col-md-4">
 										<input class="form-control" type="text" placeholder="Nama" name="nama_kh_tb"
 										value="{{ ($type=='create') ? '' : $banding->nama_kh_tb }}" >
@@ -274,16 +274,16 @@ Dashboard - Administrasi
 										<input class="form-control" type="text" placeholder="Umur" name="umur_kh_tb"
 										value="{{ ($type=='create') ? '' : $banding->umur_kh_tb }}" >
 									</div>
-								
+
 									<div class="form-group col-md-4">
 										<input class="form-control" type="text" placeholder="Agama" name="agama_kh_tb"
 										value="{{ ($type=='create') ? '' : $banding->agama_kh_tb }}" >
 									</div>
-									
+
 								</div>
 
 								<div class="row  col-md-12">
-							    
+
 								    <div class="form-group col-md-4">
 										<input class="form-control" type="text" placeholder="Nama" name="pekerjaan_kh_tb"
 										value="{{ ($type=='create') ? '' : $banding->pekerjaan_kh_tb }}" >
@@ -292,16 +292,16 @@ Dashboard - Administrasi
 										<input class="form-control" type="text" placeholder="Umur" name="alamat_kh_tb"
 										value="{{ ($type=='create') ? '' : $banding->alamat_kh_tb }}" >
 									</div>
-								
+
 								</div>
 
 							  </div>
 
 							  <div id="berkaspa" class="w3-container city" style="display:none">
-							    
+
 
 							   <div class="row  col-md-12">
-							    
+
 								   <div class="form-group col-md-4">
 										<label class="control-label">Tanggal Putus PA</label>
 										<input class="form-control" type="date"  name="tgl_putus_pa"
@@ -317,11 +317,11 @@ Dashboard - Administrasi
 										<input class="form-control" type="date" name="tgl_sp_pa"
 										value="{{ ($type=='create') ? '' : $banding->tgl_sp_pa }}" >
 									</div>
-								
+
 								</div>
 
 								<div class="row  col-md-12">
-							    
+
 								    <div class="form-group col-md-4">
 										<input class="form-control" type="text" placeholder="No Perkara PA" name="no_perkara_pa"
 										value="{{ ($type=='create') ? '' : $banding->no_perkara_pa }}" >
@@ -330,34 +330,35 @@ Dashboard - Administrasi
 										<input class="form-control" type="text" placeholder="Amar PA" name="amar_pa"
 										value="{{ ($type=='create') ? '' : $banding->amar_pa }}" >
 									</div>
-								
+
 									<div class="form-group col-md-4">
 										<input class="form-control" type="text" placeholder="Jenis PKR" name="jenis_pkr"
 										value="{{ ($type=='create') ? '' : $banding->jenis_pkr }}" >
 									</div>
-									
+
 								</div>
 
 								<div class="row  col-md-12">
-							    
+
 								    <div class="form-group col-md-4">
 										<input class="form-control" type="text" placeholder="Ketua Majelis PA" name="ketua_majelis_pa"
 										value="{{ ($type=='create') ? '' : $banding->ketua_majelis_pa }}" >
+
 									</div>
 									<div class="form-group col-md-4">
 										<input class="form-control" type="text" placeholder="Hakim Anggota 1" name="hakim_agg_pa1"
 										value="{{ ($type=='create') ? '' : $banding->hakim_agg_pa1 }}" >
 									</div>
-								
+
 									<div class="form-group col-md-4">
 										<input class="form-control" type="text" placeholder="Hakim Anggota 2" name="hakim_agg_pa2"
 										value="{{ ($type=='create') ? '' : $banding->hakim_agg_pa2 }}" >
 									</div>
-									
+
 								</div>
 
 								<div class="row  col-md-12">
-							    
+
 								    <div class="form-group col-md-4">
 										<input class="form-control" type="text" placeholder="Panitera Pengganti PA" name="pp_pa"
 										value="{{ ($type=='create') ? '' : $banding->pp_pa }}" >
@@ -365,16 +366,16 @@ Dashboard - Administrasi
 									<div class="form-group col-md-4">
 										<input class="form-control" type="text" placeholder="Kode PA" name="kode_pa"
 										value="{{ ($type=='create') ? '' : $banding->kode_pa }}" >
-									</div>								
+									</div>
 									<div class="form-group col-md-4">
 										<input class="form-control" type="text" placeholder="No SP PA" name="no_sp_pa"
 										value="{{ ($type=='create') ? '' : $banding->no_sp_pa }}" >
 									</div>
-									
+
 								</div>
 
 								<div class="row  col-md-12">
-							    
+
 								    <div class="form-group col-md-4">
 								    	<label class="control-label">Bulan SP PA</label>
 										<input class="form-control" type="text" placeholder="Bulan SP PA" name="bulan_sp_pa"
@@ -385,66 +386,107 @@ Dashboard - Administrasi
 										<input class="form-control" type="date" placeholder="PMH" name="pmh"
 										value="{{ ($type=='create') ? '' : $banding->pmh }}" >
 									</div>
-								
+
 								</div>
 
 							  </div>
 
 							  <div id="berkaspta" class="w3-container city" style="display:none">
 							    <div class="row  col-md-12">
-							    
+
 								    <div class="form-group col-md-7">
 										<input class="form-control" type="text" placeholder="Ketua Majelis PTA" name="ketua_majelis_pta"
 										value="{{ ($type=='create') ? '' : $banding->ketua_majelis_pta }}" >
+										<select class="select-search" name="id_pengadilan" required>
+											<option value="">Pilih Ketua Majelis PTA</option>
+											@foreach($ketuamajelisPA as $result)
+												@if($type=="update")
+													<option value="{{$result->id_pegawai}}" {{($result->id_pegawai==$banding->ketua_majelis_pa) ? "selected" : ""}}>{{$result->nama}}</option>
+												@else
+													<option value="{{$result->id_pegawai}}">{{$result->nama}}</option>
+												@endif
+											@endforeach
+										</select>
+
 									</div>
 									<div class="form-group col-md-5">
 										<input class="form-control" type="text" placeholder="Kode Hakim Majelis" name="kode_hm"
 										value="{{ ($type=='create') ? '' : $banding->kode_hm }}" >
-									</div>								
-									
+									</div>
+
 								</div>
 
 								<div class="row  col-md-12">
-							    
+
 								    <div class="form-group col-md-7">
 										<input class="form-control" type="text" placeholder="Hakim Anggota 1" name="hakim_agg_pta1"
 										value="{{ ($type=='create') ? '' : $banding->hakim_agg_pta1 }}" >
+										<select class="select-search" name="id_pengadilan" required>
+											<option value="">Pilih Hakim</option>
+											@foreach($hakim as $result)
+												@if($type=="update")
+													<option value="{{$result->id_pegawai}}" {{($result->id_pegawai==$banding->ketua_majelis_pa) ? "selected" : ""}}>{{$result->nama}}</option>
+												@else
+													<option value="{{$result->id_pegawai}}">{{$result->nama}}</option>
+												@endif
+											@endforeach
+										</select>
 									</div>
 									<div class="form-group col-md-5">
 										<input class="form-control" type="text" placeholder="Kode Hakim Anggota" name="kode_ha1"
 										value="{{ ($type=='create') ? '' : $banding->kode_ha1 }}" >
-									</div>								
-									
+									</div>
+
 								</div>
 
 								<div class="row  col-md-12">
-							    
+
 								    <div class="form-group col-md-7">
 										<input class="form-control" type="text" placeholder="Hakim Anggota 2" name="hakim_agg_pta2"
 										value="{{ ($type=='create') ? '' : $banding->hakim_agg_pta2 }}" >
+										<select class="select-search" name="id_pengadilan" required>
+											<option value="">Pilih Hakim</option>
+											@foreach($hakim as $result)
+												@if($type=="update")
+													<option value="{{$result->id_pegawai}}" {{($result->id_pegawai==$banding->ketua_majelis_pa) ? "selected" : ""}}>{{$result->nama}}</option>
+												@else
+													<option value="{{$result->id_pegawai}}">{{$result->nama}}</option>
+												@endif
+											@endforeach
+										</select>
 									</div>
 									<div class="form-group col-md-5">
 										<input class="form-control" type="text" placeholder="Kode Hakim Anggota" name="kode_ha2"
 										value="{{ ($type=='create') ? '' : $banding->kode_ha2 }}" >
-									</div>								
-									
+									</div>
+
 								</div>
 
 								<div class="row  col-md-12">
-							    
+
 								    <div class="form-group col-md-7">
 										<input class="form-control" type="text" placeholder="Panitera Pengganti PTA" name="pp_pta"
 										value="{{ ($type=='create') ? '' : $banding->pp_pta }}" >
+										<select class="select-search" name="id_pengadilan" required>
+											<option value="">Pilih Panitera</option>
+											@foreach($panitera as $result)
+												@if($type=="update")
+													<option value="{{$result->id_pegawai}}" {{($result->id_pegawai==$banding->ketua_majelis_pa) ? "selected" : ""}}>{{$result->nama}}</option>
+												@else
+													<option value="{{$result->id_pegawai}}">{{$result->nama}}</option>
+												@endif
+											@endforeach
+										</select>
 									</div>
 									<div class="form-group col-md-5">
 										<input class="form-control" type="text" placeholder="Kode Panitera Pengganti" name="kode_pp_pta"
 										value="{{ ($type=='create') ? '' : $banding->kode_pp_pta}}" >
-									</div>								
-									
+									</div>
+
 								</div>
 
 								<div class="row  col-md-12">
-							    
+
 								   <div class="form-group col-md-4">
 										<label class="control-label">Penunjukkan Panitera Pengganti</label>
 										<input class="form-control" type="date"  name="penunjukkan_pp_pta"
@@ -460,11 +502,11 @@ Dashboard - Administrasi
 										<input class="form-control" type="date" name="tgl_phs"
 										value="{{ ($type=='create') ? '' : $banding->tgl_phs }}" >
 									</div>
-								
+
 								</div>
 
 								<div class="row  col-md-12">
-							    
+
 								   <div class="form-group col-md-4">
 										<label class="control-label">Tanggal Putus Banding</label>
 										<input class="form-control" type="date"  name="tgl_putus_banding"
@@ -480,11 +522,11 @@ Dashboard - Administrasi
 										<input class="form-control" type="date" name="tgl_kirim_berkas"
 										value="{{ ($type=='create') ? '' : $banding->tgl_kirim_berkas }}" >
 									</div>
-								
+
 								</div>
 
 								<div class="row  col-md-12">
-							    
+
 								   <div class="form-group col-md-4">
 										<label class="control-label">Tanggal Upload</label>
 										<input class="form-control" type="date"  name="tgl_putus_banding"
@@ -495,22 +537,22 @@ Dashboard - Administrasi
 										<input class="form-control" type="text" placeholder="Amar Banding" name="amar_banding"
 										value="{{ ($type=='create') ? '' : $banding->amar_banding }}" >
 									</div>
-									
+
 
 								</div>
-							
+
 						</div>
 							  	<div class="text-right">
 							<button type="submit" class="btn btn-primary">{{ ($type=='create') ? 'Buat Data Banding' : 'Ubah Data Banding' }} <i class="icon-arrow-right14 position-right"></i></button>
 							@if($type=="update")
 							<a class="btn btn-danger" href="javascript:void(0)" onclick="window.history.back(); "> Batalkan <i class="fa fa-times position-right"></i></a>
 							@endif</div>
-							  
+
 
 							  </div>
 
-						
-					
+
+
 					</form>
 					</div>
 					<!-- /form horizontal -->
@@ -581,7 +623,7 @@ Dashboard - Administrasi
 				function(){
 				});
 			 })
-			
+
 		})
 	</script>
 	<script>
@@ -603,6 +645,6 @@ function openCity(evt, cityName) {
 
 	<script type="text/javascript" src="{{base_url()}}assets/ckeditor/ckeditor.js"></script>
 	<script type="text/javascript" src="{{base_url()}}assets/js/pages/editor_ckeditor.js"></script>
-	
+
 @endsection
 @endsection
