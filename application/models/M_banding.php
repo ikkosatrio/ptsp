@@ -17,6 +17,14 @@ class M_banding extends CI_Model {
 		// return $this->db->get($table);
 	}
 
+	function chartbanding($table){
+        $this->db->select('nama_peng, COUNT(banding.id_banding) as total');
+        $this->db->group_by('banding.id_pengadilan');
+        $this->db->from($table);
+        $this->db->join('pengadilan','banding.id_pengadilan=pengadilan.id_pengadilan');
+        return $query = $this->db->get();
+    }
+
 	function input_data($data,$table){
 		$this->db->insert($table,$data);
 	}

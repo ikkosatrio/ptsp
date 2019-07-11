@@ -17,6 +17,8 @@
 	<link href="{{base_url()}}assets/js/sweetalert.min.css" rel="stylesheet" type="text/css">
 	<link href="{{base_url()}}assets/css/custom2.css" rel="stylesheet" type="text/css">
 	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.css">
+
 	<!-- /global stylesheets -->
 	@yield('style')
 	<!-- Core JS files -->
@@ -186,10 +188,11 @@
 	@yield('corejs')
 	<script type="text/javascript" src="{{base_url()}}assets/js/core/app.js"></script>
 	<!-- /theme JS files -->
-	@yield('script')
+
 	<script type="text/javascript" src="{{base_url()}}assets/js/cak-js.js"></script>
 	<script type="text/javascript" src="{{base_url()}}assets/js/sweetalert.min.js"></script>
-
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js"></script>
+	@yield('script')
 	<script type="text/javascript">
 		function deleteIt(that){
 		swal({
