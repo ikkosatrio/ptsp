@@ -170,6 +170,16 @@ Dashboard - Administrasi
 @section('script')
 	<script>
         $(document).ready(function(){
+
+            function getRandomColor() {
+                var letters = '0123456789ABCDEF'.split('');
+                var color = '#';
+                for (var i = 0; i < 6; i++ ) {
+                    color += letters[Math.floor(Math.random() * 16)];
+                }
+                return color;
+            }
+
             $.ajax({
                 url: "superuser/getdatabandingchart",
                 method: "GET",
@@ -178,10 +188,12 @@ Dashboard - Administrasi
                     console.log(data);
                     var label = [];
                     var jumlah = [];
+                    var warna = [];
 
                     for(var i in data) {
                         label.push(data[i].nama_peng);
                         jumlah.push(data[i].total);
+                        warna.push(getRandomColor());
                     }
                     console.log("label",label);
                     console.log("jumlah",jumlah);
@@ -192,7 +204,7 @@ Dashboard - Administrasi
                         datasets : [
                             {
                                 label: 'Chart Banding',
-                                backgroundColor: 'rgba(200, 200, 200, 0.75)',
+                                backgroundColor: warna,
                                 borderColor: 'rgba(200, 200, 200, 0.75)',
                                 hoverBackgroundColor: 'rgba(200, 200, 200, 1)',
                                 hoverBorderColor: 'rgba(200, 200, 200, 1)',
