@@ -285,7 +285,7 @@ class Superuser extends CI_Controller {
         $data['pengadilan'] = $this->m_pengadilan->tampil_data('pengadilan')->result();
 
 
-        $data['ketuamajelisPA'] = $this->m_pegawai->getketuamajelispa()->result();
+      
         $data['hakim'] = $this->m_pegawai->gethakim()->result();
         $data['panitera'] = $this->m_pegawai->getpanitera()->result();
 

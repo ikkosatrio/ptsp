@@ -88,7 +88,7 @@ Dashboard - Administrasi
 										value="{{ ($type=='create') ? '' : $banding->no_perkara }}" >
 									</div>
 									<div class="form-group col-md-4">
-										<select class="select-search" name="id_pengadilan" required>
+										<select class="select-search" name="id_pengadilan" >
 											<option value="">Pilih Pengadilan Agama</option>
 											@foreach($pengadilan as $result)
 												@if($type=="update")
@@ -394,14 +394,13 @@ Dashboard - Administrasi
 							  <div id="berkaspta" class="w3-container city" style="display:none">
 							    <div class="row  col-md-12">
 
-								    <div class="form-group col-md-7">
-										<input class="form-control" type="text" placeholder="Ketua Majelis PTA" name="ketua_majelis_pta"
-										value="{{ ($type=='create') ? '' : $banding->ketua_majelis_pta }}" >
-										<select class="select-search" name="id_pengadilan" required>
+								    
+							    	<div class="form-group col-md-7">
+										<select class="select-search" name="ketua_majelis_pta" >
 											<option value="">Pilih Ketua Majelis PTA</option>
-											@foreach($ketuamajelisPA as $result)
+											@foreach($hakim as $result)
 												@if($type=="update")
-													<option value="{{$result->id_pegawai}}" {{($result->id_pegawai==$banding->ketua_majelis_pa) ? "selected" : ""}}>{{$result->nama}}</option>
+													<option value="{{$result->id_pegawai}}" {{($result->id_pegawai==$banding->ketua_majelis_pta) ? "selected" : ""}}>{{$result->nama}}</option>
 												@else
 													<option value="{{$result->id_pegawai}}">{{$result->nama}}</option>
 												@endif
@@ -419,13 +418,13 @@ Dashboard - Administrasi
 								<div class="row  col-md-12">
 
 								    <div class="form-group col-md-7">
-										<input class="form-control" type="text" placeholder="Hakim Anggota 1" name="hakim_agg_pta1"
-										value="{{ ($type=='create') ? '' : $banding->hakim_agg_pta1 }}" >
-										<select class="select-search" name="id_pengadilan" required>
+										<!-- <input class="form-control" type="text" placeholder="Hakim Anggota 1" name="hakim_agg_pta1"
+										value="{{ ($type=='create') ? '' : $banding->hakim_agg_pta1 }}" > -->
+										<select class="select-search" name="hakim_agg_pta1" >
 											<option value="">Pilih Hakim</option>
 											@foreach($hakim as $result)
 												@if($type=="update")
-													<option value="{{$result->id_pegawai}}" {{($result->id_pegawai==$banding->ketua_majelis_pa) ? "selected" : ""}}>{{$result->nama}}</option>
+													<option value="{{$result->id_pegawai}}" {{($result->id_pegawai==$banding->hakim_agg_pta1) ? "selected" : ""}}>{{$result->nama}}</option>
 												@else
 													<option value="{{$result->id_pegawai}}">{{$result->nama}}</option>
 												@endif
@@ -442,13 +441,13 @@ Dashboard - Administrasi
 								<div class="row  col-md-12">
 
 								    <div class="form-group col-md-7">
-										<input class="form-control" type="text" placeholder="Hakim Anggota 2" name="hakim_agg_pta2"
-										value="{{ ($type=='create') ? '' : $banding->hakim_agg_pta2 }}" >
-										<select class="select-search" name="id_pengadilan" required>
+										<!-- <input class="form-control" type="text" placeholder="Hakim Anggota 2" name="hakim_agg_pta2"
+										value="{{ ($type=='create') ? '' : $banding->hakim_agg_pta2 }}" > -->
+										<select class="select-search" name="hakim_agg_pta2" >
 											<option value="">Pilih Hakim</option>
 											@foreach($hakim as $result)
 												@if($type=="update")
-													<option value="{{$result->id_pegawai}}" {{($result->id_pegawai==$banding->ketua_majelis_pa) ? "selected" : ""}}>{{$result->nama}}</option>
+													<option value="{{$result->id_pegawai}}" {{($result->id_pegawai==$banding->hakim_agg_pta2) ? "selected" : ""}}>{{$result->nama}}</option>
 												@else
 													<option value="{{$result->id_pegawai}}">{{$result->nama}}</option>
 												@endif
@@ -465,13 +464,13 @@ Dashboard - Administrasi
 								<div class="row  col-md-12">
 
 								    <div class="form-group col-md-7">
-										<input class="form-control" type="text" placeholder="Panitera Pengganti PTA" name="pp_pta"
-										value="{{ ($type=='create') ? '' : $banding->pp_pta }}" >
-										<select class="select-search" name="id_pengadilan" required>
+										<!-- <input class="form-control" type="text" placeholder="Panitera Pengganti PTA" name="pp_pta"
+										value="{{ ($type=='create') ? '' : $banding->pp_pta }}" > -->
+										<select class="select-search" name="pp_pta" >
 											<option value="">Pilih Panitera</option>
 											@foreach($panitera as $result)
 												@if($type=="update")
-													<option value="{{$result->id_pegawai}}" {{($result->id_pegawai==$banding->ketua_majelis_pa) ? "selected" : ""}}>{{$result->nama}}</option>
+													<option value="{{$result->id_pegawai}}" {{($result->id_pegawai==$banding->pp_pta) ? "selected" : ""}}>{{$result->nama}}</option>
 												@else
 													<option value="{{$result->id_pegawai}}">{{$result->nama}}</option>
 												@endif
