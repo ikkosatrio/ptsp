@@ -1,4 +1,4 @@
-<?php
+ <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Superuser extends CI_Controller {
@@ -18,7 +18,8 @@ class Superuser extends CI_Controller {
 		$this->load->model('m_subkategori');
         $this->load->model('m_kategorijbt');
 		$this->load->model('m_penilaianptsp');
-        $this->load->model('m_admin');
+        $this->load->model('m_pengadilan');
+        $this->load->model('m_pegawai');
 		$this->load->library('session');
 		$this->data['config'] 			= $this->m_config->ambil('config',1)->row();
 
@@ -35,7 +36,7 @@ class Superuser extends CI_Controller {
 
 	// Start Config
 	public function config ($type=null){
-		$data         = $this->data;
+		$data         = $this->data; 
 		// $data         = $this->data;
 		$data['menu'] = "config";
 
@@ -171,11 +172,11 @@ class Superuser extends CI_Controller {
 
         }else if ($url == "created" && $this->input->is_ajax_request() == true) {
 
-            $userid     	= $this->session->userdata('id');
+            $userid     	= $this->session->userdata('id_pegawai');
             $triwulan     	= $this->input->post('triwulan');
 
             $data = array(
-                'id_admin'      => $userid,
+                'id_pegawai'      => $userid,
                 'triwulan'       =>1,
             );
 
@@ -280,7 +281,8 @@ class Superuser extends CI_Controller {
     {
     	$data             = $this->data;
         $data['menu']     = "banding";
-        $data['banding'] = $this->m_banding->tampil_data('banding')->result();
+        $data['banding'] = $this->m_banding->tampil_data('banding')->result();        
+        $data['pengadilan'] = $this->m_pengadilan->tampil_data('pengadilan')->result();
 
         if ($url=="create") {
             $data['type']			= "create";
@@ -291,7 +293,7 @@ class Superuser extends CI_Controller {
 
         	$id_banding     	= $this->input->post('id_banding');
         	$no_perkara     	= $this->input->post('no_perkara');
-        	$asal_pa     	= $this->input->post('asal_pa');
+        	$pengadilan  = $this->input->post('id_pengadilan');
         	$tgl_terima_berkas     	= $this->input->post('tgl_terima_berkas');
         	$no_surat_pta     	= $this->input->post('no_surat_pta');
         	$bulan_pta     	= $this->input->post('bulan_pta');
@@ -356,7 +358,7 @@ class Superuser extends CI_Controller {
             	'id_banding'      => $id_banding,
                 'no_perkara'       => $no_perkara,
                 'tgl_terima_berkas'   => $tgl_terima_berkas,
-                'asal_pa'   => $asal_pa,
+                'id_pengadilan'=> $pengadilan,
                 'no_surat_pta'   => $no_surat_pta,
                 'bulan_pta'   => $bulan_pta,
                 'tgl_surat_pta_m'   => $tgl_surat_pta_m,
@@ -437,7 +439,7 @@ class Superuser extends CI_Controller {
 
             $id_banding     	= $this->input->post('id_banding');
         	$no_perkara     	= $this->input->post('no_perkara');
-        	$asal_pa     	= $this->input->post('asal_pa');
+        	$pengadilan  = $this->input->post('id_pengadilan');
         	$tgl_terima_berkas     	= $this->input->post('tgl_terima_berkas');
         	$no_surat_pta     	= $this->input->post('no_surat_pta');
         	$bulan_pta     	= $this->input->post('bulan_pta');
@@ -502,7 +504,7 @@ class Superuser extends CI_Controller {
             	'id_banding'      => $id_banding,
                 'no_perkara'       => $no_perkara,
                 'tgl_terima_berkas'   => $tgl_terima_berkas,
-                'asal_pa'   => $asal_pa,
+                'id_pengadilan'=> $pengadilan,
                 'no_surat_pta'   => $no_surat_pta,
                 'bulan_pta'   => $bulan_pta,
                 'tgl_surat_pta_m'   => $tgl_surat_pta_m,
@@ -651,6 +653,127 @@ class Superuser extends CI_Controller {
     }
     //end Kategori Penilaian
 
+    //pegawai
+
+
+    public function pegawai($url=null,$id=null)
+    {
+        $data             = $this->data;
+        $data['menu']     = "pegawai";
+        $data['pegawai'] = $this->m_pegawai->tampil_data('datapegawai')->result();
+        $data['jabatan'] = $this->m_kategorijbt->tampil_data('jabatan')->result();
+
+        if ($url=="create") {
+            $data['type']           = "create";
+            echo $this->blade->nggambar('admin.pegawai.content',$data);
+            return;
+        }
+        else if ($url == "created" && $this->input->is_ajax_request() == true) {
+
+
+            $id_jbt       = $this->input->post('id_jbt');
+            $nip       = $this->input->post('nip');
+            $pass       = $this->input->post('pass');
+            $nama       = $this->input->post('nama');
+            $tempat_lahir       = $this->input->post('tempat_lahir');
+            $tanggal_lahir       = $this->input->post('tanggal_lahir');
+            $foto      = time().$_FILES['foto']['name'];
+            $foto      = str_replace(' ', '_', $foto);
+
+            if (!empty($_FILES['foto']['name'])) {
+                    $upload     = $this->upload('./assets/images/pegawai/','foto',$foto);
+                    if($upload['auth']  == false){
+                        echo goResult(false,$upload['msg']);
+                        return;
+                    }
+                }
+
+
+            $data = array(
+
+                'nip'       => $nip,
+                'id_jbt'       => $id_jbt,
+                'pass'       => $pass,
+                'nama'       => $nama,
+                'tempat_lahir'       => $tempat_lahir,
+                'tanggal_lahir'       => $tanggal_lahir,
+                'foto'       => $foto,
+
+
+            );
+
+            if($this->m_pegawai->input_data($data,'datapegawai')){
+                echo goResult(true,"Data Telah Di Tambahkan");
+                return;
+            }
+        }
+        else if ($url=="update" && $id!=null) {
+            $data['type']    = "update";
+            $where           = array('id_pegawai' => $id);
+            $data['pegawai'] = $this->m_pegawai->detail($where,'datapegawai')->row();
+            echo $this->blade->nggambar('admin.pegawai.content',$data);
+        }
+        else if ($url=="updated" && $id!=null && $this->input->is_ajax_request() == true) {
+            $where           = array('id_pegawai' => $id);
+
+            $id_jbt       = $this->input->post('id_jbt');
+            $nip       = $this->input->post('nip');
+            $pass       = $this->input->post('pass');
+            $nama       = $this->input->post('nama');
+            $tempat_lahir       = $this->input->post('tempat_lahir');
+            $tanggal_lahir       = $this->input->post('tanggal_lahir');
+            $foto      = time().$_FILES['foto']['name'];
+            $foto      = str_replace(' ', '_', $foto);
+
+
+            if (!empty($_FILES['foto']['name'])) {
+                    $upload     = $this->upload('./assets/images/pegawai/','foto',$foto);
+                    if($upload['auth']  == false){
+                        echo goResult(false,$upload['msg']);
+                        return;
+                    }
+            $data = array(
+
+                'nip'       => $nip,
+                'id_jbt'       => $id_jbt,
+                'pass'       => $pass,
+                'nama'       => $nama,
+                'tempat_lahir'       => $tempat_lahir,
+                'tanggal_lahir'       => $tanggal_lahir,
+                'foto' => $foto,
+            );
+                }else{
+                $data = array(
+
+                'id_jbt'       => $id_jbt,
+                'nip'       => $nip,
+                'pass'       => $pass,
+                'nama'       => $nama,
+                'tempat_lahir'       => $tempat_lahir,
+                'tanggal_lahir'       => $tanggal_lahir,
+
+                );
+                }
+
+            if($this->m_pegawai->update_data($where,$data,'datapegawai')){
+                echo goResult(true,"Data Telah Di Tambahkan");
+                return;
+            }
+        }
+        else if ($url=="deleted" && $id != null) {
+            $where           = array('id_pegawai' => $id);
+            if ($this->m_pegawai->hapus_data($where,'datapegawai')) {
+
+            }
+            redirect('superuser/pegawai/');
+        }
+        else {
+            echo $this->blade->nggambar('admin.pegawai.index',$data);
+            return;
+        }
+    }
+//pegawai
+
 //Kategorijbt
 
 public function kategorijbt($url=null,$id=null)
@@ -724,79 +847,79 @@ public function kategorijbt($url=null,$id=null)
     // --------------------------------- End contohview
 
 
-// --------------------------------- Start Admin
-    public function admin($url=null,$id=null)
+// --------------------------------- Start pengadilan
+
+     
+    public function pengadilan($url=null,$id=null)
     {
         $data             = $this->data;
-        $data['menu']     = "admin";
-        $data['admin'] = $this->m_admin->tampil_data('admin')->result();
-        $data['kategorijbt'] = $this->m_kategorijbt->tampil_data('jabatan')->result();
+        $data['menu']     = "pengadilan";
+        $data['pengadilan'] = $this->m_pengadilan->tampil_data('pengadilan')->result();
 
         if ($url=="create") {
             $data['type']           = "create";
-
-            echo $this->blade->nggambar('admin.admin.content',$data);
+            echo $this->blade->nggambar('admin.pengadilan.content',$data);
             return;
         }
         else if ($url == "created" && $this->input->is_ajax_request() == true) {
 
-            $user        = $this->input->post('user');
-            $pass        = $this->input->post('pass');
-            $posisi  = $this->input->post('posisi');
-            $kategorijbt  = $this->input->post('kategorijbt');
+            $id_pengadilan         = $this->input->post('id_pengadilan');
+            $nama_peng         = $this->input->post('nama_peng');
+            $deskripsi_peng        = $this->input->post('deskripsi_peng');
+           
 
             $data = array(
-                'user'       => $user,
-                'pass'       => $pass,
-                'posisi'   => $posisi,
-                'id_jbt'=> $kategorijbt,
+                'id_pengadilan'      => $id_pengadilan,
+                'nama_peng'       => $nama_peng,
+                'deskripsi_peng'   => $deskripsi_peng,
+         
             );
 
-            if($this->m_admin->input_data($data,'admin')){
+            if($this->m_pengadilan->input_data($data,'pengadilan')){
                 echo goResult(true,"Data Telah Di Tambahkan");
                 return;
             }
         }
         else if ($url=="update" && $id!=null) {
             $data['type']    = "update";
-            $where           = array('id' => $id);
-            $data['admin'] = $this->m_subkategori->detail($where,'admin')->row();
-            echo $this->blade->nggambar('admin.admin.content',$data);
+            $where           = array('id_pengadilan' => $id);
+            $data['pengadilan'] = $this->m_pengadilan->detail($where,'pengadilan')->row();
+            echo $this->blade->nggambar('admin.pengadilan.content',$data);
         }
         else if ($url=="updated" && $id!=null && $this->input->is_ajax_request() == true) {
-            $where           = array('id' => $id);
+            $where           = array('id_pengadilan' => $id);
 
-            $user        = $this->input->post('user');
-            $pass        = $this->input->post('pass');
-            $posisi  = $this->input->post('posisi');
-            $kategorijbt  = $this->input->post('kategorijbt');
-
+            $id_pengadilan         = $this->input->post('id_pengadilan');
+            $nama_peng         = $this->input->post('nama_peng');
+            $deskripsi_peng        = $this->input->post('deskripsi_peng');
+            
 
             $data = array(
-                 'user'       => $user,
-                'pass'       => $pass,
-                'posisi'   => $posisi,
-                'id_jbt'=> $kategorijbt,
+               'id_pengadilan'      => $id_pengadilan,
+                'nama_peng'       => $nama_peng,
+                'deskripsi_peng'   => $deskripsi_peng,
+                
             );
 
-            if($this->m_admin->update_data($where,$data,'admin')){
+            if($this->m_pengadilan->update_data($where,$data,'pengadilan')){
                 echo goResult(true,"Data Telah Di Tambahkan");
                 return;
             }
         }
         else if ($url=="deleted" && $id != null) {
-            $where           = array('id_subkat' => $id);
-            if ($this->m_admin->hapus_data($where,'admin')) {
+            $where           = array('id_pengadilan' => $id);
+            if ($this->m_pengadilan->hapus_data($where,'pengadilan')) {
 
             }
-            redirect('superuser/admin/');
+            redirect('superuser/pengadilan/');
         }
         else {
-            echo $this->blade->nggambar('admin.admin.index',$data);
+            echo $this->blade->nggambar('admin.pengadilan.index',$data);
             return;
         }
     }
-    // --------------------------------- End Admin
+   
+    // --------------------------------- End pengadilan
 
 
 	// --------------------------------- Start SUBKAtegori

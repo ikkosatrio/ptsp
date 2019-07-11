@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 22 Jun 2019 pada 19.13
+-- Waktu pembuatan: 03 Jul 2019 pada 13.04
 -- Versi server: 10.1.37-MariaDB
 -- Versi PHP: 5.6.40
 
@@ -25,36 +25,13 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `admin`
---
-
-CREATE TABLE `admin` (
-  `id` int(11) NOT NULL,
-  `id_jbt` int(11) NOT NULL,
-  `user` varchar(255) DEFAULT NULL,
-  `pass` varchar(255) DEFAULT NULL,
-  `posisi` varchar(50) NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data untuk tabel `admin`
---
-
-INSERT INTO `admin` (`id`, `id_jbt`, `user`, `pass`, `posisi`, `created_at`) VALUES
-(1, 0, 'admin', 'admin', '', '2019-06-22 15:50:25'),
-(2, 3, 'adit', 'adit', 'superuser', '2019-06-22 17:12:26');
-
--- --------------------------------------------------------
-
---
 -- Struktur dari tabel `banding`
 --
 
 CREATE TABLE `banding` (
   `id_banding` char(20) NOT NULL,
+  `id_pengadilan` int(11) NOT NULL,
   `no_perkara` text NOT NULL,
-  `asal_pa` varchar(50) NOT NULL,
   `tgl_terima_berkas` date DEFAULT NULL,
   `no_surat_pta` text NOT NULL,
   `bulan_pta` varchar(15) NOT NULL,
@@ -121,12 +98,8 @@ CREATE TABLE `banding` (
 -- Dumping data untuk tabel `banding`
 --
 
-INSERT INTO `banding` (`id_banding`, `no_perkara`, `asal_pa`, `tgl_terima_berkas`, `no_surat_pta`, `bulan_pta`, `tgl_surat_pta_m`, `tgl_surat_pta_h`, `nama_pb`, `semula_pb`, `umur_pb`, `agama_pb`, `pendidikan_pb`, `pekerjaan_pb`, `alamat_pb`, `nama_kh_pb`, `umur_kh_pb`, `agama_kh_pb`, `pekerjaan_kh_pb`, `alamat_kh_pb`, `nama_tb`, `semula_tb`, `umur_tb`, `agama_tb`, `pendidikan_tb`, `pekerjaan_tb`, `alamat_tb`, `nama_kh_tb`, `umur_kh_tb`, `agama_kh_tb`, `pekerjaan_kh_tb`, `alamat_kh_tb`, `tgl_putus_pa`, `no_perkara_pa`, `amar_pa`, `ketua_majelis_pa`, `hakim_agg_pa1`, `hakim_agg_pa2`, `pp_pa`, `tgl_akta_banding`, `jenis_pkr`, `kode_pa`, `no_sp_pa`, `bulan_sp_pa`, `tgl_sp_pa`, `pmh`, `ketua_majelis_pta`, `kode_hm`, `hakim_agg_pta1`, `kode_ha1`, `hakim_agg_pta2`, `kode_ha2`, `pp_pta`, `kode_pp_pta`, `penunjukkan_pp_pta`, `tgl_berkas_diterima_majelis`, `tgl_phs`, `tgl_putus_banding`, `amar_banding`, `tgl_minutasi`, `tgl_kirim_berkas`, `tgl_upload`, `created_at`) VALUES
-('22', '231234567', 'banw33ss', '2019-06-14', '23213456hehehe', 'maret', NULL, '2312 asdnbasd 1040', 'basdn', 'nasdnasd', '32', 'asdasd', 'asdasd', 'nmas dasd ', 'nasdasn', 'asdasd', '22', 'sadasd', 'asdas', 'sada', 'bdbdb', 'b', 'b', 'b', 'nsad', 'nndas', 'nasd', ' dsda', 'jjhs', 'dasdas', ' asd n', 'nnjj', NULL, '213123', 'wqeqwe', 'dasd', 'jj', 'bjj', 'jhj', NULL, 'jhj', 'jhj', 'j', 'hjh', NULL, NULL, 'sad', 'b', 'b', 'b', 'b', 'b', 'b', 'b', NULL, NULL, NULL, NULL, 'ddd', NULL, NULL, NULL, '2019-06-20 06:32:20'),
-('3123', '23123', '213123', '1970-01-01', '', '', NULL, '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', NULL, '', '', '', '', '', '', NULL, '', '', '', '', NULL, NULL, '', '', '', '', '', '', '', '', NULL, NULL, NULL, NULL, '', NULL, NULL, NULL, '2019-06-20 06:32:20'),
-('44', 'dfsd', 'sdfds', '2019-06-14', 'jhjh', 'jhjh', '2019-06-05', 'jh', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '2019-06-14', '', '', '', '', '', '', '0000-00-00', '', '', '', '', '0000-00-00', '0000-00-00', '', '', '', '', '', '', '', '', '0000-00-00', '0000-00-00', '0000-00-00', '0000-00-00', '', '0000-00-00', '0000-00-00', NULL, '2019-06-20 06:32:20'),
-('99', '54/767/HM.00/2018', '8', NULL, '8', '8', NULL, '8', '8', '8', '8', '8', '8', '8', '8', '8', '8', '8', '8', '8', '8', '8', '8', '8', '8', '8', '8', '8', '8', '8', '8', '8', NULL, '8', '8', '8', '8', '8', '8', NULL, '8', '8', '8', '8', NULL, NULL, '8', '8', '8', '8', '8', '8', '8', '8', NULL, NULL, NULL, NULL, '8', NULL, NULL, NULL, '2019-06-20 06:32:20'),
-('9999090', 'oi', 'o', '0000-00-00', 'oi', 'oi', '0000-00-00', 'o', 'o', 'io', 'io', 'io', 'io', 'io', 'i', 'oi', 'oi', 'oi', 'oi', 'o', 'io', 'oio', 'io', 'io', 'i', 'oi', 'oi', 'oi', 'o', 'io', 'io', 'io', '0000-00-00', 'ioi', 'ioi', 'io', 'i', 'oi', 'oi', '0000-00-00', 'o', 'oi', 'oio', 'oi', '0000-00-00', '0000-00-00', 'oioi', 'oi', 'o', 'io', 'io', 'io', 'ioxxxxx', 'i', '0000-00-00', '0000-00-00', '0000-00-00', '0000-00-00', '', '0000-00-00', '0000-00-00', NULL, '2019-06-21 07:44:36');
+INSERT INTO `banding` (`id_banding`, `id_pengadilan`, `no_perkara`, `tgl_terima_berkas`, `no_surat_pta`, `bulan_pta`, `tgl_surat_pta_m`, `tgl_surat_pta_h`, `nama_pb`, `semula_pb`, `umur_pb`, `agama_pb`, `pendidikan_pb`, `pekerjaan_pb`, `alamat_pb`, `nama_kh_pb`, `umur_kh_pb`, `agama_kh_pb`, `pekerjaan_kh_pb`, `alamat_kh_pb`, `nama_tb`, `semula_tb`, `umur_tb`, `agama_tb`, `pendidikan_tb`, `pekerjaan_tb`, `alamat_tb`, `nama_kh_tb`, `umur_kh_tb`, `agama_kh_tb`, `pekerjaan_kh_tb`, `alamat_kh_tb`, `tgl_putus_pa`, `no_perkara_pa`, `amar_pa`, `ketua_majelis_pa`, `hakim_agg_pa1`, `hakim_agg_pa2`, `pp_pa`, `tgl_akta_banding`, `jenis_pkr`, `kode_pa`, `no_sp_pa`, `bulan_sp_pa`, `tgl_sp_pa`, `pmh`, `ketua_majelis_pta`, `kode_hm`, `hakim_agg_pta1`, `kode_ha1`, `hakim_agg_pta2`, `kode_ha2`, `pp_pta`, `kode_pp_pta`, `penunjukkan_pp_pta`, `tgl_berkas_diterima_majelis`, `tgl_phs`, `tgl_putus_banding`, `amar_banding`, `tgl_minutasi`, `tgl_kirim_berkas`, `tgl_upload`, `created_at`) VALUES
+('1', 5, '1', '2019-07-12', '2', 'maret', '2019-07-17', 'hijriah', 'z', 'z', 'z', 'z', 'z', 'z', 'z', 'z', 'z', 'z', 'z', 'z', 'z', 'z', 'z', 'z', 'z', 'z', 'z', 'z', 'z', 'z', 'z', 'z', '2019-07-03', '3', 'h', 'h', 'h', 'h', 'h', '2019-07-03', 'h', 'h', 'h', 'g', '2019-07-03', '2019-07-09', 'h', 'h', 'h', 'h', 'h', 'h', 'h', 'h', '2019-07-03', '2019-07-03', '2019-07-03', '2019-07-03', 'zzz', '2019-07-03', '2019-07-03', NULL, '2019-07-03 02:45:23');
 
 -- --------------------------------------------------------
 
@@ -155,7 +128,34 @@ CREATE TABLE `config` (
 --
 
 INSERT INTO `config` (`id`, `name`, `email`, `phone`, `address`, `description`, `icon`, `instagram`, `facebook`, `logo`, `meta_deskripsi`, `basic`, `meta_keyword`) VALUES
-(1, 'Batik Murni Madiun', 'batikpecel@gmail.com', '083849940637', 'Madiun', 'Batik Pecel<br>', 'icon1.png', 'madiun', 'madiun', 'logo3.png', '																																																																								Batik Pecel\r\n											\r\n											\r\n											\r\n											\r\n											\r\n											', 5, '																																																																													Batik Pecel\r\n											\r\n											\r\n											\r\n											\r\n											\r\n											');
+(1, 'Pengadilan Tinggi Agama Surabaya', 'ptasurabaya@gmail.com', '083849940637', 'PTA Surabaya', 'PTA Surabaya<br>', 'icon2.png', 'PTA Surabaya', 'PTA Surabaya', 'logo5.png', '																																																																																																																																				PTA Surabaya\r\n											\r\n											\r\n											\r\n											\r\n											\r\n											\r\n											\r\n											\r\n											\r\n											\r\n											', 5, '																																																PTA Surabaya\r\n											\r\n											\r\n											\r\n											');
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `datapegawai`
+--
+
+CREATE TABLE `datapegawai` (
+  `id_pegawai` int(11) NOT NULL,
+  `id_jbt` int(11) NOT NULL,
+  `nip` varchar(50) NOT NULL,
+  `pass` varchar(50) NOT NULL,
+  `nama` varchar(50) NOT NULL,
+  `tempat_lahir` varchar(50) NOT NULL,
+  `tanggal_lahir` date NOT NULL,
+  `foto` text NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data untuk tabel `datapegawai`
+--
+
+INSERT INTO `datapegawai` (`id_pegawai`, `id_jbt`, `nip`, `pass`, `nama`, `tempat_lahir`, `tanggal_lahir`, `foto`, `created_at`) VALUES
+(1, 0, 'pabangkalan', 'asda', 'asda', 'sd', '2019-06-27', '15616258161.jpg', '2019-06-27 08:56:56'),
+(3, 2, 'pasurabaya', 'jhjh', 'jhj', 'asd', '2019-06-27', '1561643817pta.png', '2019-06-27 13:55:05'),
+(4, 10, 'admin', 'admin', 'admin', 'surabaya', '2019-06-27', '1561644388', '2019-06-27 14:06:28');
 
 -- --------------------------------------------------------
 
@@ -170,6 +170,41 @@ CREATE TABLE `detailpenilaian` (
   `kendala` varchar(255) NOT NULL,
   `id_subkat` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data untuk tabel `detailpenilaian`
+--
+
+INSERT INTO `detailpenilaian` (`id_detailpenilaian`, `id_penilaian`, `nilai`, `kendala`, `id_subkat`) VALUES
+(1, 1, 10, '', 5),
+(2, 1, 10, '', 6),
+(3, 1, 10, '', 7),
+(4, 1, 10, '', 8),
+(5, 1, 10, '', 9),
+(6, 1, 10, '', 10),
+(7, 1, 10, '', 11),
+(8, 1, 10, '', 12),
+(9, 1, 10, '', 13),
+(10, 1, 10, '', 14),
+(11, 1, 10, '', 15),
+(12, 1, 10, '', 16),
+(13, 1, 10, '', 17),
+(14, 1, 10, '', 18),
+(15, 1, 10, '', 19),
+(16, 1, 10, '', 20),
+(17, 1, 10, '', 21),
+(18, 1, 10, '', 22),
+(19, 1, 10, '', 23),
+(20, 1, 10, '', 24),
+(21, 1, 10, '', 25),
+(22, 1, 10, '', 26),
+(23, 1, 10, '', 27),
+(24, 1, 10, '', 28),
+(25, 1, 10, '', 29),
+(26, 1, 10, '', 30),
+(27, 1, 10, '', 31),
+(28, 1, 10, '', 32),
+(29, 1, 10, '', 33);
 
 -- --------------------------------------------------------
 
@@ -189,7 +224,16 @@ CREATE TABLE `jabatan` (
 --
 
 INSERT INTO `jabatan` (`id_jbt`, `nama_jbt`, `desk_jbt`, `created_at`) VALUES
-(3, 'Panitera Pengganti', '<p>Panitera Pengganti</p>\r\n', '2019-06-22 16:18:23');
+(1, 'Ketua', '<p>Ketua Pengadilan Tinggi Agama Surabaya</p>\r\n', '2019-06-27 13:20:45'),
+(2, 'Wakil Ketua', '<p>Wakil Ketua Pengadilan Tinggi Agama Surabaya</p', '2019-06-27 13:20:58'),
+(3, 'Hakim Tinggi', '<p>Hakim Tinggi&nbsp;Pengadilan Tinggi Agama Surab', '2019-06-27 13:22:12'),
+(4, 'Kesekretaritatan', '<p>Kesekretariatan&nbsp;Pengadilan Tinggi Agama Su', '2019-06-27 13:22:46'),
+(5, 'Fungsional Umum / Staf', '<p>Fungsional Umum / Staf Pengadilan Tinggi Agama ', '2019-06-27 13:23:12'),
+(6, 'Panitera', '<p>Panitera&nbsp;Pengadilan Tinggi Agama Surabaya<', '2019-06-27 13:23:37'),
+(7, 'Panitera Muda', '<p>Panitera Muda&nbsp;Pengadilan Tinggi Agama Sura', '2019-06-27 13:24:13'),
+(8, 'Panitera Pengganti', '<p>Panitera Pengganti Pengadilan Tinggi Agama Sura', '2019-06-27 13:24:35'),
+(9, 'Tenaga Kontrak', '<p>Tenaga Kontrak&nbsp;Pengadilan Tinggi Agama Sur', '2019-06-27 13:24:50'),
+(10, 'Administrator', '<p>Administrator&nbsp;Pengadilan Tinggi Agama Sura', '2019-06-27 13:25:07');
 
 -- --------------------------------------------------------
 
@@ -221,15 +265,79 @@ INSERT INTO `kategoripenilaian` (`id_kategori`, `kode_kat`, `nama_kat`, `deskrip
 -- --------------------------------------------------------
 
 --
+-- Struktur dari tabel `pengadilan`
+--
+
+CREATE TABLE `pengadilan` (
+  `id_pengadilan` int(11) NOT NULL,
+  `nama_peng` varchar(50) NOT NULL,
+  `deskripsi_peng` varchar(255) NOT NULL,
+  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data untuk tabel `pengadilan`
+--
+
+INSERT INTO `pengadilan` (`id_pengadilan`, `nama_peng`, `deskripsi_peng`, `created_at`) VALUES
+(1, 'Pengadilan Agama  Bangil', '<p>Pengadilan Agama&nbsp; Bangil</p>\r\n', '2019-07-03 01:43:13'),
+(2, 'Pengadilan Agama  Bangkalan', '<p>Pengadilan Agama&nbsp; Bangkalan</p>\r\n', '2019-07-03 01:43:41'),
+(3, 'Pengadilan Agama  Banyuwangi', '<p>Pengadilan Agama&nbsp; Banyuwangi</p>\r\n', '2019-07-03 01:43:56'),
+(4, 'Pengadilan Agama  Bawean', '<p>Pengadilan Agama&nbsp; Bawean</p>\r\n', '2019-07-03 01:44:25'),
+(5, 'Pengadilan Agama  Blitar', '<p>Pengadilan Agama&nbsp; Blitar</p>\r\n', '2019-07-03 01:44:45'),
+(6, 'Pengadilan Agama  Bojonegoro', '<p>Pengadilan Agama&nbsp; Bojonegoro</p>\r\n', '2019-07-03 01:45:08'),
+(7, 'Pengadilan Agama  Bondowoso', '', '2019-07-03 01:45:23'),
+(8, 'Pengadilan Agama  Gresik', '', '2019-07-03 01:45:38'),
+(9, 'Pengadilan Agama  Jember', '', '2019-07-03 01:46:43'),
+(10, 'Pengadilan Agama  Jombang', '', '2019-07-03 01:46:57'),
+(11, 'Pengadilan Agama  Kangean', '', '2019-07-03 01:47:16'),
+(12, 'Pengadilan Agama  Kabupaten Kediri', '', '2019-07-03 01:47:26'),
+(13, 'Pengadilan Agama  Kodya Kediri', '', '2019-07-03 01:47:59'),
+(14, 'Pengadilan Agama  Kraksaan', '', '2019-07-03 01:48:20'),
+(15, 'Pengadilan Agama  Lamongan', '', '2019-07-03 01:48:31'),
+(16, 'Pengadilan Agama  Lumajang', '', '2019-07-03 01:48:43'),
+(17, 'Pengadilan Agama  Kabupaten Madiun', '', '2019-07-03 01:49:02'),
+(18, 'Pengadilan Agama  Kodya Madiun', '', '2019-07-03 01:49:17'),
+(19, 'Pengadilan Agama  Magetan', '', '2019-07-03 01:49:28'),
+(20, 'Pengadilan Agama  Kabupaten Malang', '', '2019-07-03 01:50:20'),
+(21, 'Pengadilan Agama  Kodya Malang', '', '2019-07-03 01:50:35'),
+(22, 'Pengadilan Agama  Mojokerto', '', '2019-07-03 01:50:53'),
+(23, 'Pengadilan Agama  Nganjuk', '', '2019-07-03 01:51:03'),
+(24, 'Pengadilan Agama Ngawi', '', '2019-07-03 01:51:25'),
+(25, 'Pengadilan Agama Pacitan', '', '2019-07-03 01:51:38'),
+(26, 'Pengadilan Agama Pamekasan', '', '2019-07-03 01:51:55'),
+(27, 'Pengadilan Agama Pasuruan', '', '2019-07-03 01:52:10'),
+(28, 'Pengadilan Agama Ponorogo', '', '2019-07-03 01:52:27'),
+(29, 'Pengadilan Agama Probolinggo', '', '2019-07-03 01:52:40'),
+(30, 'Pengadilan Agama Sampang', '', '2019-07-03 01:52:55'),
+(31, 'Pengadilan Agama Sidoarjo', '', '2019-07-03 01:53:12'),
+(32, 'Pengadilan Agama Situbondo', '', '2019-07-03 01:53:27'),
+(33, 'Pengadilan Agama Sumenep', '', '2019-07-03 01:53:36'),
+(34, 'Pengadilan Agama Surabaya', '', '2019-07-03 01:54:18'),
+(35, 'Pengadilan Agama Trenggalek', '', '2019-07-03 01:54:32'),
+(36, 'Pengadilan Agama Tuban', '', '2019-07-03 01:54:42'),
+(37, 'Pengadilan Agama Tulungagung', '', '2019-07-03 01:54:54');
+
+-- --------------------------------------------------------
+
+--
 -- Struktur dari tabel `penilaianptsp`
 --
 
 CREATE TABLE `penilaianptsp` (
   `id_penilaian` int(11) NOT NULL,
-  `id_admin` int(11) NOT NULL,
+  `id_pegawai` int(11) NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `triwulan` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data untuk tabel `penilaianptsp`
+--
+
+INSERT INTO `penilaianptsp` (`id_penilaian`, `id_pegawai`, `created_at`, `triwulan`) VALUES
+(1, 1, '2019-06-24 01:45:37', 1),
+(2, 3, '2019-06-25 07:47:36', 1);
 
 -- --------------------------------------------------------
 
@@ -329,12 +437,6 @@ INSERT INTO `subkatpenilaian` (`id_subkat`, `id_kategori`, `kode_subkat`, `nama_
 --
 
 --
--- Indeks untuk tabel `admin`
---
-ALTER TABLE `admin`
-  ADD PRIMARY KEY (`id`);
-
---
 -- Indeks untuk tabel `banding`
 --
 ALTER TABLE `banding`
@@ -345,6 +447,12 @@ ALTER TABLE `banding`
 --
 ALTER TABLE `config`
   ADD PRIMARY KEY (`id`);
+
+--
+-- Indeks untuk tabel `datapegawai`
+--
+ALTER TABLE `datapegawai`
+  ADD PRIMARY KEY (`id_pegawai`);
 
 --
 -- Indeks untuk tabel `detailpenilaian`
@@ -363,6 +471,12 @@ ALTER TABLE `jabatan`
 --
 ALTER TABLE `kategoripenilaian`
   ADD PRIMARY KEY (`id_kategori`);
+
+--
+-- Indeks untuk tabel `pengadilan`
+--
+ALTER TABLE `pengadilan`
+  ADD PRIMARY KEY (`id_pengadilan`);
 
 --
 -- Indeks untuk tabel `penilaianptsp`
@@ -393,28 +507,28 @@ ALTER TABLE `subkatpenilaian`
 --
 
 --
--- AUTO_INCREMENT untuk tabel `admin`
---
-ALTER TABLE `admin`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
-
---
 -- AUTO_INCREMENT untuk tabel `config`
 --
 ALTER TABLE `config`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
+-- AUTO_INCREMENT untuk tabel `datapegawai`
+--
+ALTER TABLE `datapegawai`
+  MODIFY `id_pegawai` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
 -- AUTO_INCREMENT untuk tabel `detailpenilaian`
 --
 ALTER TABLE `detailpenilaian`
-  MODIFY `id_detailpenilaian` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_detailpenilaian` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
 
 --
 -- AUTO_INCREMENT untuk tabel `jabatan`
 --
 ALTER TABLE `jabatan`
-  MODIFY `id_jbt` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id_jbt` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT untuk tabel `kategoripenilaian`
@@ -426,7 +540,7 @@ ALTER TABLE `kategoripenilaian`
 -- AUTO_INCREMENT untuk tabel `penilaianptsp`
 --
 ALTER TABLE `penilaianptsp`
-  MODIFY `id_penilaian` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_penilaian` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT untuk tabel `profil`

@@ -74,7 +74,7 @@ Dashboard - Administrasi
 			                        </td>
 			                        <td class="text-center">
 			                        	<span class="text-size-small text-muted">
-			                        		{{read_more(strip_tags($result->asal_pa),130)}}
+			                        		{{read_more(strip_tags($result->nama_peng),130)}}
 			                        	</span>
 			                        </td>
 			                        <td class="text-center">

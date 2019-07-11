@@ -115,7 +115,18 @@
 								<!-- Forms -->
 								<li class="navigation-header"><span>Manajemen Konten</span> <i class="icon-menu" title="Manajemen Mata Pelajaran"></i></li>
 								<!-- <li class="{{match($menu,'profil','active')}}"><a href="{{base_url('superuser/profil')}}"><i class="icon-home5"></i> <span>Profil Website</span></a></li> -->
-								<li class="{{match($menu,'banding','active')}}"><a href="{{base_url('superuser/banding')}}"><i class="icon-home4"></i> <span>Data Banding</span></a></li>
+								<li class="{{match($menu,'banding','active')}}{{match($menu,'pengadilan','active')}}"><a href="#"><i class="icon-home4"></i> <span>Data Banding</span></a>
+									<ul>
+										
+										<li class="{{match($menu,'kategori','active')}}"><a href="{{base_url('superuser/banding')}}">Daftar Data Banding</a></li>
+										<li class="{{match($menu,'pengadilan','active')}}"><a href="{{base_url('superuser/pengadilan')}}">Data Pengadilan Agama</a></li>
+										
+									</ul>
+
+
+
+								</li>
+								
 								<li class="{{match($menu,'kategori','active')}}{{match($menu,'subkategori','active')}}">
 									<a href="#"><i class="icon-box"></i> <span>Penilaian PTSP</span></a>
 									<ul>
@@ -126,11 +137,12 @@
 										
 									</ul>
 								</li>
-								<li class="{{match($menu,'admin','active')}}{{match($menu,'kategorijbt','active')}}">
+								<li class="{{match($menu,'pegawai','active')}}{{match($menu,'kategorijbt','active')}}">
 									<a href="#"><i class="icon-box"></i> <span>Manajemen Pengguna</span></a>
 									<ul>
+										<li class="{{match($menu,'pegawai','active')}}"><a href="{{base_url('superuser/pegawai')}}"> Data Pegawai</a></li>
 										<li class="{{match($menu,'kategorijbt','active')}}"><a href="{{base_url('superuser/kategorijbt')}}"> Jabatan</a></li>
-										<li class="{{match($menu,'admin','active')}}"><a href="{{base_url('superuser/admin')}}"> Administrator</a></li>
+										
 									</ul>
 								</li>
 

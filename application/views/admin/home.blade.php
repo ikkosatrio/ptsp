@@ -73,7 +73,7 @@ Dashboard - Administrasi
 			                        </td>
 			                        <td class="text-center">
 			                        	<span class="text-size-small text-muted">
-			                        		{{read_more(strip_tags($result->asal_pa),130)}}
+			                        		{{read_more(strip_tags($result->nama_peng),130)}}
 			                        	</span>
 			                        </td>
 			                        <td class="text-center">
@@ -116,7 +116,7 @@ Dashboard - Administrasi
 		                         <tr>
 
 									 <td align="center">{{($key+1)}}</td>
-									 <td align="center">{{($result->user)}}</td>
+									 <td align="center">{{($result->nip)}}</td>
 									 <td align="center">{{($result->triwulan)}}</td>
 			                        <td class="text-center">
 			                           

@@ -276,6 +276,12 @@ if (!function_exists('img_produk')) {
 	}
 }
 
+if (!function_exists('img_pegawai')) {
+	function img_pegawai($img=null){
+		return base_url().'assets/images/pegawai/'.$img;
+	}
+}
+
 if (!function_exists('img_slider')) {
 	function img_slider($img=null){
 		return base_url().'assets/images/slider/'.$img;

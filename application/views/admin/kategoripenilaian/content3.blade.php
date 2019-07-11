@@ -64,7 +64,7 @@ Dashboard - Administrasi
 									<?php
 									$totalMax += $row->skormaximal;
 									$totalPerolehan += $row->skorperolehan;
-									$totalPencapaian += $row->pencapaian;
+									$totalPencapaian += $row ->pencapaian;
 									?>
 								<tr>
 		                        	<td align="center">{{$key+1}}</td>
@@ -143,6 +143,36 @@ Dashboard - Administrasi
 			                        </td>
 			                        <td style="width:300px;">
 			                        	A	                        	
+			                        </td>
+			                        
+		                        </tr>
+		                        <tr>
+		                        	<td align="center">2</td>
+			                        <td style="width:300px;">
+			                        	51%  -   70 %	                        	
+			                        </td>
+			                        <td style="width:300px;">
+			                        	B	                        	
+			                        </td>
+			                        
+		                        </tr>
+		                        <tr>
+		                        	<td align="center">3</td>
+			                        <td style="width:300px;">
+			                        	26%   -   50 %	                        	
+			                        </td>
+			                        <td style="width:300px;">
+			                        	C	                        	
+			                        </td>
+			                        
+		                        </tr>
+		                        <tr>
+		                        	<td align="center">4</td>
+			                        <td style="width:300px;">
+			                        	0  -  25 %	                        	
+			                        </td>
+			                        <td style="width:300px;">
+			                        	D	                        	
 			                        </td>
 			                        
 		                        </tr>

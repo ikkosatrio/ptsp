@@ -1,6 +1,6 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class M_banding extends CI_Model {
+class M_pegawai extends CI_Model {
 
 	public $variable;
 
@@ -12,7 +12,7 @@ class M_banding extends CI_Model {
 
 	function tampil_data($table){
 		$this->db->from($table);
-		$this->db->join('pengadilan','banding.id_pengadilan=pengadilan.id_pengadilan');
+		 $this->db->join('jabatan','datapegawai.id_jbt=jabatan.id_jbt');
 		return $query = $this->db->get();
 		// return $this->db->get($table);
 	}
@@ -37,5 +37,5 @@ class M_banding extends CI_Model {
 
 }
 
-/* End of file M_bandingphp */
-/* Location: ./application/models/M_banding.php */
+/* End of file M_kategori.php */
+/* Location: ./application/models/M_kategori.php */

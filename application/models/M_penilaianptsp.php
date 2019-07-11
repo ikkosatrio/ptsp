@@ -12,7 +12,7 @@ class M_penilaianptsp extends CI_Model {
 
 	function tampil_data($table){
 		$this->db->from($table);
-        $this->db->join('admin','admin.id=penilaianptsp.id_admin');
+        $this->db->join('datapegawai','datapegawai.id_pegawai=penilaianptsp.id_pegawai');
 		return $query = $this->db->get();
 		// return $this->db->get($table);
 	}
