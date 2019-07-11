@@ -65,6 +65,13 @@ Dashboard - Administrasi
 									value="{{ ($type=='create') ? '' : $pegawai->nama }}" required>
 								</div>
 							</div>
+							<div class="form-group">
+								<label class="col-lg-2 control-label">Telepon Pegawai <span class="text-danger"><b>*</b></span></label>
+								<div class="col-lg-10">
+									<input class="form-control" type="number" placeholder="Telepon Pegawai" name="tlp"
+									value="{{ ($type=='create') ? '' : $pegawai->tlp }}" required>
+								</div>
+							</div>
 
 							<div class="form-group">
                                 <label class="col-lg-2 control-label">Jabatan <span class="text-danger"><b>*</b></span></label>

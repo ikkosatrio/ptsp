@@ -675,6 +675,7 @@ class Superuser extends CI_Controller {
             $nip       = $this->input->post('nip');
             $pass       = $this->input->post('pass');
             $nama       = $this->input->post('nama');
+            $tlp       = $this->input->post('tlp');
             $tempat_lahir       = $this->input->post('tempat_lahir');
             $tanggal_lahir       = $this->input->post('tanggal_lahir');
             $foto      = time().$_FILES['foto']['name'];
@@ -695,6 +696,7 @@ class Superuser extends CI_Controller {
                 'id_jbt'       => $id_jbt,
                 'pass'       => $pass,
                 'nama'       => $nama,
+                'tlp'       => $tlp,
                 'tempat_lahir'       => $tempat_lahir,
                 'tanggal_lahir'       => $tanggal_lahir,
                 'foto'       => $foto,
@@ -720,6 +722,7 @@ class Superuser extends CI_Controller {
             $nip       = $this->input->post('nip');
             $pass       = $this->input->post('pass');
             $nama       = $this->input->post('nama');
+            $tlp       = $this->input->post('tlp');
             $tempat_lahir       = $this->input->post('tempat_lahir');
             $tanggal_lahir       = $this->input->post('tanggal_lahir');
             $foto      = time().$_FILES['foto']['name'];
@@ -738,6 +741,7 @@ class Superuser extends CI_Controller {
                 'id_jbt'       => $id_jbt,
                 'pass'       => $pass,
                 'nama'       => $nama,
+                'tlp'       => $tlp,
                 'tempat_lahir'       => $tempat_lahir,
                 'tanggal_lahir'       => $tanggal_lahir,
                 'foto' => $foto,
@@ -749,6 +753,7 @@ class Superuser extends CI_Controller {
                 'nip'       => $nip,
                 'pass'       => $pass,
                 'nama'       => $nama,
+                'tlp'       => $tlp,
                 'tempat_lahir'       => $tempat_lahir,
                 'tanggal_lahir'       => $tanggal_lahir,
 
