@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 11 Jul 2019 pada 14.37
+-- Waktu pembuatan: 12 Jul 2019 pada 09.55
 -- Versi server: 10.1.37-MariaDB
 -- Versi PHP: 5.6.40
 
@@ -99,6 +99,7 @@ CREATE TABLE `banding` (
 --
 
 INSERT INTO `banding` (`id_banding`, `id_pengadilan`, `no_perkara`, `tgl_terima_berkas`, `no_surat_pta`, `bulan_pta`, `tgl_surat_pta_m`, `tgl_surat_pta_h`, `nama_pb`, `semula_pb`, `umur_pb`, `agama_pb`, `pendidikan_pb`, `pekerjaan_pb`, `alamat_pb`, `nama_kh_pb`, `umur_kh_pb`, `agama_kh_pb`, `pekerjaan_kh_pb`, `alamat_kh_pb`, `nama_tb`, `semula_tb`, `umur_tb`, `agama_tb`, `pendidikan_tb`, `pekerjaan_tb`, `alamat_tb`, `nama_kh_tb`, `umur_kh_tb`, `agama_kh_tb`, `pekerjaan_kh_tb`, `alamat_kh_tb`, `tgl_putus_pa`, `no_perkara_pa`, `amar_pa`, `ketua_majelis_pa`, `hakim_agg_pa1`, `hakim_agg_pa2`, `pp_pa`, `tgl_akta_banding`, `jenis_pkr`, `kode_pa`, `no_sp_pa`, `bulan_sp_pa`, `tgl_sp_pa`, `pmh`, `ketua_majelis_pta`, `kode_hm`, `hakim_agg_pta1`, `kode_ha1`, `hakim_agg_pta2`, `kode_ha2`, `pp_pta`, `kode_pp_pta`, `penunjukkan_pp_pta`, `tgl_berkas_diterima_majelis`, `tgl_phs`, `tgl_putus_banding`, `amar_banding`, `tgl_minutasi`, `tgl_kirim_berkas`, `tgl_upload`, `created_at`) VALUES
+('000', 2, '12312', '0000-00-00', '', '', '0000-00-00', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '0000-00-00', '', '', '', '', '', '', '0000-00-00', '', '', '', '', '0000-00-00', '0000-00-00', '6', '', '7', '', '8', '', '9', '', '0000-00-00', '0000-00-00', '0000-00-00', '0000-00-00', '', '0000-00-00', '0000-00-00', NULL, '2019-07-11 13:40:26'),
 ('1', 5, '1', '2019-07-12', '2', 'maret', '2019-07-17', 'hijriah', 'z', 'z', 'z', 'z', 'z', 'z', 'z', 'z', 'z', 'z', 'z', 'z', 'z', 'z', 'z', 'z', 'z', 'z', 'z', 'z', 'z', 'z', 'z', 'z', '2019-07-03', '3', 'h', 'h', 'h', 'h', 'h', '2019-07-03', 'h', 'h', 'h', 'g', '2019-07-03', '2019-07-09', 'h', 'h', 'h', 'h', 'h', 'h', 'h', 'h', '2019-07-03', '2019-07-03', '2019-07-03', '2019-07-03', 'zzz', '2019-07-03', '2019-07-03', NULL, '2019-07-03 02:45:23');
 
 -- --------------------------------------------------------
@@ -155,10 +156,61 @@ CREATE TABLE `datapegawai` (
 
 INSERT INTO `datapegawai` (`id_pegawai`, `id_jbt`, `nip`, `pass`, `nama`, `tlp`, `tempat_lahir`, `tanggal_lahir`, `foto`, `created_at`) VALUES
 (1, 0, 'pabangkalan', 'asda', 'asda', 0, 'sd', '2019-06-27', '15616258161.jpg', '2019-06-27 08:56:56'),
-(3, 2, 'pasurabaya', 'jhjh', 'jhj', 0, 'asd', '2019-06-27', '1561643817pta.png', '2019-06-27 13:55:05'),
 (4, 10, 'admin', 'admin', 'admin', 0, 'surabaya', '2019-06-27', '1561644388', '2019-06-27 14:06:28'),
-(5, 4, '196306141990031001', 'admin', 'H. Agus Widyo Susanto, S.H., M.H. ', 90192387, 'Malang', '1963-06-14', '1562292805', '2019-07-05 02:13:25'),
-(6, 3, '111', 'ko', 'iko', 9123, 'asd', '0000-00-00', '1562848044', '2019-07-11 12:27:24');
+(10, 1, '195304221976011001', 'ketuapta', 'Drs. H. Bahrussam Yunus, S.H., M.H', 90808, '	Pare Pare', '1953-04-22', '1562893510ketua.jpg', '2019-07-12 01:05:10'),
+(11, 2, '195210021976081001', 'wakilketuapta', 'Drs.H. Moh. Munawar', 45627787, 'Bojonegoro', '1952-10-02', '1562895257munawar.jpg', '2019-07-12 01:32:42'),
+(12, 3, '195807081984031002', 'hakimpta', 'Drs. H. Lutfi, S.H., M.H', 7568487, 'Tuban', '1958-07-08', '1562896095lutfi.jpg', '2019-07-12 01:48:15'),
+(13, 3, '195901081987032002', 'hakimpta', 'Dra. Hj. Zulaecho, M.H', 8676546, 'Pekalongan', '1955-07-21', '1562896553zulaicho.jpg', '2019-07-12 01:55:53'),
+(14, 3, '195701111985121001', 'hakimpta', 'Drs. H. M. Badawi, S.H.,M.H', 4765588, 'Sleman', '1957-01-11', '1562897657badawi.jpg', '2019-07-12 02:14:17'),
+(15, 3, '195509081985031002', 'hakimpta', 'H. Marzuqi, S.H., M.H.', 2147483647, 'Mataram', '1955-09-08', '1562898365Marzuqi.jpg', '2019-07-12 02:26:05'),
+(16, 3, '196008031991031002', 'hakimpta', 'Drs.H.Nur Khazim, M.H.', 2147483647, 'Semarang', '1960-08-03', '1562898627nur.jpg', '2019-07-12 02:30:27'),
+(17, 3, '195608131988031001', 'hakimpta', 'Drs.H.Hasan Bisri, S.H., M.H ', 8746834, 'Cirebon', '1956-08-13', '1562899236hasan.jpg', '2019-07-12 02:40:36'),
+(18, 3, '195210051979031003', 'hakimpta', 'Drs.H.Ghufron Sulaiman, S.H.,M.Hum', 912039, 'Gresik', '1952-10-05', '1562899742Gufron.jpg', '2019-07-12 02:49:02'),
+(19, 3, '195504101981031005', 'hakimpta', 'Drs.H. Abd. Munir, S.H', 91283, 'Pangkep', '1955-04-10', '1562899824munir.jpg', '2019-07-12 02:50:24'),
+(20, 3, '195508041986031002', 'hakimpta', 'Drs.H.Muzni Ilyas, S.H., M.H', 12312, 'Bukit Tinggi', '1955-08-14', '1562901252muzni.jpg', '2019-07-12 03:14:12'),
+(21, 3, '195207221981011001', 'hakimpta', 'Drs.H.Cholisin, S.H.,M.Hum ', 912830, 'Gresik', '1952-07-22', '1562901343cholisin.jpg', '2019-07-12 03:15:43'),
+(22, 3, '195307151982031003', 'hakimpta', 'Drs.H.M. Roehan EL Ghani, S.H', 8901293, 'Magetan', '1953-07-15', '1562901429cholisin.jpg', '2019-07-12 03:17:09'),
+(23, 3, '195504151982031001', 'hakimpta', 'Drs. H. Solihun, S.H.,M.H', 8901283, 'Banyuwangi', '1955-04-15', '1562901600Solihun.jpg', '2019-07-12 03:20:00'),
+(24, 3, '195404021980031003', 'hakimpta', 'Drs.H.Asrofin Sahlan, S.H.,M.H', 9812937, 'Bojonegoro', '1954-04-02', '1562901867asrofin.jpg', '2019-07-12 03:24:28'),
+(25, 3, '195303101979031003', 'hakimpta', 'Drs.H.Masruri Syuhadak, S.H.,M.H', 2147483647, 'Lamongan', '1953-03-10', '1562903040masruri.jpg', '2019-07-12 03:44:00'),
+(26, 3, '195303251981031003', 'hakimpta', 'Drs. H. Imam Bahrun', 9120397, 'Ponorogo', '1953-03-25', '1562903113imam.jpg', '2019-07-12 03:45:13'),
+(27, 3, '195212121981031007', 'hakimpta', 'Drs. H. Ashfari, S.H.,M.H', 98798, 'Ponorogo', '1952-12-12', '1562903622ashfari.jpg', '2019-07-12 03:53:42'),
+(28, 3, '195210121978031003', 'hakimta', 'H.A. Afandi Zaini, S.H.,S.Ag.,M.M', 81293, 'Bangkalan', '1952-10-12', '1562903836afandi.jpg', '2019-07-12 03:57:16'),
+(29, 3, '195305101981011001', 'hakimpta', 'Drs.H. Abdullah Cholil, M.Hum', 809128, 'Jember', '1953-05-10', '1562904026cholil.jpg', '2019-07-12 04:00:26'),
+(30, 3, '195308141981031002', 'hakimpta', 'Drs.H Hadi Muhtarom, S.H', 98129308, 'Madiun', '1953-08-14', '1562904310hadi.jpg', '2019-07-12 04:05:10'),
+(31, 3, '195208031980032001', 'hakimpta', 'Dra.Hj Ma\'fufah Shidqon, S.H.,M.H', 98129038, 'Tuban', '1952-08-03', '1562904394mafufah.jpg', '2019-07-12 04:06:34'),
+(32, 3, '19541014.198603.1.001', 'hakimpta', 'Drs. H. Basuni, S.H.,M.H', 90989312, 'Sidoarjo', '1954-10-14', '1562904635basuni.jpg', '2019-07-12 04:10:35'),
+(33, 3, '195208011980032002', 'hakimpta', 'Dra. Hj. Marwiyah', 9871293, 'Purworejo', '1952-08-01', '1562904922marwiyah.jpg', '2019-07-12 04:15:22'),
+(34, 6, '19680109.199303.1.001', 'paniterapta', 'Dr. H. Didi Kusnadi, M.Ag.', 9812398, 'Majalengka', '1968-01-09', '1562905004didi.jpg', '2019-07-12 04:16:44'),
+(35, 7, '195908251984032002', 'panmudpta', 'Dra. Hj. Chairussakinah Ady', 128397, 'surabaya', '1959-08-25', '1562905089sakinah.jpg', '2019-07-12 04:18:09'),
+(36, 7, '19641025.199303.2.002', 'panmudpta', 'Dra.Hj.Suffana Qomah ', 908123, 'Gresik', '1964-10-25', '1562905157suffana.jpg', '2019-07-12 04:19:17'),
+(37, 8, '196306171991031001', 'pppta', 'H.Mukalili, S.H. ', 2147483647, 'Surabaya', '1963-06-17', '1562905424mukalili.jpg', '2019-07-12 04:23:44'),
+(38, 8, '196005301979032001', 'pppta', 'Hj. Melati Pudjiwiandari, S.H. ', 918239081, 'surabaya', '1960-05-03', '1562905612melati.jpg', '2019-07-12 04:26:52'),
+(39, 8, '197105201994032004', 'pppta', 'Hj. Diah Anggraeni S.H.,M.H. ', 9218309, 'Surabaya', '1977-05-01', '1562905727diah.jpg', '2019-07-12 04:28:47'),
+(40, 8, '195806171983031007', 'pppta', 'Masruchin, S.H. ', 918238, 'Jombang', '1958-06-17', '1562905807masruhin.jpg', '2019-07-12 04:30:07'),
+(41, 8, '19630705.199303.2.003', 'pppta', 'Hj. Siti Rofi\'ah,S,H. ', 9812903, 'Blitar', '1963-07-05', '1562905896sitirofiah.jpg', '2019-07-12 04:31:36'),
+(42, 8, '19740118.200212.2.002', 'pppta', 'Diana Kholidah,S.H., M.H. ', 98917237, 'Sampang', '1974-01-18', '1562906222diana.jpg', '2019-07-12 04:37:02'),
+(43, 8, '19630822.199303.2.001', 'pppta', 'Dra.Sri Pratiwiningrum, M.HES ', 98123, 'Sidoarjo', '1963-08-22', '1562906276ningrum.jpg', '2019-07-12 04:37:56'),
+(44, 8, '19710520.199403.2.004', 'pppta', 'Hj. Chalimah Tuzuhro S.H. ', 98219038, 'Surabaya', '1971-05-20', '1562906331chalimah.jpg', '2019-07-12 04:38:51'),
+(45, 8, '196106081993031001', 'pppta', 'Drs. Sudarno, S.H. M.H ', 2147483647, 'Magetan', '1961-06-08', '1562906499sudarno.jpg', '2019-07-12 04:41:39'),
+(46, 8, '19660503.200604.2.002', 'pppta', 'Hj. Sufa\'ah, S.Ag ', 9182390, 'Lamongan', '1966-05-03', '1562906553sufaah.jpg', '2019-07-12 04:42:33'),
+(47, 8, '19760213.200904.2.001', 'pppta', 'Eva Ervina, S.E., S.H.', 90981823, 'Malang', '1973-02-09', '1562906640eva.jpg', '2019-07-12 04:44:00'),
+(48, 4, '196306141990031001', 'sekretarispta', 'H. Agus Widyo Susanto, S.H., M.H. ', 901283, 'Malang', '1963-06-14', '1562906707agus.jpg', '2019-07-12 04:45:07'),
+(49, 4, '197210211993031002', 'kabagpta', 'Maulana Musa Sugi Alam, S.H ', 878978, 'Pasuran', '1972-10-21', '1562906775musa.jpg', '2019-07-12 04:46:15'),
+(50, 4, '19750128.200212.1.004', 'kabagpta', 'Mokhamad Kodi, S.H., M.H.', 2147483647, 'Jombang', '1975-01-28', '1562906921kodi.jpg', '2019-07-12 04:48:41'),
+(51, 4, '19820205.200604.1.005', 'kasubpta', 'Rohmad Bahrudin, S.Kom.', 2147483647, 'Sidoarjo', '1982-02-05', '1562906992rahmat.jpg', '2019-07-12 04:49:52'),
+(52, 4, '198110092009121003', 'kasubpta', 'Priyo Setiawan, S.Kom ', 89127389, 'Blitar', '1981-10-09', '1562912115priyo.jpg', '2019-07-12 06:15:15'),
+(53, 4, '19750527.200912.1.002', 'kasubpta', 'Lukmanul Hakim, S.E., S.H. ', 9812093, 'Surabaya', '1975-05-27', '1562912191lukman.jpg', '2019-07-12 06:16:31'),
+(54, 4, '19730103.200604.1.001', 'kasubpta', 'Rusmin Rapi, S.T ', 98120938, 'Ujung Pandang', '1973-01-03', '1562912258rusmin.jpg', '2019-07-12 06:17:39'),
+(55, 5, '198707042012122001', 'stafpta', 'Argita Budi Mawarni, S.H. ', 91823908, 'Surabaya', '1987-07-04', '1562912599gita.jpg', '2019-07-12 06:23:19'),
+(56, 5, '19860618.200904.2.015', 'stafpta', 'Irma Amalia, S.E.', 9128739, 'Semarang', '1986-07-18', '1562912649irma.jpg', '2019-07-12 06:24:09'),
+(57, 5, '199106172015032001', 'stafpta', 'Ika Karlina,S,H. ', 918230981, 'Gowa', '1991-06-17', '1562912709ika.jpg', '2019-07-12 06:25:09'),
+(58, 5, '198111252009121003', 'stafpta', 'Heri sulistiono, S.Kom ', 912839, 'Semarang', '1981-11-25', '1562912763', '2019-07-12 06:26:03'),
+(59, 5, '198403152009122003', 'stafpta', 'Ana mutma\'inah A.md ', 91283091, 'Lamongan', '1982-03-15', '1562912817ana.jpg', '2019-07-12 06:26:57'),
+(60, 5, '197810192011012005', 'stafpta', 'Isnayati, A.Md ', 8129738, 'Tembilahan', '1978-10-17', '1562912875isna.jpg', '2019-07-12 06:27:55'),
+(61, 5, '198712162006041001', 'stafpta', 'Dimas Hirawan, S.H. ', 9081293, 'Jayapura', '1987-12-16', '1562912937dimas.jpg', '2019-07-12 06:28:57'),
+(62, 5, '19840521.200912.2.003', 'stafpta', 'Lailiya Rahmah, A.Md ', 98123908, 'Sidoarjo', '1984-05-21', '1562913014lia.jpg', '2019-07-12 06:30:14'),
+(63, 5, '199002032014031002', 'stafpta', 'Robi NAG,S,HI. ', 9128298, 'Kendal', '1990-02-03', '1562913079roby.jpg', '2019-07-12 06:31:19');
 
 -- --------------------------------------------------------
 
@@ -519,7 +571,7 @@ ALTER TABLE `config`
 -- AUTO_INCREMENT untuk tabel `datapegawai`
 --
 ALTER TABLE `datapegawai`
-  MODIFY `id_pegawai` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id_pegawai` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=64;
 
 --
 -- AUTO_INCREMENT untuk tabel `detailpenilaian`

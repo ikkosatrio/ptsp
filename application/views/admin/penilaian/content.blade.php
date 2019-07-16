@@ -45,24 +45,6 @@ Dashboard - Administrasi
 						<form id="form-blog" class="form-horizontal" action="{{ ($type=='create') ? base_url('superuser/penilaian/created') : base_url('superuser/penilaian/updated/'.$penilaian->id_subkat) }}" method="post">
 						
 								
-								<div class="row  col-md-12">
-
-								    <div class="form-group col-md-5">
-										
-										<select class="select-search" name="#" >
-											<option value="">Pilih Tahun</option>
-											
-													<option value="2019">2019</option>
-												
-													<option value="2020">2020<option>
-											
-										</select>
-									</div>
-									
-
-								</div>	
-
-
 						@foreach($kategoris as $keyKat => $kategori)
 						<div class="panel-group">
 				    		<div class="panel panel-default">

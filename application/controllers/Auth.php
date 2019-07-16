@@ -57,7 +57,7 @@ class Auth extends CI_Controller {
 
 		$data_session = array(
 				'nama' => $this->input->post('nip'),
-                'nip' => $cek->nip,
+                'id_pegawai' => $cek->id_pegawai,
 				'auth' =>	TRUE
 				);
 

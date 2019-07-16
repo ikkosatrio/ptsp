@@ -114,8 +114,18 @@ Dashboard - Administrasi
 		                         <tr>
 		                        	<td align="center">Hasil average</td>
 			                        <td style="width:300px;">
-			                        	A
-			                        	
+			                        	@if($totalPerolehan > 250 ) 
+			                        		A
+			                        	@elseif($totalPerolehan > 180)
+			                        	B
+			                        	@elseif($totalPerolehan > 105)
+			                        	C
+			                        	@elseif($totalPerolehan < 105)
+			                        	D
+			                        	@endif
+
+
+			                        
 			                        </td>
 			                        
 		                        </tr>
