@@ -117,17 +117,17 @@
 								<!-- Forms -->
 								<li class="navigation-header"><span>Manajemen Konten</span> <i class="icon-menu" title="Manajemen Mata Pelajaran"></i></li>
 								<!-- <li class="{{match($menu,'profil','active')}}"><a href="{{base_url('superuser/profil')}}"><i class="icon-home5"></i> <span>Profil Website</span></a></li> -->
-								<li class="{{match($menu,'banding','active')}}{{match($menu,'pengadilan','active')}}"><a href="#"><i class="icon-home4"></i> <span>Data Banding</span></a>
+
+                                @if ($currentUser->id_jbt == 3 || $currentUser->id_jbt == 10)
+                                <li class="{{match($menu,'banding','active')}}{{match($menu,'pengadilan','active')}}"><a href="#"><i class="icon-home4"></i> <span>Data Banding</span></a>
 									<ul>
 										
 										<li class="{{match($menu,'kategori','active')}}"><a href="{{base_url('superuser/banding')}}">Daftar Data Banding</a></li>
 										<li class="{{match($menu,'pengadilan','active')}}"><a href="{{base_url('superuser/pengadilan')}}">Data Pengadilan Agama</a></li>
 										
 									</ul>
-
-
-
 								</li>
+                                @endif
 								
 								<li class="{{match($menu,'kategori','active')}}{{match($menu,'subkategori','active')}}">
 									<a href="#"><i class="icon-box"></i> <span>Penilaian PTSP</span></a>

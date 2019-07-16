@@ -23,6 +23,8 @@ class Superuser extends CI_Controller {
 		$this->load->library('session');
 		$this->data['config'] 			= $this->m_config->ambil('config',1)->row();
 
+        $this->data['currentUser'] 			= $this->m_pegawai->detail(array("id_pegawai" => $this->session->userdata('id_pegawai')),'datapegawai')->row();
+
 	}
 
 	public function index()
