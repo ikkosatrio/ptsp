@@ -54,7 +54,7 @@
 				<li class="dropdown dropdown-user">
 					<a class="dropdown-toggle" data-toggle="dropdown">
 						<img src="{{img_holder('profile')}}" alt="">
-						<span>{{ucwords($ctrl->session->userdata('nama'))}}</span>
+						<span>{{$currentUser->nama}}</span>
 						<i class="caret"></i>
 					</a>
 
@@ -89,7 +89,7 @@
 							<div class="media">
 								<a href="#" class="media-left"><img src="{{img_holder('profile')}}" class="img-circle img-sm" alt=""></a>
 								<div class="media-body">
-									<span class="media-heading text-semibold">{{ucwords($ctrl->session->userdata('nama'))}}</span>
+									<span class="media-heading text-semibold">{{$currentUser->nama}}</span>
 									
 								</div>
 
@@ -109,7 +109,9 @@
 								<!-- Main -->
 								<li class="navigation-header"><span>Main</span> <i class="icon-menu" title="Main pages"></i></li>
 								<li class="{{match($menu,'dashboard','active')}}"><a href="{{base_url('superuser')}}"><i class="icon-home4"></i> <span>Dashboard</span></a></li>
+								@if ($currentUser->id_jbt == 10)
 								<li class="{{match($menu,'config','active')}}"><a href="{{base_url('superuser/config')}}"><i class="icon-gear"></i> <span>Configurasi Website</span></a></li>
+								@endif
 								<!-- <li class="{{match($menu,'slider','active')}}"><a href="{{base_url('superuser/slider')}}"><i class="icon-images2"></i> <span>Slider</span></a></li>
 								<li class="{{match($menu,'header','active')}}"><a href="{{base_url('superuser/header')}}"><i class="icon-home4"></i> <span>Header</span></a></li> -->
 								<!-- /main -->
@@ -117,28 +119,43 @@
 								<!-- Forms -->
 								<li class="navigation-header"><span>Manajemen Konten</span> <i class="icon-menu" title="Manajemen Mata Pelajaran"></i></li>
 								<!-- <li class="{{match($menu,'profil','active')}}"><a href="{{base_url('superuser/profil')}}"><i class="icon-home5"></i> <span>Profil Website</span></a></li> -->
-								<li class="{{match($menu,'banding','active')}}{{match($menu,'pengadilan','active')}}"><a href="#"><i class="icon-home4"></i> <span>Data Banding</span></a>
+
+                                @if ($currentUser->id_jbt == 1 || $currentUser->id_jbt == 2 || $currentUser->id_jbt == 6 || $currentUser->id_jbt == 7 || $currentUser->id_jbt == 8 || $currentUser->id_jbt == 10 || $currentUser->id_jbt == 11)
+                                <li class="{{match($menu,'banding','active')}}{{match($menu,'pengadilan','active')}}"><a href="#"><i class="icon-home4"></i> <span>Data Banding</span></a>
 									<ul>
 										
 										<li class="{{match($menu,'kategori','active')}}"><a href="{{base_url('superuser/banding')}}">Daftar Data Banding</a></li>
 										<li class="{{match($menu,'pengadilan','active')}}"><a href="{{base_url('superuser/pengadilan')}}">Data Pengadilan Agama</a></li>
 										
 									</ul>
-
-
-
 								</li>
-								
+                                @endif
+
+								@if ($currentUser->id_jbt == 1 || $currentUser->id_jbt == 2 || $currentUser->id_jbt == 10 || $currentUser->id_jbt == 11)
 								<li class="{{match($menu,'kategori','active')}}{{match($menu,'subkategori','active')}}">
 									<a href="#"><i class="icon-box"></i> <span>Penilaian PTSP</span></a>
 									<ul>
 										
 										<li class="{{match($menu,'kategori','active')}}"><a href="{{base_url('superuser/kategoripenilaian')}}">Kategori Penilaian</a></li>
 										<li class="{{match($menu,'subkategori','active')}}"><a href="{{base_url('superuser/subkategori')}}">Sub Kategori</a></li>
+										
 										<li class="{{match($menu,'penilaian','active')}}"><a href="{{base_url('superuser/penilaian')}}">Data Penilaian</a></li>
 										
 									</ul>
 								</li>
+								@endif
+
+								<li class="{{match($menu,'suratmasuk','active')}}{{match($menu,'suratkeluar','active')}}">
+									<a href="#"><i class="icon-box"></i> <span>Surat</span></a>
+									<ul>
+										<li class="{{match($menu,'suratmasuk','active')}}"><a href="{{base_url('superuser/suratmasuk')}}"> Surat Masuk</a></li>
+										<li class="{{match($menu,'suratkeluar','active')}}"><a href="{{base_url('superuser/suratkeluar')}}">Surat Keluar</a></li>
+										<li class="{{match($menu,'klasifikasi','active')}}"><a href="{{base_url('superuser/klasifikasi')}}">Klasifikasi Surat</a></li>
+										
+									</ul>
+								</li>
+
+								@if ($currentUser->id_jbt == 10)
 								<li class="{{match($menu,'pegawai','active')}}{{match($menu,'kategorijbt','active')}}">
 									<a href="#"><i class="icon-box"></i> <span>Manajemen Pengguna</span></a>
 									<ul>
@@ -147,7 +164,7 @@
 										
 									</ul>
 								</li>
-
+								@endif
 								
 								<!-- /forms -->
 							</ul>

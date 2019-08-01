@@ -3,126 +3,131 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Superuser extends CI_Controller {
 
-	public function __construct()
-	{
-		parent::__construct();
+    public function __construct()
+    {
+        parent::__construct();
 
-		if(!$this->session->userdata('auth')){
-			redirect('auth');
-		}
-		$this->blade->sebarno('ctrl', $this);
+        if(!$this->session->userdata('auth')){
+            redirect('auth');
+        }
+        $this->blade->sebarno('ctrl', $this);
 
-		$this->load->model('m_config');
-		$this->load->model('m_banding');
-		$this->load->model('m_kategoripenilaian');
-		$this->load->model('m_subkategori');
+        $this->load->model('m_config');
+        $this->load->model('m_banding');
+        $this->load->model('m_kategoripenilaian');
+        $this->load->model('m_subkategori');
         $this->load->model('m_kategorijbt');
-		$this->load->model('m_penilaianptsp');
+        $this->load->model('m_penilaianptsp');
         $this->load->model('m_pengadilan');
         $this->load->model('m_pegawai');
-		$this->load->library('session');
-		$this->data['config'] 			= $this->m_config->ambil('config',1)->row();
+        $this->load->model('m_suratkeluar');
+        $this->load->model('m_suratmasuk');
+        $this->load->model('m_klasifikasi');
+        $this->load->library('session');
+        $this->data['config']           = $this->m_config->ambil('config',1)->row();
 
-	}
+        $this->data['currentUser']          = $this->m_pegawai->detail(array("id_pegawai" => $this->session->userdata('id_pegawai')),'datapegawai')->row();
 
-	public function index()
-	{
-		$data 		= $this->data;
-		$data['menu'] = "dashboard";
+    }
+
+    public function index()
+    {
+        $data       = $this->data;
+        $data['menu'] = "dashboard";
          $data['banding'] = $this->m_banding->tampil_data('banding')->result();
          $data['penilaian'] = $this->m_penilaianptsp->tampil_data('penilaianptsp')->result();
-		echo $this->blade->nggambar('admin.home',$data);
-	}
+        echo $this->blade->nggambar('admin.home',$data);
+    }
 
-	// Start Config
-	public function config ($type=null){
-		$data         = $this->data; 
-		// $data         = $this->data;
-		$data['menu'] = "config";
+    // Start Config
+    public function config ($type=null){
+        $data         = $this->data; 
+        // $data         = $this->data;
+        $data['menu'] = "config";
 
-		if ($this->input->is_ajax_request()) {
+        if ($this->input->is_ajax_request()) {
 
-			switch ($type) {
+            switch ($type) {
 
-				case 'update':
+                case 'update':
 
-					$logoname 		= $data['config']->logo;
-					$iconname 		= $data['config']->icon;
+                    $logoname       = $data['config']->logo;
+                    $iconname       = $data['config']->icon;
 
-					if (!empty($_FILES['logo']['name'])) {
-						$upload 	= $this->upload('./assets/images/website/config/logo/','logo','logo');
+                    if (!empty($_FILES['logo']['name'])) {
+                        $upload     = $this->upload('./assets/images/website/config/logo/','logo','logo');
 
-						if($upload['auth']	== false){
-							echo goResult(false,$upload['msg']);
-							return;
-						}
+                        if($upload['auth']  == false){
+                            echo goResult(false,$upload['msg']);
+                            return;
+                        }
 
-						$logoname 	= $upload['msg']['file_name'];
-						if(!empty($logoname)){remFile(base_url().'assets/images/website/config/logo/'.$data['config']->logo);}
-					}
+                        $logoname   = $upload['msg']['file_name'];
+                        if(!empty($logoname)){remFile(base_url().'assets/images/website/config/logo/'.$data['config']->logo);}
+                    }
 
-					if (!empty($_FILES['icon']['name'])) {
-						$upload 	= $this->upload('./assets/images/website/config/icon/','icon','icon');
-						if($upload['auth']	== false){
-							echo goResult(false,$upload['msg']);
-							return;
-						}
+                    if (!empty($_FILES['icon']['name'])) {
+                        $upload     = $this->upload('./assets/images/website/config/icon/','icon','icon');
+                        if($upload['auth']  == false){
+                            echo goResult(false,$upload['msg']);
+                            return;
+                        }
 
-						$iconname 	= $upload['msg']['file_name'];
-						if(!empty($iconname)){remFile(base_url().'assets/images/website/config/icon/'.$data['config']->icon);}
-					}
+                        $iconname   = $upload['msg']['file_name'];
+                        if(!empty($iconname)){remFile(base_url().'assets/images/website/config/icon/'.$data['config']->icon);}
+                    }
 
-					$id             = 1;
-					$name           = $this->input->post('name');
-					$email          = $this->input->post('email');
-					$phone          = $this->input->post('phone');
-					$facebook       = $this->input->post('facebook');
-					$instagram      = $this->input->post('instagram');
-					$address        = $this->input->post('address');
-					$description    = $this->input->post('description');
-					$meta_deskripsi = $this->input->post('meta_deskripsi');
-					$meta_keyword   = $this->input->post('meta_keyword');
+                    $id             = 1;
+                    $name           = $this->input->post('name');
+                    $email          = $this->input->post('email');
+                    $phone          = $this->input->post('phone');
+                    $facebook       = $this->input->post('facebook');
+                    $instagram      = $this->input->post('instagram');
+                    $address        = $this->input->post('address');
+                    $description    = $this->input->post('description');
+                    $meta_deskripsi = $this->input->post('meta_deskripsi');
+                    $meta_keyword   = $this->input->post('meta_keyword');
 
-					$data = array(
-						'name'           => $name,
-						'email'          => $email,
-						'phone'          => $phone,
-						'facebook'       => $facebook,
-						'instagram'      => $instagram,
-						'address'        => $address,
-						'description'    => $description,
-						'icon'           => $iconname,
-						'logo'           => $logoname,
-						'meta_deskripsi' => $meta_deskripsi,
-						'meta_keyword'   => $meta_keyword
-					);
+                    $data = array(
+                        'name'           => $name,
+                        'email'          => $email,
+                        'phone'          => $phone,
+                        'facebook'       => $facebook,
+                        'instagram'      => $instagram,
+                        'address'        => $address,
+                        'description'    => $description,
+                        'icon'           => $iconname,
+                        'logo'           => $logoname,
+                        'meta_deskripsi' => $meta_deskripsi,
+                        'meta_keyword'   => $meta_keyword
+                    );
 
-					$where = array(
-						'id' => $id
-					);
+                    $where = array(
+                        'id' => $id
+                    );
 
-					if($this->m_config->update_data($where,$data,'config')){
-						echo goResult(true,"Data Telah Di Perbarui");
-						return;
-					}
+                    if($this->m_config->update_data($where,$data,'config')){
+                        echo goResult(true,"Data Telah Di Perbarui");
+                        return;
+                    }
 
-					break;
+                    break;
 
-				default:
-					echo goResult(false,"Konfigurasi Telah Di Simpan");
-					return;
-					break;
-			}
-		   return;
-		}
+                default:
+                    echo goResult(false,"Konfigurasi Telah Di Simpan");
+                    return;
+                    break;
+            }
+           return;
+        }
 
-		echo $this->blade->nggambar('admin.config.index',$data);
-		return;
-	}
-	// End Config
+        echo $this->blade->nggambar('admin.config.index',$data);
+        return;
+    }
+    // End Config
 
 
-	//Kategori Penilaian
+    //Kategori Penilaian
     public function penilaian($url=null,$id=null)
     {
         $data             = $this->data;
@@ -133,21 +138,21 @@ class Superuser extends CI_Controller {
 
         $arrKat = array();
         foreach ($kategoris as $key => $kat) {
-        	$where = array(
-        		"id_kategori" => $kat->id_kategori,
-        	);
-        	$kat->subkategori = $this->m_subkategori->detail($where,"subkatpenilaian")->result();
-        	$arrKat[] = $kat;
+            $where = array(
+                "id_kategori" => $kat->id_kategori,
+            );
+            $kat->subkategori = $this->m_subkategori->detail($where,"subkatpenilaian")->result();
+            $arrKat[] = $kat;
         }
 
         $data['kategoris']  = $arrKat;
         if ($url=="create") {
-            $data['type']			= "create";
+            $data['type']           = "create";
             echo $this->blade->nggambar('admin.penilaian.content',$data);
             return;
         }
         else if ($url=="detail" && $id!=null) {
-            $data['type']			= "detail";
+            $data['type']           = "detail";
             $kategoris = $this->m_kategoripenilaian->tampil_data('kategoripenilaian')->result();
 
             $arrKat = array();
@@ -165,15 +170,15 @@ class Superuser extends CI_Controller {
                 $arrKat[] = $row;
             }
 
-            $data['hasil']			= $arrKat;
+            $data['hasil']          = $arrKat;
 
             echo $this->blade->nggambar('admin.kategoripenilaian.content3',$data);
             return;
 
         }else if ($url == "created" && $this->input->is_ajax_request() == true) {
 
-            $userid     	= $this->session->userdata('id_pegawai');
-            $triwulan     	= $this->input->post('triwulan');
+            $userid         = $this->session->userdata('id_pegawai');
+            $triwulan       = $this->input->post('triwulan');
 
             $data = array(
                 'id_pegawai'      => $userid,
@@ -219,12 +224,12 @@ class Superuser extends CI_Controller {
         else if ($url=="updated" && $id!=null && $this->input->is_ajax_request() == true) {
             $where           = array('id_kategori' => $id);
 
-            $kode_kat     	= $this->input->post('kode_kat');
-            $nama_kat     	= $this->input->post('nama_kat');
+            $kode_kat       = $this->input->post('kode_kat');
+            $nama_kat       = $this->input->post('nama_kat');
             $deskripsi  = $this->input->post('deskripsi');
 
             $data = array(
-            	'kode_kat'      => $kode_kat,
+                'kode_kat'      => $kode_kat,
                 'nama_kat'       => $nama_kat,
                 'deskripsi_kat'   => $deskripsi,
             );
@@ -286,7 +291,7 @@ class Superuser extends CI_Controller {
     //Banding
     public function banding($url=null,$id=null)
     {
-    	$data             = $this->data;
+        $data             = $this->data;
         $data['menu']     = "banding";
         $data['banding'] = $this->m_banding->tampil_data('banding')->result();        
         $data['pengadilan'] = $this->m_pengadilan->tampil_data('pengadilan')->result();
@@ -297,77 +302,77 @@ class Superuser extends CI_Controller {
         $data['panitera'] = $this->m_pegawai->getpanitera()->result();
 
         if ($url=="create") {
-            $data['type']			= "create";
+            $data['type']           = "create";
             echo $this->blade->nggambar('admin.banding.content',$data);
             return;
         }
         else if ($url == "created" && $this->input->is_ajax_request() == true) {
 
-        	$id_banding     	= $this->input->post('id_banding');
-        	$no_perkara     	= $this->input->post('no_perkara');
-        	$pengadilan  = $this->input->post('id_pengadilan');
-        	$tgl_terima_berkas     	= $this->input->post('tgl_terima_berkas');
-        	$no_surat_pta     	= $this->input->post('no_surat_pta');
-        	$bulan_pta     	= $this->input->post('bulan_pta');
-        	$tgl_surat_pta_m     	= $this->input->post('tgl_surat_pta_m');
-        	$tgl_surat_pta_h     	= $this->input->post('tgl_surat_pta_h');
-        	$nama_pb     	= $this->input->post('nama_pb');
-        	$semula_pb     	= $this->input->post('semula_pb');
-        	$umur_pb     	= $this->input->post('umur_pb');
-        	$agama_pb     	= $this->input->post('agama_pb');
-        	$pendidikan_pb     	= $this->input->post('pendidikan_pb');
-        	$pekerjaan_pb     	= $this->input->post('pekerjaan_pb');
-        	$alamat_pb     	= $this->input->post('alamat_pb');
-        	$nama_kh_pb     	= $this->input->post('nama_kh_pb');
-        	$umur_kh_pb     	= $this->input->post('umur_kh_pb');
-        	$agama_kh_pb     	= $this->input->post('agama_kh_pb');
-        	$pekerjaan_kh_pb     	= $this->input->post('pekerjaan_kh_pb');
-        	$alamat_kh_pb     	= $this->input->post('alamat_kh_pb');
-        	$nama_tb     	= $this->input->post('nama_tb');
-        	$semula_tb     	= $this->input->post('semula_tb');
-        	$umur_tb     	= $this->input->post('umur_tb');
-        	$agama_tb     	= $this->input->post('agama_tb');
-        	$pendidikan_tb     	= $this->input->post('pendidikan_tb');
-        	$pekerjaan_tb     	= $this->input->post('pekerjaan_tb');
-        	$alamat_tb     	= $this->input->post('alamat_tb');
-        	$nama_kh_tb    	= $this->input->post('nama_kh_tb');
-        	$umur_kh_tb     	= $this->input->post('umur_kh_tb');
-        	$agama_kh_tb     	= $this->input->post('agama_kh_tb');
-        	$pekerjaan_kh_tb     	= $this->input->post('pekerjaan_kh_tb');
-        	$alamat_kh_tb     	= $this->input->post('alamat_kh_tb');
-        	$tgl_putus_pa     	= $this->input->post('tgl_putus_pa');
-			$no_perkara_pa     	= $this->input->post('no_perkara_pa');
-			$amar_pa     	= $this->input->post('amar_pa');
-			$ketua_majelis_pa     	= $this->input->post('ketua_majelis_pa');
-			$hakim_agg_pa1    	= $this->input->post('hakim_agg_pa1');
-			$hakim_agg_pa2    	= $this->input->post('hakim_agg_pa2');
-			$pp_pa    	= $this->input->post('pp_pa');
-			$tgl_akta_banding    	= $this->input->post('tgl_akta_banding');
-			$jenis_pkr    	= $this->input->post('jenis_pkr');
-			$kode_pa    	= $this->input->post('kode_pa');
-			$no_sp_pa    	= $this->input->post('no_sp_pa');
-			$bulan_sp_pa    	= $this->input->post('bulan_sp_pa');
-			$tgl_sp_pa    	= $this->input->post('tgl_sp_pa');
-			$pmh    	= $this->input->post('pmh');
-			$ketua_majelis_pta    	= $this->input->post('ketua_majelis_pta');
-			$kode_hm    	= $this->input->post('kode_hm');
-			$hakim_agg_pta1    	= $this->input->post('hakim_agg_pta1');
-			$kode_ha1    	= $this->input->post('kode_ha1');
-			$hakim_agg_pta2    	= $this->input->post('hakim_agg_pta2');
-			$kode_ha2    	= $this->input->post('kode_ha2');
-			$pp_pta    	= $this->input->post('pp_pta');
-			$kode_pp_pta    	= $this->input->post('kode_pp_pta');
-			$penunjukkan_pp_pta    	= $this->input->post('penunjukkan_pp_pta');
-			$tgl_berkas_diterima_majelis    	= $this->input->post('tgl_berkas_diterima_majelis');
-			$tgl_phs    	= $this->input->post('tgl_phs');
-			$tgl_putus_banding    	= $this->input->post('tgl_putus_banding');
-			$amar_banding    	= $this->input->post('amar_banding');
-			$tgl_minutasi    	= $this->input->post('tgl_minutasi');
-			$tgl_kirim_berkas    	= $this->input->post('tgl_kirim_berkas');
-			$tgl_upload    	= $this->input->post('tgl_upload');
+            $id_banding         = $this->input->post('id_banding');
+            $no_perkara         = $this->input->post('no_perkara');
+            $pengadilan  = $this->input->post('id_pengadilan');
+            $tgl_terima_berkas      = $this->input->post('tgl_terima_berkas');
+            $no_surat_pta       = $this->input->post('no_surat_pta');
+            $bulan_pta      = $this->input->post('bulan_pta');
+            $tgl_surat_pta_m        = $this->input->post('tgl_surat_pta_m');
+            $tgl_surat_pta_h        = $this->input->post('tgl_surat_pta_h');
+            $nama_pb        = $this->input->post('nama_pb');
+            $semula_pb      = $this->input->post('semula_pb');
+            $umur_pb        = $this->input->post('umur_pb');
+            $agama_pb       = $this->input->post('agama_pb');
+            $pendidikan_pb      = $this->input->post('pendidikan_pb');
+            $pekerjaan_pb       = $this->input->post('pekerjaan_pb');
+            $alamat_pb      = $this->input->post('alamat_pb');
+            $nama_kh_pb         = $this->input->post('nama_kh_pb');
+            $umur_kh_pb         = $this->input->post('umur_kh_pb');
+            $agama_kh_pb        = $this->input->post('agama_kh_pb');
+            $pekerjaan_kh_pb        = $this->input->post('pekerjaan_kh_pb');
+            $alamat_kh_pb       = $this->input->post('alamat_kh_pb');
+            $nama_tb        = $this->input->post('nama_tb');
+            $semula_tb      = $this->input->post('semula_tb');
+            $umur_tb        = $this->input->post('umur_tb');
+            $agama_tb       = $this->input->post('agama_tb');
+            $pendidikan_tb      = $this->input->post('pendidikan_tb');
+            $pekerjaan_tb       = $this->input->post('pekerjaan_tb');
+            $alamat_tb      = $this->input->post('alamat_tb');
+            $nama_kh_tb     = $this->input->post('nama_kh_tb');
+            $umur_kh_tb         = $this->input->post('umur_kh_tb');
+            $agama_kh_tb        = $this->input->post('agama_kh_tb');
+            $pekerjaan_kh_tb        = $this->input->post('pekerjaan_kh_tb');
+            $alamat_kh_tb       = $this->input->post('alamat_kh_tb');
+            $tgl_putus_pa       = $this->input->post('tgl_putus_pa');
+            $no_perkara_pa      = $this->input->post('no_perkara_pa');
+            $amar_pa        = $this->input->post('amar_pa');
+            $ketua_majelis_pa       = $this->input->post('ketua_majelis_pa');
+            $hakim_agg_pa1      = $this->input->post('hakim_agg_pa1');
+            $hakim_agg_pa2      = $this->input->post('hakim_agg_pa2');
+            $pp_pa      = $this->input->post('pp_pa');
+            $tgl_akta_banding       = $this->input->post('tgl_akta_banding');
+            $jenis_pkr      = $this->input->post('jenis_pkr');
+            $kode_pa        = $this->input->post('kode_pa');
+            $no_sp_pa       = $this->input->post('no_sp_pa');
+            $bulan_sp_pa        = $this->input->post('bulan_sp_pa');
+            $tgl_sp_pa      = $this->input->post('tgl_sp_pa');
+            $pmh        = $this->input->post('pmh');
+            $ketua_majelis_pta      = $this->input->post('ketua_majelis_pta');
+            $kode_hm        = $this->input->post('kode_hm');
+            $hakim_agg_pta1     = $this->input->post('hakim_agg_pta1');
+            $kode_ha1       = $this->input->post('kode_ha1');
+            $hakim_agg_pta2     = $this->input->post('hakim_agg_pta2');
+            $kode_ha2       = $this->input->post('kode_ha2');
+            $pp_pta     = $this->input->post('pp_pta');
+            $kode_pp_pta        = $this->input->post('kode_pp_pta');
+            $penunjukkan_pp_pta     = $this->input->post('penunjukkan_pp_pta');
+            $tgl_berkas_diterima_majelis        = $this->input->post('tgl_berkas_diterima_majelis');
+            $tgl_phs        = $this->input->post('tgl_phs');
+            $tgl_putus_banding      = $this->input->post('tgl_putus_banding');
+            $amar_banding       = $this->input->post('amar_banding');
+            $tgl_minutasi       = $this->input->post('tgl_minutasi');
+            $tgl_kirim_berkas       = $this->input->post('tgl_kirim_berkas');
+            $tgl_upload     = $this->input->post('tgl_upload');
 
             $data = array(
-            	'id_banding'      => $id_banding,
+                'id_banding'      => $id_banding,
                 'no_perkara'       => $no_perkara,
                 'tgl_terima_berkas'   => $tgl_terima_berkas,
                 'id_pengadilan'=> $pengadilan,
@@ -400,35 +405,35 @@ class Superuser extends CI_Controller {
                 'pekerjaan_kh_tb'   => $pekerjaan_kh_tb,
                 'alamat_kh_tb'   => $alamat_kh_tb,
                 'tgl_putus_pa'   => $tgl_putus_pa,
-				'no_perkara_pa'   => $no_perkara_pa,
-				'amar_pa'   => $amar_pa,
-				'ketua_majelis_pa'   => $ketua_majelis_pa,
-				'hakim_agg_pa1'   => $hakim_agg_pa1,
-				'hakim_agg_pa2'   => $hakim_agg_pa2,
-				'pp_pa'   => $pp_pa,
-				'tgl_akta_banding'   => $tgl_akta_banding,
-				'jenis_pkr'   => $jenis_pkr,
-				'kode_pa'   => $kode_pa,
-				'no_sp_pa'   => $no_sp_pa,
-				'bulan_sp_pa'   => $bulan_sp_pa,
-				'tgl_sp_pa'   => $tgl_sp_pa,
-				'pmh'   => $pmh,
-				'ketua_majelis_pta'   => $ketua_majelis_pta,
-				'kode_hm'   => $kode_hm,
-				'hakim_agg_pta1'   => $hakim_agg_pta1,
-				'kode_ha1'   => $kode_ha1,
-				'hakim_agg_pta2'   => $hakim_agg_pta2,
-				'kode_ha2'   => $kode_ha2,
-				'pp_pta'   => $pp_pta,
-				'kode_pp_pta'   => $kode_pp_pta,
-				'penunjukkan_pp_pta'   => $penunjukkan_pp_pta,
-				'tgl_berkas_diterima_majelis'   => $tgl_berkas_diterima_majelis,
-				'tgl_phs'   => $tgl_phs,
-				'tgl_putus_banding'   => $tgl_putus_banding,
-				'amar_banding'   => $amar_banding,
-				'tgl_minutasi'   => $tgl_minutasi,
-				'tgl_kirim_berkas'   => $tgl_kirim_berkas,
-				'tgl_upload'   => $tgl_upload,
+                'no_perkara_pa'   => $no_perkara_pa,
+                'amar_pa'   => $amar_pa,
+                'ketua_majelis_pa'   => $ketua_majelis_pa,
+                'hakim_agg_pa1'   => $hakim_agg_pa1,
+                'hakim_agg_pa2'   => $hakim_agg_pa2,
+                'pp_pa'   => $pp_pa,
+                'tgl_akta_banding'   => $tgl_akta_banding,
+                'jenis_pkr'   => $jenis_pkr,
+                'kode_pa'   => $kode_pa,
+                'no_sp_pa'   => $no_sp_pa,
+                'bulan_sp_pa'   => $bulan_sp_pa,
+                'tgl_sp_pa'   => $tgl_sp_pa,
+                'pmh'   => $pmh,
+                'ketua_majelis_pta'   => $ketua_majelis_pta,
+                'kode_hm'   => $kode_hm,
+                'hakim_agg_pta1'   => $hakim_agg_pta1,
+                'kode_ha1'   => $kode_ha1,
+                'hakim_agg_pta2'   => $hakim_agg_pta2,
+                'kode_ha2'   => $kode_ha2,
+                'pp_pta'   => $pp_pta,
+                'kode_pp_pta'   => $kode_pp_pta,
+                'penunjukkan_pp_pta'   => $penunjukkan_pp_pta,
+                'tgl_berkas_diterima_majelis'   => $tgl_berkas_diterima_majelis,
+                'tgl_phs'   => $tgl_phs,
+                'tgl_putus_banding'   => $tgl_putus_banding,
+                'amar_banding'   => $amar_banding,
+                'tgl_minutasi'   => $tgl_minutasi,
+                'tgl_kirim_berkas'   => $tgl_kirim_berkas,
+                'tgl_upload'   => $tgl_upload,
 
 
 
@@ -449,71 +454,71 @@ class Superuser extends CI_Controller {
         else if ($url=="updated" && $id!=null && $this->input->is_ajax_request() == true) {
             $where           = array('id_banding' => $id);
 
-            $id_banding     	= $this->input->post('id_banding');
-        	$no_perkara     	= $this->input->post('no_perkara');
-        	$pengadilan  = $this->input->post('id_pengadilan');
-        	$tgl_terima_berkas     	= $this->input->post('tgl_terima_berkas');
-        	$no_surat_pta     	= $this->input->post('no_surat_pta');
-        	$bulan_pta     	= $this->input->post('bulan_pta');
-        	$tgl_surat_pta_m     	= $this->input->post('tgl_surat_pta_m');
-        	$tgl_surat_pta_h     	= $this->input->post('tgl_surat_pta_h');
-        	$nama_pb     	= $this->input->post('nama_pb');
-        	$semula_pb     	= $this->input->post('semula_pb');
-        	$umur_pb     	= $this->input->post('umur_pb');
-        	$agama_pb     	= $this->input->post('agama_pb');
-        	$pendidikan_pb     	= $this->input->post('pendidikan_pb');
-        	$pekerjaan_pb     	= $this->input->post('pekerjaan_pb');
-        	$alamat_pb     	= $this->input->post('alamat_pb');
-        	$nama_kh_pb     	= $this->input->post('nama_kh_pb');
-        	$umur_kh_pb     	= $this->input->post('umur_kh_pb');
-        	$agama_kh_pb     	= $this->input->post('agama_kh_pb');
-        	$pekerjaan_kh_pb     	= $this->input->post('pekerjaan_kh_pb');
-        	$alamat_kh_pb     	= $this->input->post('alamat_kh_pb');
-        	$nama_tb     	= $this->input->post('nama_tb');
-        	$semula_tb     	= $this->input->post('semula_tb');
-        	$umur_tb     	= $this->input->post('umur_tb');
-        	$agama_tb     	= $this->input->post('agama_tb');
-        	$pendidikan_tb     	= $this->input->post('pendidikan_tb');
-        	$pekerjaan_tb     	= $this->input->post('pekerjaan_tb');
-        	$alamat_tb     	= $this->input->post('alamat_tb');
-        	$nama_kh_tb    	= $this->input->post('nama_kh_tb');
-        	$umur_kh_tb     	= $this->input->post('umur_kh_tb');
-        	$agama_kh_tb     	= $this->input->post('agama_kh_tb');
-        	$pekerjaan_kh_tb     	= $this->input->post('pekerjaan_kh_tb');
-        	$alamat_kh_tb     	= $this->input->post('alamat_kh_tb');
-        	$tgl_putus_pa     	= $this->input->post('tgl_putus_pa');
-			$no_perkara_pa     	= $this->input->post('no_perkara_pa');
-			$amar_pa     	= $this->input->post('amar_pa');
-			$ketua_majelis_pa     	= $this->input->post('ketua_majelis_pa');
-			$hakim_agg_pa1    	= $this->input->post('hakim_agg_pa1');
-			$hakim_agg_pa2    	= $this->input->post('hakim_agg_pa2');
-			$pp_pa    	= $this->input->post('pp_pa');
-			$tgl_akta_banding    	= $this->input->post('tgl_akta_banding');
-			$jenis_pkr    	= $this->input->post('jenis_pkr');
-			$kode_pa    	= $this->input->post('kode_pa');
-			$no_sp_pa    	= $this->input->post('no_sp_pa');
-			$bulan_sp_pa    	= $this->input->post('bulan_sp_pa');
-			$tgl_sp_pa    	= $this->input->post('tgl_sp_pa');
-			$pmh    	= $this->input->post('pmh');
-			$ketua_majelis_pta    	= $this->input->post('ketua_majelis_pta');
-			$kode_hm    	= $this->input->post('kode_hm');
-			$hakim_agg_pta1    	= $this->input->post('hakim_agg_pta1');
-			$kode_ha1    	= $this->input->post('kode_ha1');
-			$hakim_agg_pta2    	= $this->input->post('hakim_agg_pta2');
-			$kode_ha2    	= $this->input->post('kode_ha2');
-			$pp_pta    	= $this->input->post('pp_pta');
-			$kode_pp_pta    	= $this->input->post('kode_pp_pta');
-			$penunjukkan_pp_pta    	= $this->input->post('penunjukkan_pp_pta');
-			$tgl_berkas_diterima_majelis    	= $this->input->post('tgl_berkas_diterima_majelis');
-			$tgl_phs    	= $this->input->post('tgl_phs');
-			$tgl_putus_banding    	= $this->input->post('tgl_putus_banding');
-			$amar_banding    	= $this->input->post('amar_banding');
-			$tgl_minutasi    	= $this->input->post('tgl_minutasi');
-			$tgl_kirim_berkas    	= $this->input->post('tgl_kirim_berkas');
-			$tgl_upload    	= $this->input->post('tgl_upload');
+            $id_banding         = $this->input->post('id_banding');
+            $no_perkara         = $this->input->post('no_perkara');
+            $pengadilan  = $this->input->post('id_pengadilan');
+            $tgl_terima_berkas      = $this->input->post('tgl_terima_berkas');
+            $no_surat_pta       = $this->input->post('no_surat_pta');
+            $bulan_pta      = $this->input->post('bulan_pta');
+            $tgl_surat_pta_m        = $this->input->post('tgl_surat_pta_m');
+            $tgl_surat_pta_h        = $this->input->post('tgl_surat_pta_h');
+            $nama_pb        = $this->input->post('nama_pb');
+            $semula_pb      = $this->input->post('semula_pb');
+            $umur_pb        = $this->input->post('umur_pb');
+            $agama_pb       = $this->input->post('agama_pb');
+            $pendidikan_pb      = $this->input->post('pendidikan_pb');
+            $pekerjaan_pb       = $this->input->post('pekerjaan_pb');
+            $alamat_pb      = $this->input->post('alamat_pb');
+            $nama_kh_pb         = $this->input->post('nama_kh_pb');
+            $umur_kh_pb         = $this->input->post('umur_kh_pb');
+            $agama_kh_pb        = $this->input->post('agama_kh_pb');
+            $pekerjaan_kh_pb        = $this->input->post('pekerjaan_kh_pb');
+            $alamat_kh_pb       = $this->input->post('alamat_kh_pb');
+            $nama_tb        = $this->input->post('nama_tb');
+            $semula_tb      = $this->input->post('semula_tb');
+            $umur_tb        = $this->input->post('umur_tb');
+            $agama_tb       = $this->input->post('agama_tb');
+            $pendidikan_tb      = $this->input->post('pendidikan_tb');
+            $pekerjaan_tb       = $this->input->post('pekerjaan_tb');
+            $alamat_tb      = $this->input->post('alamat_tb');
+            $nama_kh_tb     = $this->input->post('nama_kh_tb');
+            $umur_kh_tb         = $this->input->post('umur_kh_tb');
+            $agama_kh_tb        = $this->input->post('agama_kh_tb');
+            $pekerjaan_kh_tb        = $this->input->post('pekerjaan_kh_tb');
+            $alamat_kh_tb       = $this->input->post('alamat_kh_tb');
+            $tgl_putus_pa       = $this->input->post('tgl_putus_pa');
+            $no_perkara_pa      = $this->input->post('no_perkara_pa');
+            $amar_pa        = $this->input->post('amar_pa');
+            $ketua_majelis_pa       = $this->input->post('ketua_majelis_pa');
+            $hakim_agg_pa1      = $this->input->post('hakim_agg_pa1');
+            $hakim_agg_pa2      = $this->input->post('hakim_agg_pa2');
+            $pp_pa      = $this->input->post('pp_pa');
+            $tgl_akta_banding       = $this->input->post('tgl_akta_banding');
+            $jenis_pkr      = $this->input->post('jenis_pkr');
+            $kode_pa        = $this->input->post('kode_pa');
+            $no_sp_pa       = $this->input->post('no_sp_pa');
+            $bulan_sp_pa        = $this->input->post('bulan_sp_pa');
+            $tgl_sp_pa      = $this->input->post('tgl_sp_pa');
+            $pmh        = $this->input->post('pmh');
+            $ketua_majelis_pta      = $this->input->post('ketua_majelis_pta');
+            $kode_hm        = $this->input->post('kode_hm');
+            $hakim_agg_pta1     = $this->input->post('hakim_agg_pta1');
+            $kode_ha1       = $this->input->post('kode_ha1');
+            $hakim_agg_pta2     = $this->input->post('hakim_agg_pta2');
+            $kode_ha2       = $this->input->post('kode_ha2');
+            $pp_pta     = $this->input->post('pp_pta');
+            $kode_pp_pta        = $this->input->post('kode_pp_pta');
+            $penunjukkan_pp_pta     = $this->input->post('penunjukkan_pp_pta');
+            $tgl_berkas_diterima_majelis        = $this->input->post('tgl_berkas_diterima_majelis');
+            $tgl_phs        = $this->input->post('tgl_phs');
+            $tgl_putus_banding      = $this->input->post('tgl_putus_banding');
+            $amar_banding       = $this->input->post('amar_banding');
+            $tgl_minutasi       = $this->input->post('tgl_minutasi');
+            $tgl_kirim_berkas       = $this->input->post('tgl_kirim_berkas');
+            $tgl_upload     = $this->input->post('tgl_upload');
 
             $data = array(
-            	'id_banding'      => $id_banding,
+                'id_banding'      => $id_banding,
                 'no_perkara'       => $no_perkara,
                 'tgl_terima_berkas'   => $tgl_terima_berkas,
                 'id_pengadilan'=> $pengadilan,
@@ -546,35 +551,35 @@ class Superuser extends CI_Controller {
                 'pekerjaan_kh_tb'   => $pekerjaan_kh_tb,
                 'alamat_kh_tb'   => $alamat_kh_tb,
                 'tgl_putus_pa'   => $tgl_putus_pa,
-				'no_perkara_pa'   => $no_perkara_pa,
-				'amar_pa'   => $amar_pa,
-				'ketua_majelis_pa'   => $ketua_majelis_pa,
-				'hakim_agg_pa1'   => $hakim_agg_pa1,
-				'hakim_agg_pa2'   => $hakim_agg_pa2,
-				'pp_pa'   => $pp_pa,
-				'tgl_akta_banding'   => $tgl_akta_banding,
-				'jenis_pkr'   => $jenis_pkr,
-				'kode_pa'   => $kode_pa,
-				'no_sp_pa'   => $no_sp_pa,
-				'bulan_sp_pa'   => $bulan_sp_pa,
-				'tgl_sp_pa'   => $tgl_sp_pa,
-				'pmh'   => $pmh,
-				'ketua_majelis_pta'   => $ketua_majelis_pta,
-				'kode_hm'   => $kode_hm,
-				'hakim_agg_pta1'   => $hakim_agg_pta1,
-				'kode_ha1'   => $kode_ha1,
-				'hakim_agg_pta2'   => $hakim_agg_pta2,
-				'kode_ha2'   => $kode_ha2,
-				'pp_pta'   => $pp_pta,
-				'kode_pp_pta'   => $kode_pp_pta,
-				'penunjukkan_pp_pta'   => $penunjukkan_pp_pta,
-				'tgl_berkas_diterima_majelis'   => $tgl_berkas_diterima_majelis,
-				'tgl_phs'   => $tgl_phs,
-				'tgl_putus_banding'   => $tgl_putus_banding,
-				'amar_banding'   => $amar_banding,
-				'tgl_minutasi'   => $tgl_minutasi,
-				'tgl_kirim_berkas'   => $tgl_kirim_berkas,
-				'tgl_upload'   => $tgl_upload,
+                'no_perkara_pa'   => $no_perkara_pa,
+                'amar_pa'   => $amar_pa,
+                'ketua_majelis_pa'   => $ketua_majelis_pa,
+                'hakim_agg_pa1'   => $hakim_agg_pa1,
+                'hakim_agg_pa2'   => $hakim_agg_pa2,
+                'pp_pa'   => $pp_pa,
+                'tgl_akta_banding'   => $tgl_akta_banding,
+                'jenis_pkr'   => $jenis_pkr,
+                'kode_pa'   => $kode_pa,
+                'no_sp_pa'   => $no_sp_pa,
+                'bulan_sp_pa'   => $bulan_sp_pa,
+                'tgl_sp_pa'   => $tgl_sp_pa,
+                'pmh'   => $pmh,
+                'ketua_majelis_pta'   => $ketua_majelis_pta,
+                'kode_hm'   => $kode_hm,
+                'hakim_agg_pta1'   => $hakim_agg_pta1,
+                'kode_ha1'   => $kode_ha1,
+                'hakim_agg_pta2'   => $hakim_agg_pta2,
+                'kode_ha2'   => $kode_ha2,
+                'pp_pta'   => $pp_pta,
+                'kode_pp_pta'   => $kode_pp_pta,
+                'penunjukkan_pp_pta'   => $penunjukkan_pp_pta,
+                'tgl_berkas_diterima_majelis'   => $tgl_berkas_diterima_majelis,
+                'tgl_phs'   => $tgl_phs,
+                'tgl_putus_banding'   => $tgl_putus_banding,
+                'amar_banding'   => $amar_banding,
+                'tgl_minutasi'   => $tgl_minutasi,
+                'tgl_kirim_berkas'   => $tgl_kirim_berkas,
+                'tgl_upload'   => $tgl_upload,
             );
 
             if($this->m_banding->update_data($where,$data,'banding')){
@@ -604,18 +609,18 @@ class Superuser extends CI_Controller {
         $data['kategori'] = $this->m_kategoripenilaian->tampil_data('kategoripenilaian')->result();
 
         if ($url=="create") {
-            $data['type']			= "create";
+            $data['type']           = "create";
             echo $this->blade->nggambar('admin.kategoripenilaian.content',$data);
             return;
         }
         else if ($url == "created" && $this->input->is_ajax_request() == true) {
 
-        	$kode_kat     	= $this->input->post('kode_kat');
-            $nama_kat     	= $this->input->post('nama_kat');
+            $kode_kat       = $this->input->post('kode_kat');
+            $nama_kat       = $this->input->post('nama_kat');
             $deskripsi  = $this->input->post('deskripsi');
 
             $data = array(
-            	'kode_kat'      => $kode_kat,
+                'kode_kat'      => $kode_kat,
                 'nama_kat'       => $nama_kat,
                 'deskripsi_kat'   => $deskripsi,
             );
@@ -634,12 +639,12 @@ class Superuser extends CI_Controller {
         else if ($url=="updated" && $id!=null && $this->input->is_ajax_request() == true) {
             $where           = array('id_kategori' => $id);
 
-            $kode_kat     	= $this->input->post('kode_kat');
-            $nama_kat     	= $this->input->post('nama_kat');
+            $kode_kat       = $this->input->post('kode_kat');
+            $nama_kat       = $this->input->post('nama_kat');
             $deskripsi  = $this->input->post('deskripsi');
 
             $data = array(
-            	'kode_kat'      => $kode_kat,
+                'kode_kat'      => $kode_kat,
                 'nama_kat'       => $nama_kat,
                 'deskripsi_kat'   => $deskripsi,
             );
@@ -859,10 +864,306 @@ public function kategorijbt($url=null,$id=null)
     }
     // --------------------------------- End Kategorijbt
 
-//contohview
+    //suratmasuk
 
-    // --------------------------------- End contohview
+public function suratmasuk($url=null,$id=null)
+    {
+        $data             = $this->data;
+        $data['menu']     = "suratmasuk";
+        $data['suratmasuk'] = $this->m_suratmasuk->tampil_data('surat_masuk')->result();
+        $data['max_noberkas'] = $this->m_suratmasuk->max_noberkas();
+        $data['klasifikasi_surat'] = $this->m_klasifikasi->tampil_data('surat_klasifikasi')->result();
 
+        if ($url=="create") {
+
+            $data['type']           = "create";
+            echo $this->blade->nggambar('admin.surat_masuk.content',$data);
+            return;
+        }
+        else if ($url == "created" && $this->input->is_ajax_request() == true) {
+
+            $userid         = $this->session->userdata('id_pegawai');
+            $no_berkas      = $this->input->post('no_berkas');
+            $sifat_surat      = $this->input->post('sifat_surat');
+            $asal_surat      = $this->input->post('asal_surat');
+            $no_surat      = $this->input->post('no_surat');
+            $bagian      = $this->input->post('bagian');
+            $tanggal_surat      = $this->input->post('tanggal_surat');
+            $tanggal_terima_surat      = $this->input->post('tanggal_terima_surat');
+            $isi_ringkas      = $this->input->post('isi_ringkas');
+            $id_klasifikasi      = $this->input->post('id_klasifikasi');
+            $keterangan_surat      = $this->input->post('keterangan_surat');
+            $file_surat      = $this->input->post('file_surat');
+            $relasi_keluar      = $this->input->post('relasi_keluar');
+            $selesai      = $this->input->post('selesai');
+
+
+            $data = array(
+
+                'id_pegawai'      => $userid,
+                'no_berkas'       => $no_berkas,
+                'sifat_surat'       => $sifat_surat,
+                'asal_surat'       => $asal_surat,
+                'no_surat'       => $no_surat,
+                'bagian'       => $bagian,
+                'tanggal_surat'       => $tanggal_surat,
+                'tanggal_terima_surat'       => $tanggal_terima_surat,
+                'isi_ringkas'       => $isi_ringkas,
+                'id_klasifikasi'       => $id_klasifikasi,
+                'keterangan_surat'       => $keterangan_surat,
+                'file_surat'       => $file_surat,
+                'relasi_keluar'       => $relasi_keluar,
+                'selesai'       => $selesai,
+            );
+
+            if($this->m_suratmasuk->input_data($data,'surat_masuk')){
+                echo goResult(true,"Data Telah Di Tambahkan");
+                return;
+            }
+        }
+        else if ($url=="update" && $id!=null) {
+            $data['type']    = "update";
+            $where           = array('id_suratmasuk' => $id);
+            $data['suratmasuk'] = $this->m_suratkeluar->detail($where,'surat_masuk')->row();
+            echo $this->blade->nggambar('admin.surat_masuk.content',$data);
+        }
+        else if ($url=="updated" && $id!=null && $this->input->is_ajax_request() == true) {
+            $where           = array('id_suratmasuk' => $id);
+
+
+           $no_berkas      = $this->input->post('no_berkas');
+            $sifat_surat      = $this->input->post('sifat_surat');
+            $asal_surat      = $this->input->post('asal_surat');
+            $no_surat      = $this->input->post('no_surat');
+            $bagian      = $this->input->post('bagian');
+            $tanggal_surat      = $this->input->post('tanggal_surat');
+            $tanggal_terima_surat      = $this->input->post('tanggal_terima_surat');
+            $isi_ringkas      = $this->input->post('isi_ringkas');
+            $id_klasifikasi      = $this->input->post('id_klasifikasi');
+            $keterangan_surat      = $this->input->post('keterangan_surat');
+            $file_surat      = $this->input->post('file_surat');
+            $relasi_keluar      = $this->input->post('relasi_keluar');
+            $selesai      = $this->input->post('selesai');
+
+
+            $data = array(
+
+                'id_pegawai'      => $userid,
+                'no_berkas'       => $no_berkas,
+                'sifat_surat'       => $sifat_surat,
+                'asal_surat'       => $asal_surat,
+                'no_surat'       => $no_surat,
+                'bagian'       => $bagian,
+                'tanggal_surat'       => $tanggal_surat,
+                'tanggal_terima_surat'       => $tanggal_terima_surat,
+                'isi_ringkas'       => $isi_ringkas,
+                'id_klasifikasi'       => $id_klasifikasi,
+                'keterangan_surat'       => $keterangan_surat,
+                'file_surat'       => $file_surat,
+                'relasi_keluar'       => $relasi_keluar,
+                'selesai'       => $selesai,
+);
+            if($this->m_suratmasuk->update_data($where,$data,'surat_masuk')){
+                echo goResult(true,"Data Telah Di Tambahkan");
+                return;
+            }
+        }
+        else if ($url=="deleted" && $id != null) {
+            $where           = array('id_suratmasuk' => $id);
+            if ($this->m_suratmasuk->hapus_data($where,'surat_masuk')) {
+
+            }
+            redirect('superuser/suratmasuk/');
+        }
+        else {
+            echo $this->blade->nggambar('admin.surat_masuk.index',$data);
+            return;
+        }
+    }
+//suratmasuk
+
+//suratkeluar
+
+public function suratkeluar($url=null,$id=null)
+    {
+        $data             = $this->data;
+        $data['menu']     = "suratkeluar";
+        $data['suratkeluar'] = $this->m_suratkeluar->tampil_data('surat_keluar')->result();
+
+        if ($url=="create") {
+
+            $data['type']           = "create";
+            echo $this->blade->nggambar('admin.surat_keluar.content',$data);
+            return;
+        }
+        else if ($url == "created" && $this->input->is_ajax_request() == true) {
+
+            $userid         = $this->session->userdata('id_pegawai');
+            $no_berkas      = $this->input->post('no_berkas');
+            $sifat_surat      = $this->input->post('sifat_surat');
+            $tujuan_surat      = $this->input->post('tujuan_surat');
+            $no_surat      = $this->input->post('no_surat');
+            $tgl_surat      = $this->input->post('tgl_surat');
+            $isi_ringkas      = $this->input->post('isi_ringkas');
+            $keterangan_surat      = $this->input->post('keterangan_surat');
+            $file_surat      = $this->input->post('file_surat');
+            $relasi_masuk      = $this->input->post('relasi_masuk');
+
+
+            $data = array(
+
+                'id_pegawai'      => $userid,
+                'no_berkas'       => $no_berkas,
+                'sifat_surat'       => $sifat_surat,
+                'tujuan_surat'       => $tujuan_surat,
+                'no_surat'       => $no_surat,
+                'tgl_surat'       => $tgl_surat,
+                'isi_ringkas'       => $isi_ringkas,
+                'keterangan_surat'       => $keterangan_surat,
+                'file_surat'       => $file_surat,
+                'relasi_masuk'       => $relasi_masuk,
+
+            );
+
+            if($this->m_suratkeluar->input_data($data,'surat_keluar')){
+                echo goResult(true,"Data Telah Di Tambahkan");
+                return;
+            }
+        }
+        else if ($url=="update" && $id!=null) {
+            $data['type']    = "update";
+            $where           = array('id_suratkeluar' => $id);
+            $data['suratkeluar'] = $this->m_suratkeluar->detail($where,'surat_keluar')->row();
+            echo $this->blade->nggambar('admin.surat_keluar.content',$data);
+        }
+        else if ($url=="updated" && $id!=null && $this->input->is_ajax_request() == true) {
+            $where           = array('id_suratkeluar' => $id);
+
+
+            $no_berkas      = $this->input->post('no_berkas');
+            $sifat_surat      = $this->input->post('sifat_surat');
+            $tujuan_surat      = $this->input->post('tujuan_surat');
+            $no_surat      = $this->input->post('no_surat');
+            $tgl_surat      = $this->input->post('tgl_surat');
+            $isi_ringkas      = $this->input->post('isi_ringkas');
+            $keterangan_surat      = $this->input->post('keterangan_surat');
+            $file_surat      = $this->input->post('file_surat');
+            $relasi_masuk      = $this->input->post('relasi_masuk');
+
+
+            $data = array(
+
+                'no_berkas'       => $no_berkas,
+                'sifat_surat'       => $sifat_surat,
+                'tujuan_surat'       => $tujuan_surat,
+                'no_surat'       => $no_surat,
+                'tgl_surat'       => $tgl_surat,
+                'isi_ringkas'       => $isi_ringkas,
+                'keterangan_surat'       => $keterangan_surat,
+                'file_surat'       => $file_surat,
+                'relasi_masuk'       => $relasi_masuk,
+
+            );
+
+            if($this->m_suratkeluar->update_data($where,$data,'surat_keluar')){
+                echo goResult(true,"Data Telah Di Tambahkan");
+                return;
+            }
+        }
+        else if ($url=="deleted" && $id != null) {
+            $where           = array('id_suratkeluar' => $id);
+            if ($this->m_suratkeluar->hapus_data($where,'surat_keluar')) {
+
+            }
+            redirect('superuser/suratkeluar/');
+        }
+        else {
+            echo $this->blade->nggambar('admin.surat_keluar.index',$data);
+            return;
+        }
+    }
+//suratkeluar
+
+//klasifikasi
+
+public function klasifikasi($url=null,$id=null)
+    {
+        $data             = $this->data;
+        $data['menu']     = "klasifikasi";
+        $data['klasifikasi'] = $this->m_klasifikasi->tampil_data('surat_klasifikasi')->result();
+
+        if ($url=="create") {
+            $data['type']           = "create";
+            echo $this->blade->nggambar('admin.klasifikasi_surat.content',$data);
+            return;
+        }
+        else if ($url == "created" && $this->input->is_ajax_request() == true) {
+
+
+            $kode_klasifikasi      = $this->input->post('kode_klasifikasi');
+            $nama_klasifikasi      = $this->input->post('nama_klasifikasi');
+            $uraian_klasifikasi      = $this->input->post('uraian_klasifikasi');
+           
+           
+
+
+            $data = array(
+
+                'kode_klasifikasi'       => $kode_klasifikasi,
+                'nama_klasifikasi'       => $nama_klasifikasi,
+                'uraian_klasifikasi'       => $uraian_klasifikasi,
+             
+            );
+
+            if($this->m_klasifikasi->input_data($data,'surat_klasifikasi')){
+                echo goResult(true,"Data Telah Di Tambahkan");
+                return;
+            }
+        }
+        else if ($url=="update" && $id!=null) {
+            $data['type']    = "update";
+            $where           = array('id_klasifikasi' => $id);
+            $data['klasifikasi'] = $this->m_klasifikasi->detail($where,'surat_klasifikasi')->row();
+            echo $this->blade->nggambar('admin.klasifikasi_surat.content',$data);
+        }
+        else if ($url=="updated" && $id!=null && $this->input->is_ajax_request() == true) {
+            $where           = array('id_klasifikasi' => $id);
+
+
+          
+            $kode_klasifikasi      = $this->input->post('kode_klasifikasi');
+            $nama_klasifikasi      = $this->input->post('nama_klasifikasi');
+            $uraian_klasifikasi      = $this->input->post('uraian_klasifikasi');
+           
+           
+
+
+            $data = array(
+
+                'kode_klasifikasi'       => $kode_klasifikasi,
+                'nama_klasifikasi'       => $nama_klasifikasi,
+                'uraian_klasifikasi'       => $uraian_klasifikasi,
+
+            );
+
+            if($this->m_klasifikasi->update_data($where,$data,'surat_klasifikasi')){
+                echo goResult(true,"Data Telah Di Tambahkan");
+                return;
+            }
+        }
+        else if ($url=="deleted" && $id != null) {
+            $where           = array('id_klasifikasi' => $id);
+            if ($this->m_klasifikasi->hapus_data($where,'surat_klasifikasi')) {
+
+            }
+            redirect('superuser/klasifikasi/');
+        }
+        else {
+            echo $this->blade->nggambar('admin.klasifikasi_surat.index',$data);
+            return;
+        }
+    }
+//klasifikasi
 
 // --------------------------------- Start pengadilan
 
@@ -939,139 +1240,139 @@ public function kategorijbt($url=null,$id=null)
     // --------------------------------- End pengadilan
 
 
-	// --------------------------------- Start SUBKAtegori
-	public function subkategori($url=null,$id=null)
-	{
-		$data             = $this->data;
-		$data['menu']     = "subkategori";
-		$data['subkategori'] = $this->m_subkategori->tampil_data('subkatpenilaian')->result();
-		$data['kategori'] = $this->m_kategoripenilaian->tampil_data('kategoripenilaian')->result();
+    // --------------------------------- Start SUBKAtegori
+    public function subkategori($url=null,$id=null)
+    {
+        $data             = $this->data;
+        $data['menu']     = "subkategori";
+        $data['subkategori'] = $this->m_subkategori->tampil_data('subkatpenilaian')->result();
+        $data['kategori'] = $this->m_kategoripenilaian->tampil_data('kategoripenilaian')->result();
 
-		if ($url=="create") {
-			$data['type']			= "create";
+        if ($url=="create") {
+            $data['type']           = "create";
 
-			echo $this->blade->nggambar('admin.subkategori.content',$data);
-			return;
-		}
-		else if ($url == "created" && $this->input->is_ajax_request() == true) {
+            echo $this->blade->nggambar('admin.subkategori.content',$data);
+            return;
+        }
+        else if ($url == "created" && $this->input->is_ajax_request() == true) {
 
-			$kode_subkat     	= $this->input->post('kode_subkat');
-			$nama_subkat     	= $this->input->post('nama_subkat');
-			$deskripsi  = $this->input->post('deskripsi');
-			$kategori  = $this->input->post('kategori');
+            $kode_subkat        = $this->input->post('kode_subkat');
+            $nama_subkat        = $this->input->post('nama_subkat');
+            $deskripsi  = $this->input->post('deskripsi');
+            $kategori  = $this->input->post('kategori');
 
-			$data = array(
-				'kode_subkat'       => $kode_subkat,
-				'nama_subkat'       => $nama_subkat,
-				'deskripsi_subkat'   => $deskripsi,
-				'id_kategori'=> $kategori,
-			);
+            $data = array(
+                'kode_subkat'       => $kode_subkat,
+                'nama_subkat'       => $nama_subkat,
+                'deskripsi_subkat'   => $deskripsi,
+                'id_kategori'=> $kategori,
+            );
 
-			if($this->m_subkategori->input_data($data,'subkatpenilaian')){
-				echo goResult(true,"Data Telah Di Tambahkan");
-				return;
-			}
-		}
-		else if ($url=="update" && $id!=null) {
-			$data['type']    = "update";
-			$where           = array('id_subkat' => $id);
-			$data['subkategori'] = $this->m_subkategori->detail($where,'subkatpenilaian')->row();
-			echo $this->blade->nggambar('admin.subkategori.content',$data);
-		}
-		else if ($url=="updated" && $id!=null && $this->input->is_ajax_request() == true) {
-			$where           = array('id_subkat' => $id);
+            if($this->m_subkategori->input_data($data,'subkatpenilaian')){
+                echo goResult(true,"Data Telah Di Tambahkan");
+                return;
+            }
+        }
+        else if ($url=="update" && $id!=null) {
+            $data['type']    = "update";
+            $where           = array('id_subkat' => $id);
+            $data['subkategori'] = $this->m_subkategori->detail($where,'subkatpenilaian')->row();
+            echo $this->blade->nggambar('admin.subkategori.content',$data);
+        }
+        else if ($url=="updated" && $id!=null && $this->input->is_ajax_request() == true) {
+            $where           = array('id_subkat' => $id);
 
-			$kode_subkat     	= $this->input->post('kode_subkat');
-			$nama_subkat     	= $this->input->post('nama_subkat');
-			$deskripsi  = $this->input->post('deskripsi');
-			$kategori  = $this->input->post('kategori');
-
-
-			$data = array(
-				'kode_subkat'       => $kode_subkat,
-				'nama_subkat'       => $nama_subkat,
-				'deskripsi_subkat'   => $deskripsi,
-				'id_kategori'=> $kategori,
-			);
-
-			if($this->m_subkategori->update_data($where,$data,'subkatpenilaian')){
-				echo goResult(true,"Data Telah Di Tambahkan");
-				return;
-			}
-		}
-		else if ($url=="deleted" && $id != null) {
-			$where           = array('id_subkat' => $id);
-			if ($this->m_subkategori->hapus_data($where,'subkatpenilaian')) {
-
-			}
-			redirect('superuser/subkategori/');
-		}
-		else {
-			echo $this->blade->nggambar('admin.subkategori.index',$data);
-			return;
-		}
-	}
-	// --------------------------------- End SUBKAtegori
+            $kode_subkat        = $this->input->post('kode_subkat');
+            $nama_subkat        = $this->input->post('nama_subkat');
+            $deskripsi  = $this->input->post('deskripsi');
+            $kategori  = $this->input->post('kategori');
 
 
+            $data = array(
+                'kode_subkat'       => $kode_subkat,
+                'nama_subkat'       => $nama_subkat,
+                'deskripsi_subkat'   => $deskripsi,
+                'id_kategori'=> $kategori,
+            );
 
-	//---------------------------------------------------------------------
-	//--------------------------------------------------------fungsi global
-	private function upload($dir,$name ='userfile',$filename=null){
-		$config['upload_path']      = $dir;
+            if($this->m_subkategori->update_data($where,$data,'subkatpenilaian')){
+                echo goResult(true,"Data Telah Di Tambahkan");
+                return;
+            }
+        }
+        else if ($url=="deleted" && $id != null) {
+            $where           = array('id_subkat' => $id);
+            if ($this->m_subkategori->hapus_data($where,'subkatpenilaian')) {
+
+            }
+            redirect('superuser/subkategori/');
+        }
+        else {
+            echo $this->blade->nggambar('admin.subkategori.index',$data);
+            return;
+        }
+    }
+    // --------------------------------- End SUBKAtegori
+
+
+
+    //---------------------------------------------------------------------
+    //--------------------------------------------------------fungsi global
+    private function upload($dir,$name ='userfile',$filename=null){
+        $config['upload_path']      = $dir;
         $config['allowed_types']    = 'gif|jpg|png|jpeg';
         $config['max_size']         = 8000;
-        $config['encrypt_name'] 	= FALSE;
-        $config['file_name'] 		= $filename;
+        $config['encrypt_name']     = FALSE;
+        $config['file_name']        = $filename;
 
         $this->load->library('upload', $config);
 
         if ( ! $this->upload->do_upload($name))
         {
-        		$data['auth'] 	= false;
-                $data['msg'] 	= $this->upload->display_errors();
+                $data['auth']   = false;
+                $data['msg']    = $this->upload->display_errors();
                 return $data;
         }
         else
         {
-        		$data['auth']	= true;
-        		$data['msg']	= $this->upload->data();
-        		return $data;
+                $data['auth']   = true;
+                $data['msg']    = $this->upload->data();
+                return $data;
         }
-	}
+    }
 
-	private function upload_files($path,$files){
+    private function upload_files($path,$files){
 
         $config = array(
             'upload_path'   => $path,
             'allowed_types' => 'gif|jpg|png|jpeg',
-            'max_size'		=> '10000',
+            'max_size'      => '10000',
             'overwrite'     => false,
             'encrypt_name'  => FALSE
         );
 
         $this->load->library('upload', $config);
 
-        $images 		= array();
-        $data['msg']	= array();
-        $data['auth']	= false;
+        $images         = array();
+        $data['msg']    = array();
+        $data['auth']   = false;
         foreach ($files['name'] as $key => $image) {
-			$_FILES['images[]']['name']     = $files['name'][$key];
-			$_FILES['images[]']['type']     = $files['type'][$key];
-			$_FILES['images[]']['tmp_name'] = $files['tmp_name'][$key];
-			$_FILES['images[]']['error']    = $files['error'][$key];
-			$_FILES['images[]']['size']     = $files['size'][$key];
+            $_FILES['images[]']['name']     = $files['name'][$key];
+            $_FILES['images[]']['type']     = $files['type'][$key];
+            $_FILES['images[]']['tmp_name'] = $files['tmp_name'][$key];
+            $_FILES['images[]']['error']    = $files['error'][$key];
+            $_FILES['images[]']['size']     = $files['size'][$key];
 
-			$value 		= str_replace(' ', '_', $_FILES['images[]']['name']);
-            $config['file_name'] 		= $value;
+            $value      = str_replace(' ', '_', $_FILES['images[]']['name']);
+            $config['file_name']        = $value;
             $this->upload->initialize($config);
 
             if ($this->upload->do_upload('images[]')) {
-            	$data['auth']		= true;
-            	array_push($data['msg'],$this->upload->data());
+                $data['auth']       = true;
+                array_push($data['msg'],$this->upload->data());
             } else {
-            	$data['auth']		= ($data['auth']==true) ? true : false;
-            	array_push($data['msg'],$this->upload->display_errors());
+                $data['auth']       = ($data['auth']==true) ? true : false;
+                array_push($data['msg'],$this->upload->display_errors());
             }
         }
 
@@ -1079,11 +1380,11 @@ public function kategorijbt($url=null,$id=null)
     }
 
     private function isImage($file){
-		if ((($_FILES[$file]['type'] == 'image/gif') || ($_FILES[$file]['type'] == 'image/jpeg') || ($_FILES[$file]['type'] == 'image/png'))){
-			return true;
-		}
-		else {
-			return false;
-		}
-	}
+        if ((($_FILES[$file]['type'] == 'image/gif') || ($_FILES[$file]['type'] == 'image/jpeg') || ($_FILES[$file]['type'] == 'image/png'))){
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
 }

@@ -15,7 +15,7 @@ Dashboard - Administrasi
 					<div class="breadcrumb-line">
 						<ul class="breadcrumb">
 							<li><a href="{{base_url('superuser')}}"><i class="icon-home2 position-left"></i> Home</a></li>
-							<li class="active"><a href="#">Kategori</a></li>
+							<li class="active"><a href="#">Sub Kategori</a></li>
 						</ul>
 					</div>
 				</div>
@@ -28,7 +28,7 @@ Dashboard - Administrasi
 					<!-- Basic datatable -->
 					<div class="panel panel-flat">
 						<div class="panel-heading">
-							<h5 class="panel-title">Daftar Kategori</h5>
+							<h5 class="panel-title">Daftar Sub Kategori</h5>
 							<div class="heading-elements">
 								<ul class="icons-list">
 			                		<li><a data-action="collapse"></a></li>
@@ -38,7 +38,9 @@ Dashboard - Administrasi
 		                	</div>
 						</div>
 						<div class="panel-heading">
-							<a href="{{base_url('superuser/subkategori/create')}}"><button type="button" class="btn bg-teal-400 btn-labeled"><b><i class="icon-plus-circle2"></i></b> Tambah Kategori</button></a>
+						    @if ($currentUser->id_jbt == 10)
+							<a href="{{base_url('superuser/subkategori/create')}}"><button type="button" class="btn bg-teal-400 btn-labeled"><b><i class="icon-plus-circle2"></i></b> Tambah Sub Kategori</button></a>
+							@endif
 						</div>
 						<table class="table table-striped datatable-basic table-lg table-responsive">
 		                    <thead>
@@ -88,16 +90,18 @@ Dashboard - Administrasi
 			                           <div class="btn-group">
 					                    	<button type="button" class="btn btn-danger btn-sm btn-rounded dropdown-toggle" data-toggle="dropdown"><i class="icon-cog5 position-left"></i> Action <span class="caret"></span></button>
 					                    	<ul class="dropdown-menu dropdown-menu-right">
+					                    	    @if ($currentUser->id_jbt == 10)
 												<li>
 													<a href="{{base_url('superuser/subkategori/update/'.$result->id_subkat.'/'.seo($result->nama_subkat))}}">
-														<i class="fa fa-edit"></i> Ubah Kategori
+														<i class="fa fa-edit"></i> Ubah Sub Kategori
 													</a>
 												</li>
 												<li><a href="javascript:void(0)" onclick="deleteIt(this)" 
 												data-url="{{base_url('superuser/subkategori/deleted/'.$result->id_subkat.'/'.seo($result->nama_subkat))}}">
-														<i class="fa fa-trash"></i> Hapus Kategori
+														<i class="fa fa-trash"></i> Hapus Sub Kategori
 													</a>
 												</li>
+												@endif
 											</ul>
 										</div>
 			                        </td>

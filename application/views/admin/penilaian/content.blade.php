@@ -44,7 +44,9 @@ Dashboard - Administrasi
 						<div class="panel-body">
 						<form id="form-blog" class="form-horizontal" action="{{ ($type=='create') ? base_url('superuser/penilaian/created') : base_url('superuser/penilaian/updated/'.$penilaian->id_subkat) }}" method="post">
 						
-								
+							
+
+
 						@foreach($kategoris as $keyKat => $kategori)
 						<div class="panel-group">
 				    		<div class="panel panel-default">
@@ -70,7 +72,12 @@ Dashboard - Administrasi
 			        								<td>{{$sub->kode_subkat}}</td>
 			        								<td>{{$sub->nama_subkat}}</td>
 			        								<td>{!!$sub->deskripsi_subkat!!}</td>
-			        								<td><input class="form-input" type="number" name="nilai-{{$sub->id_subkat}}"></td>
+			        								<td><select class="select-search" name="nilai-{{$sub->id_subkat}}" >
+															<option value="">Nilai</option>
+															<option value="0">0</option>
+															<option value="5">5</option>
+															<option value="10">10</option>
+																</td>
 			        								<td><textarea class="form-input" name="kendala-{{$sub->id_subkat}}"></textarea></td>
 			        							</tr>
 			        							@endforeach

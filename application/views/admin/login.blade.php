@@ -89,7 +89,7 @@
 								<input type="password" class="form-control" placeholder="Password" name="pass">
 								<div class="form-control-feedback">
 									<i class="icon-lock2 text-muted"></i>
-								</div>
+							 	</div>
 							</div>
 
 							<div class="form-group">

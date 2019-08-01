@@ -38,7 +38,9 @@ Dashboard - Administrasi
 		                	</div>
 						</div>
 						<div class="panel-heading">
+						    @if ($currentUser->id_jbt == 10)
 							<a href="{{base_url('superuser/kategoripenilaian/create')}}"><button type="button" class="btn bg-teal-400 btn-labeled"><b><i class="icon-plus-circle2"></i></b> Tambah Kategori</button></a>
+							@endif
 						</div>
 						<table class="table table-striped datatable-basic table-lg table-responsive">
 		                    <thead>
@@ -77,8 +79,10 @@ Dashboard - Administrasi
 			                        </td>
 			                        <td class="text-center">
 			                           <div class="btn-group">
+			                               
 					                    	<button type="button" class="btn btn-danger btn-sm btn-rounded dropdown-toggle" data-toggle="dropdown"><i class="icon-cog5 position-left"></i> Action <span class="caret"></span></button>
 					                    	<ul class="dropdown-menu dropdown-menu-right">
+					                    	    @if ($currentUser->id_jbt == 10)
 												<li>
 													<a href="{{base_url('superuser/kategoripenilaian/update/'.$result->id_kategori.'/'.seo($result->nama_kat))}}">
 														<i class="fa fa-edit"></i> Ubah Kategori
@@ -90,7 +94,9 @@ Dashboard - Administrasi
 														<i class="fa fa-trash"></i> Hapus Kategori
 													</a>
 												</li>
+											@endif
 											</ul>
+											
 										</div>
 			                        </td>
 		                        </tr>

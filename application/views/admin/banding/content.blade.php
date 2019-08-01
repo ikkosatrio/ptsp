@@ -541,10 +541,14 @@ Dashboard - Administrasi
 								</div>
 
 						</div>
+						
 							  	<div class="text-right">
+							@if ($currentUser->id_jbt == 1 || $currentUser->id_jbt == 2 || $currentUser->id_jbt == 6 || $currentUser->id_jbt == 7 || $currentUser->id_jbt == 8 || $currentUser->id_jbt == 10)
 							<button type="submit" class="btn btn-primary">{{ ($type=='create') ? 'Buat Data Banding' : 'Ubah Data Banding' }} <i class="icon-arrow-right14 position-right"></i></button>
+							@endif
 							@if($type=="update")
 							<a class="btn btn-danger" href="javascript:void(0)" onclick="window.history.back(); "> Batalkan <i class="fa fa-times position-right"></i></a>
+							
 							@endif</div>
 
 

@@ -38,7 +38,9 @@ Dashboard - Administrasi
 		                	</div>
 						</div>
 						<div class="panel-heading">
+						    @if ($currentUser->id_jbt == 1 || $currentUser->id_jbt == 2 || $currentUser->id_jbt == 6 || $currentUser->id_jbt == 7 || $currentUser->id_jbt == 8 || $currentUser->id_jbt == 10)
 							<a href="{{base_url('superuser/banding/create')}}"><button type="button" class="btn bg-teal-400 btn-labeled"><b><i class="icon-plus-circle2"></i></b> Tambah Banding</button></a>
+							@endif
 						</div>
 						<table class="table table-striped datatable-basic table-lg table-responsive">
 		                    <thead>
@@ -83,14 +85,17 @@ Dashboard - Administrasi
 					                    	<ul class="dropdown-menu dropdown-menu-right">
 												<li>
 													<a href="{{base_url('superuser/banding/update/'.$result->id_banding.'/'.seo($result->no_perkara))}}">
-														<i class="fa fa-edit"></i> Ubah Data Banding
+														<i class="fa fa-edit"></i> Lihat Data Banding
 													</a>
 												</li>
-												<li><a href="javascript:void(0)" onclick="deleteIt(this)" 
+												@if ($currentUser->id_jbt == 10)
+												<li>
+												    <a href="javascript:void(0)" onclick="deleteIt(this)" 
 												data-url="{{base_url('superuser/banding/deleted/'.$result->id_banding.'/'.seo($result->no_perkara))}}">
 														<i class="fa fa-trash"></i> Hapus Data Banding
 													</a>
 												</li>
+												@endif
 											</ul>
 										</div>
 			                        </td>

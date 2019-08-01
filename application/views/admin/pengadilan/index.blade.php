@@ -38,7 +38,9 @@ Dashboard - Administrasi
 		                	</div>
 						</div>
 						<div class="panel-heading">
+						    @if ($currentUser->id_jbt == 1 || $currentUser->id_jbt == 2 || $currentUser->id_jbt == 6 || $currentUser->id_jbt == 7 || $currentUser->id_jbt == 8 || $currentUser->id_jbt == 10)
 							<a href="{{base_url('superuser/pengadilan/create')}}"><button type="button" class="btn bg-teal-400 btn-labeled"><b><i class="icon-plus-circle2"></i></b> Tambah Pengadilan Agama</button></a>
+							@endif
 						</div>
 						<table class="table table-striped datatable-basic table-lg table-responsive">
 		                    <thead>
@@ -47,7 +49,10 @@ Dashboard - Administrasi
 		                            <th>ID</th>		                            
 		                            <th>Nama Pengadilan</th>
 		                            <th>Deskripsi Pengadilan</th>
+		                            @if ($currentUser->id_jbt == 1 || $currentUser->id_jbt == 2 || $currentUser->id_jbt == 6 || $currentUser->id_jbt == 7 || $currentUser->id_jbt == 8 || $currentUser->id_jbt == 10)
 		                            <th class="text-center">Aksi</th>
+		                            @endif
+		                            
 		                        </tr>
 		                    </thead>
 		                    <tbody>
@@ -74,7 +79,7 @@ Dashboard - Administrasi
 			                        		{{read_more(strip_tags($result->deskripsi_peng),130)}}
 			                        	</span>
 			                        </td>
-			                        
+			                        @if ($currentUser->id_jbt == 1 || $currentUser->id_jbt == 2 || $currentUser->id_jbt == 6 || $currentUser->id_jbt == 7 || $currentUser->id_jbt == 8 || $currentUser->id_jbt == 10)
 			                        <td class="text-center">
 			                           <div class="btn-group">
 					                    	<button type="button" class="btn btn-danger btn-sm btn-rounded dropdown-toggle" data-toggle="dropdown"><i class="icon-cog5 position-left"></i> Action <span class="caret"></span></button>
@@ -92,6 +97,7 @@ Dashboard - Administrasi
 											</ul>
 										</div>
 			                        </td>
+			                        @endif
 		                        </tr>
 		                        @endforeach
 		                    </tbody>
